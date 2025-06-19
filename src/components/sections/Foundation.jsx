@@ -421,7 +421,7 @@ const Foundation = ({ demoState, setDemoState, onSectionChange }) => {
                         <div className="card-body p-4">
                           <h5 className="font-bold text-sm mb-2">{feature.name}</h5>
                           <p className="text-xs text-base-content/70 mb-3">{feature.description}</p>
-                          <div className={`badge badge-${initiative.color} badge-sm`}>
+                          <div className={`bg-${initiative.color}/10 text-${initiative.color} px-3 py-1 rounded-full text-xs font-medium text-center`}>
                             {feature.impact}
                           </div>
                         </div>
