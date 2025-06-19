@@ -4,13 +4,15 @@ import { setAuthStatus, getDemoState, saveDemoState } from '../utils/storage';
 import { SECTIONS, SECTION_LABELS, SECTION_DESCRIPTIONS, APP_CONFIG } from '../utils/constants';
 import nuriPp from '../assets/images/nuri-pp.png';
 
-// Import section components (we'll create these next)
+// Import section components
 import Overview from './sections/Overview';
-import Foundation from './sections/Foundation';
-import Innovation from './sections/Innovation';
-import Implementation from './sections/Implementation';
-import BusinessImpact from './sections/BusinessImpact';
-import LivePrototype from './sections/LivePrototype';
+import CurrentAnalysis from './sections/CurrentAnalysis';
+import StickinessStrategy from './sections/StickinessStrategy';
+import ConversionStrategy from './sections/ConversionStrategy';
+import InnovationStrategy from './sections/InnovationStrategy';
+import GrowthStrategy from './sections/GrowthStrategy';
+import ImplementationRoadmap from './sections/ImplementationRoadmap';
+import PrototypeDemo from './sections/PrototypeDemo';
 
 const Layout = ({ onLogout }) => {
   const [currentSection, setCurrentSection] = useState(SECTIONS.OVERVIEW);
@@ -47,16 +49,20 @@ const Layout = ({ onLogout }) => {
     switch (currentSection) {
       case SECTIONS.OVERVIEW:
         return <Overview {...sectionProps} />;
-      case SECTIONS.FOUNDATION:
-        return <Foundation {...sectionProps} />;
-      case SECTIONS.INNOVATION:
-        return <Innovation {...sectionProps} />;
-      case SECTIONS.IMPLEMENTATION:
-        return <Implementation {...sectionProps} />;
-      case SECTIONS.BUSINESS_IMPACT:
-        return <BusinessImpact {...sectionProps} />;
-      case SECTIONS.LIVE_PROTOTYPE:
-        return <LivePrototype {...sectionProps} />;
+      case SECTIONS.CURRENT_ANALYSIS:
+        return <CurrentAnalysis {...sectionProps} />;
+      case SECTIONS.STICKINESS_STRATEGY:
+        return <StickinessStrategy {...sectionProps} />;
+      case SECTIONS.CONVERSION_STRATEGY:
+        return <ConversionStrategy {...sectionProps} />;
+      case SECTIONS.INNOVATION_STRATEGY:
+        return <InnovationStrategy {...sectionProps} />;
+      case SECTIONS.GROWTH_STRATEGY:
+        return <GrowthStrategy {...sectionProps} />;
+      case SECTIONS.IMPLEMENTATION_ROADMAP:
+        return <ImplementationRoadmap {...sectionProps} />;
+      case SECTIONS.PROTOTYPE_DEMO:
+        return <PrototypeDemo {...sectionProps} />;
       default:
         return <Overview {...sectionProps} />;
     }
@@ -72,7 +78,7 @@ const Layout = ({ onLogout }) => {
       
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-100 shadow-sm border-b lg:hidden">
+        <div className="navbar bg-base-100 shadow-sm border-b lg:hidden sticky top-0 z-50">
           <div className="flex-none">
             <label htmlFor="drawer-toggle" className="btn btn-square btn-ghost">
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}

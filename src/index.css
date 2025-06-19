@@ -34,9 +34,23 @@ html {
   animation: fadeIn 0.6s ease-out;
 }
 
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
 /* Glass effect utility */
 .glass-effect {
   backdrop-filter: blur(10px);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }

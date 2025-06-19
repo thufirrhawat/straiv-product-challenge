@@ -3,8 +3,8 @@
 export const APP_CONFIG = {
   name: 'Straiv Product Challenge',
   author: 'Nurettin Ünal',
-  version: '1.0.0',
-  description: 'Interactive product strategy demonstration for hotel technology',
+  version: '2.0.0',
+  description: 'Strategic Product Analysis & Recommendations for Guest App Enhancement',
   contact: {
     email: 'nurettin@example.com',
     linkedin: 'linkedin.com/in/nurettin-unal'
@@ -15,29 +15,35 @@ export const PASSCODE = 'Straiv<>Nuri';
 
 export const SECTIONS = {
   OVERVIEW: 'overview',
-  FOUNDATION: 'foundation',
-  INNOVATION: 'innovation',
-  IMPLEMENTATION: 'implementation',
-  BUSINESS_IMPACT: 'business-impact',
-  LIVE_PROTOTYPE: 'live-prototype'
+  CURRENT_ANALYSIS: 'current-analysis',
+  STICKINESS_STRATEGY: 'stickiness-strategy',
+  CONVERSION_STRATEGY: 'conversion-strategy',
+  INNOVATION_STRATEGY: 'innovation-strategy',
+  GROWTH_STRATEGY: 'growth-strategy',
+  IMPLEMENTATION_ROADMAP: 'implementation-roadmap',
+  PROTOTYPE_DEMO: 'prototype-demo'
 };
 
 export const SECTION_LABELS = {
-  [SECTIONS.OVERVIEW]: 'Strategic Overview',
-  [SECTIONS.FOUNDATION]: 'Part 1: Foundation',
-  [SECTIONS.INNOVATION]: 'Part 2: Innovation',
-  [SECTIONS.IMPLEMENTATION]: 'Implementation',
-  [SECTIONS.BUSINESS_IMPACT]: 'Business Impact',
-  [SECTIONS.LIVE_PROTOTYPE]: 'Live Prototype'
+  [SECTIONS.OVERVIEW]: 'Executive Summary',
+  [SECTIONS.CURRENT_ANALYSIS]: 'Current App Analysis',
+  [SECTIONS.STICKINESS_STRATEGY]: 'Stickiness Strategy',
+  [SECTIONS.CONVERSION_STRATEGY]: 'Conversion Strategy', 
+  [SECTIONS.INNOVATION_STRATEGY]: 'Innovation Strategy',
+  [SECTIONS.GROWTH_STRATEGY]: 'Growth Strategy',
+  [SECTIONS.IMPLEMENTATION_ROADMAP]: 'Implementation Roadmap',
+  [SECTIONS.PROTOTYPE_DEMO]: 'Strategic Prototypes'
 };
 
 export const SECTION_DESCRIPTIONS = {
-  [SECTIONS.OVERVIEW]: 'Product vision and strategic positioning',
-  [SECTIONS.FOUNDATION]: 'Journey-Stage Intelligence & Stickiness Strategy',
-  [SECTIONS.INNOVATION]: 'AI & Contextual Features',
-  [SECTIONS.IMPLEMENTATION]: 'Priority Matrix & Timeline',
-  [SECTIONS.BUSINESS_IMPACT]: 'KPIs & Success Framework',
-  [SECTIONS.LIVE_PROTOTYPE]: 'Interactive demo of journey-stage intelligence'
+  [SECTIONS.OVERVIEW]: 'My strategic assessment and key recommendations',
+  [SECTIONS.CURRENT_ANALYSIS]: 'Critical issues identified in the current Guest App',
+  [SECTIONS.STICKINESS_STRATEGY]: 'My approach to making the app integral to guest journey',
+  [SECTIONS.CONVERSION_STRATEGY]: 'My recommendations for onboarding, check-in, and transaction optimization',
+  [SECTIONS.INNOVATION_STRATEGY]: 'My innovation approach for competitive differentiation',
+  [SECTIONS.GROWTH_STRATEGY]: 'My plan for hotel adoption and guest engagement growth',
+  [SECTIONS.IMPLEMENTATION_ROADMAP]: 'My prioritized roadmap with realistic timelines and KPIs',
+  [SECTIONS.PROTOTYPE_DEMO]: 'Interactive demonstrations of my strategic recommendations'
 };
 
 export const DEMO_USERS = {
