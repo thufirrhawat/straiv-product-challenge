@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://nuri-akturk.github.io/straiv-product-challenge",
+  "homepage": "https://thufirrhawat.github.io/straiv-product-challenge",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
