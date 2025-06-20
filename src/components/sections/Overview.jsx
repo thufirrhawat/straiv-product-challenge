@@ -17,7 +17,8 @@ import {
   Shield,
   Lightbulb,
   ChevronRight,
-  AlertTriangle
+  AlertTriangle,
+  BookOpen
 } from 'lucide-react';
 
 const Overview = ({ onSectionChange, navigate }) => {
@@ -210,7 +211,7 @@ const Overview = ({ onSectionChange, navigate }) => {
               <div className="stats shadow border border-secondary/20">
                 <div className="stat place-items-center">
                   <div className="stat-title text-secondary">Market Opportunity</div>
-                  <div className="stat-value text-success">€100B+</div>
+                  <div className="stat-value text-success">€15B+</div>
                   <div className="stat-desc">Hospitality Tech Market</div>
                 </div>
               </div>
@@ -348,7 +349,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       </div>
 
       {/* Navigation to Detailed Analysis */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <button 
           className="card bg-gradient-to-r from-error to-warning text-base-content hover:scale-105 transition-transform cursor-pointer"
           onClick={() => navigate ? navigate('/current-analysis') : onSectionChange('current-analysis')}
@@ -385,6 +386,20 @@ const Overview = ({ onSectionChange, navigate }) => {
             <Smartphone className="w-12 h-12 mx-auto mb-4" />
             <h3 className="card-title justify-center">Interactive Prototypes</h3>
             <p className="text-sm opacity-80">See my recommendations in action</p>
+            <div className="card-actions justify-center">
+              <ArrowRight className="w-5 h-5" />
+            </div>
+          </div>
+        </button>
+
+        <button 
+          className="card bg-gradient-to-r from-info to-success text-base-content hover:scale-105 transition-transform cursor-pointer"
+          onClick={() => navigate ? navigate('/sources') : onSectionChange('sources')}
+        >
+          <div className="card-body text-center">
+            <BookOpen className="w-12 h-12 mx-auto mb-4" />
+            <h3 className="card-title justify-center">Research Sources</h3>
+            <p className="text-sm opacity-80">Industry data and studies supporting my analysis</p>
             <div className="card-actions justify-center">
               <ArrowRight className="w-5 h-5" />
             </div>

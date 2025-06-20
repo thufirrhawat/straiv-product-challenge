@@ -14,6 +14,7 @@ import InnovationStrategy from './sections/InnovationStrategy';
 import GrowthStrategy from './sections/GrowthStrategy';
 import ImplementationRoadmap from './sections/ImplementationRoadmap';
 import PrototypeDemo from './sections/PrototypeDemo';
+import Sources from './sections/Sources';
 
 const Layout = ({ onLogout }) => {
   const { section } = useParams();
@@ -95,6 +96,8 @@ const Layout = ({ onLogout }) => {
         return <ImplementationRoadmap {...sectionProps} />;
       case SECTIONS.PROTOTYPE_DEMO:
         return <PrototypeDemo {...sectionProps} />;
+      case SECTIONS.SOURCES:
+        return <Sources {...sectionProps} />;
       default:
         return <Overview {...sectionProps} />;
     }

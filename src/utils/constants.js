@@ -21,7 +21,8 @@ export const SECTIONS = {
   INNOVATION_STRATEGY: 'innovation-strategy',
   GROWTH_STRATEGY: 'growth-strategy',
   IMPLEMENTATION_ROADMAP: 'implementation-roadmap',
-  PROTOTYPE_DEMO: 'prototype-demo'
+  PROTOTYPE_DEMO: 'prototype-demo',
+  SOURCES: 'sources'
 };
 
 export const SECTION_LABELS = {
@@ -32,7 +33,8 @@ export const SECTION_LABELS = {
   [SECTIONS.INNOVATION_STRATEGY]: 'Innovation Strategy',
   [SECTIONS.GROWTH_STRATEGY]: 'Growth Strategy',
   [SECTIONS.IMPLEMENTATION_ROADMAP]: 'Implementation Roadmap',
-  [SECTIONS.PROTOTYPE_DEMO]: 'Strategic Prototypes'
+  [SECTIONS.PROTOTYPE_DEMO]: 'Strategic Prototypes',
+  [SECTIONS.SOURCES]: 'Research Sources'
 };
 
 export const SECTION_DESCRIPTIONS = {
@@ -43,7 +45,8 @@ export const SECTION_DESCRIPTIONS = {
   [SECTIONS.INNOVATION_STRATEGY]: 'My innovation approach for competitive differentiation',
   [SECTIONS.GROWTH_STRATEGY]: 'My plan for hotel adoption and guest engagement growth',
   [SECTIONS.IMPLEMENTATION_ROADMAP]: 'My prioritized roadmap with realistic timelines and KPIs',
-  [SECTIONS.PROTOTYPE_DEMO]: 'Interactive demonstrations of my strategic recommendations'
+  [SECTIONS.PROTOTYPE_DEMO]: 'Interactive demonstrations of my strategic recommendations',
+  [SECTIONS.SOURCES]: 'Comprehensive research data and industry sources supporting my analysis'
 };
 
 export const DEMO_USERS = {

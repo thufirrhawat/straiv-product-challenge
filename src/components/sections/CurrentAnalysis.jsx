@@ -226,7 +226,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
   const overallStats = {
     totalIssues: criticalIssues.reduce((sum, cat) => sum + cat.count, 0),
     criticalIssues: criticalIssues.filter(cat => cat.severity === 'critical').reduce((sum, cat) => sum + cat.count, 0),
-    estimatedRevenueLoss: "€47K+",
+    estimatedRevenueLoss: "€47K+ (projected)",
     fixTimeframe: "8-12 weeks"
   };
 
@@ -452,7 +452,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
               <div className="text-3xl font-bold text-error">€47K+</div>
-              <div className="text-sm">Annual Revenue Loss</div>
+              <div className="text-sm">Projected Annual Revenue Loss</div>
               <div className="text-xs text-base-content/60">Per 200-room hotel from poor conversion</div>
             </div>
             <div className="text-center">
