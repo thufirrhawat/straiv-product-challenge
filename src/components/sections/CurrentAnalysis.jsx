@@ -263,34 +263,34 @@ const CurrentAnalysis = ({ onSectionChange }) => {
       </div>
 
       {/* Overview Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         <div className="stat bg-error/10 border border-error/20 rounded-lg p-6 text-center">
           <div className="stat-figure text-error">
             <AlertTriangle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-error">{overallStats.totalIssues}</div>
-          <div className="stat-title">Total Issues Found</div>
+          <div className="stat-value text-error text-3xl">{overallStats.totalIssues}</div>
+          <div className="stat-title text-sm">Total Issues Found</div>
         </div>
         <div className="stat bg-warning/10 border border-warning/20 rounded-lg p-6 text-center">
           <div className="stat-figure text-warning">
             <Clock className="w-8 h-8" />
           </div>
-          <div className="stat-value text-warning">{overallStats.criticalIssues}</div>
-          <div className="stat-title">Critical Priority</div>
+          <div className="stat-value text-warning text-3xl">{overallStats.criticalIssues}</div>
+          <div className="stat-title text-sm">Critical Priority</div>
         </div>
         <div className="stat bg-info/10 border border-info/20 rounded-lg p-6 text-center">
           <div className="stat-figure text-info">
             <ShoppingCart className="w-8 h-8" />
           </div>
-          <div className="stat-value text-info">{overallStats.estimatedRevenueLoss}</div>
-          <div className="stat-title">Annual Revenue Loss</div>
+          <div className="stat-value text-info text-2xl leading-tight">€47K+</div>
+          <div className="stat-title text-sm">Annual Revenue Loss</div>
         </div>
         <div className="stat bg-success/10 border border-success/20 rounded-lg p-6 text-center">
           <div className="stat-figure text-success">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-success">{overallStats.fixTimeframe}</div>
-          <div className="stat-title">Fix Timeframe</div>
+          <div className="stat-value text-success text-3xl">{overallStats.fixTimeframe}</div>
+          <div className="stat-title text-sm">Fix Timeframe</div>
         </div>
       </div>
 

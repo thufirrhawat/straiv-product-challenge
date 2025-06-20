@@ -32,6 +32,7 @@ const Layout = ({ onLogout }) => {
     'growth-strategy': SECTIONS.GROWTH_STRATEGY,
     'implementation-roadmap': SECTIONS.IMPLEMENTATION_ROADMAP,
     'prototype-demo': SECTIONS.PROTOTYPE_DEMO,
+    'sources': SECTIONS.SOURCES,
   };
 
   const sectionToUrl = {
@@ -43,6 +44,7 @@ const Layout = ({ onLogout }) => {
     [SECTIONS.GROWTH_STRATEGY]: 'growth-strategy',
     [SECTIONS.IMPLEMENTATION_ROADMAP]: 'implementation-roadmap',
     [SECTIONS.PROTOTYPE_DEMO]: 'prototype-demo',
+    [SECTIONS.SOURCES]: 'sources',
   };
 
   const currentSection = urlToSection[section] || SECTIONS.OVERVIEW;

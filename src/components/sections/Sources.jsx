@@ -499,7 +499,7 @@ const Sources = () => {
       "Industry Analysis": "badge-success",
       "Global Survey": "badge-warning",
       "Impact Study": "badge-error",
-      "Strategy Guide": "badge-neutral"
+      "Localization Strategy": "badge-neutral"
     };
     return colors[type] || "badge-ghost";
   };
