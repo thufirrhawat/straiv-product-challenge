@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import PasscodeGate from './components/PasscodeGate'
 import Layout from './components/Layout'
 import { getAuthStatus } from './utils/storage'
@@ -47,11 +48,19 @@ function App() {
 
   return (
     <div data-theme="straiv">
-      {isAuthenticated ? (
-        <Layout onLogout={handleLogout} />
-      ) : (
-        <PasscodeGate onAuthenticated={handleAuthenticated} />
-      )}
+      <Router>
+        {isAuthenticated ? (
+          <Routes>
+            <Route path="/" element={<Navigate to="/overview" replace />} />
+            <Route path="/:section" element={<Layout onLogout={handleLogout} />} />
+            <Route path="*" element={<Navigate to="/overview" replace />} />
+          </Routes>
+        ) : (
+          <Routes>
+            <Route path="*" element={<PasscodeGate onAuthenticated={handleAuthenticated} />} />
+          </Routes>
+        )}
+      </Router>
       <Toaster />
     </div>
   )

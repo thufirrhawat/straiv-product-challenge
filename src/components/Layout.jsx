@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { LogOut, Menu, X, Home } from 'lucide-react';
 import { setAuthStatus, getDemoState, saveDemoState } from '../utils/storage';
 import { SECTIONS, SECTION_LABELS, SECTION_DESCRIPTIONS, APP_CONFIG } from '../utils/constants';
@@ -15,24 +16,55 @@ import ImplementationRoadmap from './sections/ImplementationRoadmap';
 import PrototypeDemo from './sections/PrototypeDemo';
 
 const Layout = ({ onLogout }) => {
-  const [currentSection, setCurrentSection] = useState(SECTIONS.OVERVIEW);
+  const { section } = useParams();
+  const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [demoState, setDemoState] = useState(getDemoState());
 
+  // Map URL slugs to section constants
+  const urlToSection = {
+    'overview': SECTIONS.OVERVIEW,
+    'current-analysis': SECTIONS.CURRENT_ANALYSIS,
+    'stickiness-strategy': SECTIONS.STICKINESS_STRATEGY,
+    'conversion-strategy': SECTIONS.CONVERSION_STRATEGY,
+    'innovation-strategy': SECTIONS.INNOVATION_STRATEGY,
+    'growth-strategy': SECTIONS.GROWTH_STRATEGY,
+    'implementation-roadmap': SECTIONS.IMPLEMENTATION_ROADMAP,
+    'prototype-demo': SECTIONS.PROTOTYPE_DEMO,
+  };
+
+  const sectionToUrl = {
+    [SECTIONS.OVERVIEW]: 'overview',
+    [SECTIONS.CURRENT_ANALYSIS]: 'current-analysis',
+    [SECTIONS.STICKINESS_STRATEGY]: 'stickiness-strategy',
+    [SECTIONS.CONVERSION_STRATEGY]: 'conversion-strategy',
+    [SECTIONS.INNOVATION_STRATEGY]: 'innovation-strategy',
+    [SECTIONS.GROWTH_STRATEGY]: 'growth-strategy',
+    [SECTIONS.IMPLEMENTATION_ROADMAP]: 'implementation-roadmap',
+    [SECTIONS.PROTOTYPE_DEMO]: 'prototype-demo',
+  };
+
+  const currentSection = urlToSection[section] || SECTIONS.OVERVIEW;
+
   useEffect(() => {
     const state = getDemoState();
-    setCurrentSection(state.currentSection || SECTIONS.OVERVIEW);
     setDemoState(state);
-  }, []);
+    
+    // If URL section is invalid, redirect to overview
+    if (!urlToSection[section]) {
+      navigate('/overview', { replace: true });
+    }
+  }, [section, navigate]);
 
-  const handleSectionChange = (section) => {
-    setCurrentSection(section);
+  const handleSectionChange = (sectionValue) => {
+    const urlSlug = sectionToUrl[sectionValue];
+    navigate(`/${urlSlug}`);
     setIsMobileMenuOpen(false);
     
     // Update demo state
     const updatedState = {
       ...demoState,
-      currentSection: section
+      currentSection: sectionValue
     };
     setDemoState(updatedState);
     saveDemoState(updatedState);
@@ -44,7 +76,7 @@ const Layout = ({ onLogout }) => {
   };
 
   const renderCurrentSection = () => {
-    const sectionProps = { demoState, setDemoState, onSectionChange: handleSectionChange };
+    const sectionProps = { demoState, setDemoState, onSectionChange: handleSectionChange, navigate };
     
     switch (currentSection) {
       case SECTIONS.OVERVIEW:

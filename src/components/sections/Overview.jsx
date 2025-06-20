@@ -20,7 +20,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 
-const Overview = ({ onSectionChange }) => {
+const Overview = ({ onSectionChange, navigate }) => {
   const [animatedStats, setAnimatedStats] = useState({
     criticalIssues: 0,
     conversionGap: 0,
@@ -351,7 +351,7 @@ const Overview = ({ onSectionChange }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <button 
           className="card bg-gradient-to-r from-error to-warning text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('current-analysis')}
+          onClick={() => navigate ? navigate('/current-analysis') : onSectionChange('current-analysis')}
         >
           <div className="card-body text-center">
             <AlertTriangle className="w-12 h-12 mx-auto mb-4" />
@@ -365,7 +365,7 @@ const Overview = ({ onSectionChange }) => {
 
         <button 
           className="card bg-gradient-to-r from-primary to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('stickiness-strategy')}
+          onClick={() => navigate ? navigate('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
         >
           <div className="card-body text-center">
             <Zap className="w-12 h-12 mx-auto mb-4" />
@@ -379,7 +379,7 @@ const Overview = ({ onSectionChange }) => {
 
         <button 
           className="card bg-gradient-to-r from-accent to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('prototype-demo')}
+          onClick={() => navigate ? navigate('/prototype-demo') : onSectionChange('prototype-demo')}
         >
           <div className="card-body text-center">
             <Smartphone className="w-12 h-12 mx-auto mb-4" />
