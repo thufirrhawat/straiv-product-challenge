@@ -126,7 +126,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       subtitle: "Address broken functionality and UX problems",
       description: "My analysis identified 18 critical issues including broken search, poor weather widget UX, redundant navigation, and non-functional AI chatbot. These must be fixed first to establish credibility.",
       icon: <AlertTriangle className="w-8 h-8" />,
-      color: "error",
+      color: "neutral",
       actions: ["Fix search functionality", "Improve weather widget UX", "Remove redundant pages", "Repair AI chatbot", "Optimize loading times"]
     },
     {
@@ -135,7 +135,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       subtitle: "Make app integral to guest journey",
       description: "My core recommendation: Journey-Stage Intelligence that adapts experiences based on pre-arrival, in-stay, and post-checkout phases. Create context-aware interactions that anticipate guest needs.",
       icon: <Zap className="w-8 h-8" />,
-      color: "primary",
+      color: "info",
       actions: ["Journey-stage detection", "Contextual content", "Personalized recommendations", "Proactive service delivery", "Habit-forming features"]
     },
     {
@@ -144,7 +144,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       subtitle: "Optimize critical touchpoints for revenue impact",
       description: "My strategy focuses on onboarding streamlining, check-in/checkout optimization, and intelligent upselling. Target 28% → 60% onboarding conversion and 13% → 25% purchase conversion.",
       icon: <TrendingUp className="w-8 h-8" />,
-      color: "secondary",
+      color: "info",
       actions: ["Streamlined onboarding", "Express check-in prominence", "Dynamic upselling", "Contextual offers", "Frictionless payments"]
     },
     {
@@ -153,7 +153,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       subtitle: "Competitive differentiation and market expansion",
       description: "My innovation approach: AI-powered guest intelligence, predictive service delivery, voice interfaces, and IoT integration. Focus on features that create viral moments and drive adoption.",
       icon: <Brain className="w-8 h-8" />,
-      color: "accent",
+      color: "info",
       actions: ["AI guest intelligence", "Predictive services", "Voice interface", "IoT integration", "Viral features"]
     }
   ];
@@ -261,25 +261,25 @@ const Overview = ({ onSectionChange, navigate }) => {
         <h2 className="text-3xl font-bold text-center mb-8">My Strategic Recommendations</h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {myRecommendations.map((rec, index) => (
-            <div key={index} className={`card bg-base-100 border border-${rec.color}/20 hover:shadow-xl transition-all hover:border-${rec.color}/40`}>
+            <div key={index} className="card bg-base-100 border border-base-300 hover:shadow-xl transition-all hover:border-base-400">
               <div className="card-body">
                 <div className="flex items-start gap-4">
-                  <div className={`flex-shrink-0 w-16 h-16 rounded-xl bg-${rec.color}/10 flex items-center justify-center`}>
-                    <div className={`text-${rec.color}`}>
+                  <div className="flex-shrink-0 w-16 h-16 rounded-xl bg-base-200 flex items-center justify-center border border-base-300">
+                    <div className="text-base-content">
                       {rec.icon}
                     </div>
                   </div>
                   <div className="flex-1">
-                    <div className={`badge badge-${rec.color} badge-sm mb-2`}>{rec.priority}</div>
-                    <h3 className="card-title text-xl mb-2">{rec.title}</h3>
-                    <p className="text-base-content/80 text-sm mb-3">{rec.subtitle}</p>
+                    <div className="badge badge-outline badge-sm mb-2 text-base-content border-base-content/30">{rec.priority}</div>
+                    <h3 className="card-title text-xl mb-2 text-base-content">{rec.title}</h3>
+                    <p className="text-base-content/80 text-sm mb-3 font-medium">{rec.subtitle}</p>
                     <p className="text-base-content/70 text-sm mb-4">{rec.description}</p>
                     
                     <div className="space-y-2">
-                      <h4 className="font-semibold text-sm">Key Actions:</h4>
+                      <h4 className="font-semibold text-sm text-base-content">Key Actions:</h4>
                       <div className="flex flex-wrap gap-1">
                         {rec.actions.map((action, aIndex) => (
-                          <span key={aIndex} className={`badge badge-${rec.color} badge-outline badge-sm`}>
+                          <span key={aIndex} className="badge badge-outline badge-sm text-base-content/80 border-base-content/20">
                             {action}
                           </span>
                         ))}

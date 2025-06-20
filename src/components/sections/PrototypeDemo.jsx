@@ -1375,6 +1375,26 @@ const PrototypeDemo = ({ onSectionChange }) => {
               {demoCategories.find(cat => cat.id === activeDemo)?.description}
             </p>
           </div>
+
+          {/* Demo Journey Steps - Moved up here for better visibility */}
+          {getActiveSteps().length > 0 && (
+            <div className="mb-6">
+              <h4 className="font-bold mb-3 text-center">Journey Steps</h4>
+              <div className="flex flex-wrap justify-center gap-2">
+                {getActiveSteps().map((step, index) => (
+                  <button
+                    key={index}
+                    className={`btn btn-sm ${currentStep === index ? 'btn-primary' : 'btn-outline'} flex-shrink-0`}
+                    onClick={() => setCurrentStep(index)}
+                  >
+                    <span className="text-xs mr-1">{index + 1}</span>
+                    <span className="hidden sm:inline">{step.screen}</span>
+                    <span className="sm:hidden">{step.screen.split(' ')[0]}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -1391,54 +1411,46 @@ const PrototypeDemo = ({ onSectionChange }) => {
                 </div>
               </div>
 
-              {/* Phone Mockup - Larger Fixed Size */}
-              <div className="mx-auto" style={{width: '400px', height: '800px'}}>
-                <div className="relative bg-gray-800 rounded-3xl p-3 shadow-2xl w-full h-full">
+              {/* Phone Mockup - Responsive Size */}
+              <div className="mx-auto w-full max-w-sm" style={{aspectRatio: '9/16', maxHeight: '70vh'}}>
+                <div className="relative bg-gray-800 rounded-3xl p-2 sm:p-3 shadow-2xl w-full h-full">
                   <div className="bg-white rounded-2xl overflow-hidden text-gray-900 w-full h-full flex flex-col">
-                    {/* Phone Header - Fixed Height */}
-                    <div className="bg-primary text-white text-center flex-shrink-0" style={{height: '80px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                      <div className="text-base font-semibold">Straiv Guest App</div>
-                      <div className="text-sm opacity-80">Hotel Stuttgart ★★★★</div>
+                    {/* Phone Header - Responsive Height */}
+                    <div className="bg-primary text-white text-center flex-shrink-0 py-3 sm:py-4 flex flex-col justify-center">
+                      <div className="text-sm sm:text-base font-semibold">Straiv Guest App</div>
+                      <div className="text-xs sm:text-sm opacity-80">Hotel Stuttgart ★★★★</div>
                     </div>
 
-                    {/* Content Area - Fixed Height */}
-                    <div className="flex-1 flex flex-col" style={{height: 'calc(100% - 80px)'}}>
+                    {/* Content Area - Responsive */}
+                    <div className="flex-1 flex flex-col">
                       {/* Current Step Content */}
                       {getCurrentStep() && (
-                        <div key={`${activeDemo}-${currentStep}`} className="flex-1 flex flex-col p-4 bg-white" style={{height: '100%'}}>
-                          {/* Header - Fixed Height */}
-                          <div className="text-center animate-fade-in flex-shrink-0" style={{height: '60px', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                            <div className="badge badge-primary mb-2 text-white text-sm">{getCurrentStep().stage}</div>
-                            <h4 className="text-base font-bold text-gray-900">{getCurrentStep().screen}</h4>
+                        <div key={`${activeDemo}-${currentStep}`} className="flex-1 flex flex-col p-2 sm:p-4 bg-white">
+                          {/* Header - Responsive */}
+                          <div className="text-center animate-fade-in flex-shrink-0 py-2 sm:py-3">
+                            <div className="badge badge-primary mb-1 sm:mb-2 text-white text-xs sm:text-sm">{getCurrentStep().stage}</div>
+                            <h4 className="text-sm sm:text-base font-bold text-gray-900">{getCurrentStep().screen}</h4>
                           </div>
 
-                          {/* Scrollable Content - Fixed Height with Hidden Scrollbar */}
-                          <div 
-                            className="animate-fade-in scrollbar-hide" 
-                            style={{
-                              height: 'calc(100% - 180px)', 
-                              overflowY: 'auto',
-                              scrollbarWidth: 'none',
-                              msOverflowStyle: 'none'
-                            }}
-                          >
+                          {/* Scrollable Content - Responsive */}
+                          <div className="animate-fade-in flex-1 overflow-y-auto scrollbar-hide min-h-0">
                             {renderMockup(getCurrentStep().mockup)}
                           </div>
 
-                          {/* Footer - Fixed Height */}
-                          <div className="flex-shrink-0" style={{height: '120px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
+                          {/* Footer - Responsive */}
+                          <div className="flex-shrink-0 space-y-2 sm:space-y-3 pt-2 sm:pt-3">
                             {/* Interaction Prompt */}
-                            <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                            <div className="p-2 sm:p-3 bg-blue-50 rounded-lg border border-blue-200">
                               <div className="flex items-center gap-2 mb-1">
-                                <Eye className="w-4 h-4 text-blue-600" />
-                                <span className="text-sm font-semibold text-blue-900">Try This:</span>
+                                <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
+                                <span className="text-xs sm:text-sm font-semibold text-blue-900">Try This:</span>
                               </div>
-                              <p className="text-sm text-blue-800">{getCurrentStep().interaction}</p>
+                              <p className="text-xs sm:text-sm text-blue-800">{getCurrentStep().interaction}</p>
                             </div>
 
                             {/* Impact Metric */}
                             <div className="text-center">
-                              <div className="badge badge-success text-white font-semibold text-sm">{getCurrentStep().impact}</div>
+                              <div className="badge badge-success text-white font-semibold text-xs sm:text-sm">{getCurrentStep().impact}</div>
                             </div>
                           </div>
                         </div>
@@ -1446,28 +1458,28 @@ const PrototypeDemo = ({ onSectionChange }) => {
                       
                       {/* Default state when no step is selected */}
                       {!getCurrentStep() && (
-                        <div className="flex-1 flex flex-col p-4 bg-white" style={{height: '100%'}}>
-                          {/* Main Content - Fixed Height */}
-                          <div className="flex items-center justify-center" style={{height: 'calc(100% - 120px)'}}>
+                        <div className="flex-1 flex flex-col p-2 sm:p-4 bg-white">
+                          {/* Main Content - Responsive */}
+                          <div className="flex-1 flex items-center justify-center">
                             <div className="text-center">
-                              <Smartphone className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                              <h4 className="text-xl font-bold text-gray-900 mb-3">Select a Demo</h4>
-                              <p className="text-base text-gray-600">Choose a strategy category above to see the mobile app flow</p>
+                              <Smartphone className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
+                              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Select a Demo</h4>
+                              <p className="text-sm sm:text-base text-gray-600">Choose a strategy category above to see the mobile app flow</p>
                             </div>
                           </div>
                           
-                          {/* Footer - Fixed Height */}
-                          <div className="flex-shrink-0" style={{height: '120px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between'}}>
-                            <div className="p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-50">
+                          {/* Footer - Responsive */}
+                          <div className="flex-shrink-0 space-y-2 sm:space-y-3 pt-2 sm:pt-3">
+                            <div className="p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-50">
                               <div className="flex items-center gap-2 mb-1">
-                                <Eye className="w-4 h-4 text-gray-400" />
-                                <span className="text-sm font-semibold text-gray-500">Interaction:</span>
+                                <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
+                                <span className="text-xs sm:text-sm font-semibold text-gray-500">Interaction:</span>
                               </div>
-                              <p className="text-sm text-gray-500">Select a category to see interactive demo</p>
+                              <p className="text-xs sm:text-sm text-gray-500">Select a category to see interactive demo</p>
                             </div>
 
                             <div className="text-center">
-                              <div className="badge badge-ghost text-gray-500 font-semibold text-sm">Ready to explore</div>
+                              <div className="badge badge-ghost text-gray-500 font-semibold text-xs sm:text-sm">Ready to explore</div>
                             </div>
                           </div>
                         </div>
@@ -1571,24 +1583,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
             </div>
           )}
 
-          {/* All Steps Overview */}
-          <div className="card bg-base-100 border border-base-300">
-            <div className="card-body">
-              <h4 className="font-bold mb-4">Demo Journey</h4>
-              <div className="space-y-2">
-                {getActiveSteps().map((step, index) => (
-                  <button
-                    key={index}
-                    className={`btn btn-sm w-full justify-start ${currentStep === index ? 'btn-primary' : 'btn-ghost'}`}
-                    onClick={() => setCurrentStep(index)}
-                  >
-                    <span className="text-xs mr-2">{index + 1}</span>
-                    <span className="text-left flex-1">{step.screen}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
+
 
           {/* Key Insights */}
           <div className="card bg-success/5 border border-success/20">

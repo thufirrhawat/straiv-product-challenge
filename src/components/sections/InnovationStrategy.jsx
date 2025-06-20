@@ -304,9 +304,9 @@ const InnovationStrategy = ({ onSectionChange }) => {
               {getActiveInnovation().features.map((feature, index) => (
                 <div key={index} className={`card bg-base-100 border border-${getActiveInnovation().color}/20`}>
                   <div className="card-body p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h5 className="font-bold text-lg">{feature.title}</h5>
-                      <div className={`badge badge-${getActiveInnovation().color} badge-sm`}>{feature.impact}</div>
+                    <div className="flex items-start justify-between mb-3 gap-3">
+                      <h5 className="font-bold text-lg flex-1">{feature.title}</h5>
+                      <div className={`badge badge-${getActiveInnovation().color} badge-sm flex-shrink-0`}>{feature.impact}</div>
                     </div>
                     <p className="text-sm text-base-content/80 mb-4">{feature.description}</p>
                     <div className="p-3 bg-accent/10 rounded-lg">

@@ -264,32 +264,32 @@ const CurrentAnalysis = ({ onSectionChange }) => {
 
       {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        <div className="stat bg-error/10 border border-error/20 rounded-lg p-6 text-center">
-          <div className="stat-figure text-error">
+        <div className="stat bg-neutral/10 border border-neutral/20 rounded-lg p-6 text-center">
+          <div className="stat-figure text-neutral">
             <AlertTriangle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-error text-3xl">{overallStats.totalIssues}</div>
+          <div className="stat-value text-neutral text-3xl">{overallStats.totalIssues}</div>
           <div className="stat-title text-sm">Total Issues Found</div>
         </div>
-        <div className="stat bg-warning/10 border border-warning/20 rounded-lg p-6 text-center">
-          <div className="stat-figure text-warning">
+        <div className="stat bg-primary/10 border border-primary/20 rounded-lg p-6 text-center">
+          <div className="stat-figure text-primary">
             <Clock className="w-8 h-8" />
           </div>
-          <div className="stat-value text-warning text-3xl">{overallStats.criticalIssues}</div>
+          <div className="stat-value text-primary text-3xl">{overallStats.criticalIssues}</div>
           <div className="stat-title text-sm">Critical Priority</div>
-        </div>
-        <div className="stat bg-info/10 border border-info/20 rounded-lg p-6 text-center">
-          <div className="stat-figure text-info">
-            <ShoppingCart className="w-8 h-8" />
-          </div>
-          <div className="stat-value text-info text-2xl leading-tight">€47K+</div>
-          <div className="stat-title text-sm">Annual Revenue Loss</div>
         </div>
         <div className="stat bg-success/10 border border-success/20 rounded-lg p-6 text-center">
           <div className="stat-figure text-success">
+            <ShoppingCart className="w-8 h-8" />
+          </div>
+          <div className="stat-value text-success text-2xl leading-tight">€47K+</div>
+          <div className="stat-title text-sm">Annual Revenue Loss</div>
+        </div>
+        <div className="stat bg-secondary/10 border border-secondary/20 rounded-lg p-6 text-center">
+          <div className="stat-figure text-secondary">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-success text-3xl">{overallStats.fixTimeframe}</div>
+          <div className="stat-value text-secondary text-3xl">{overallStats.fixTimeframe}</div>
           <div className="stat-title text-sm">Fix Timeframe</div>
         </div>
       </div>

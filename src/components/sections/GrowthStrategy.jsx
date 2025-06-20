@@ -273,9 +273,9 @@ const GrowthStrategy = ({ onSectionChange }) => {
               {getActiveGrowthArea().strategies.map((strategy, index) => (
                 <div key={index} className={`card bg-base-100 border border-${getActiveGrowthArea().color}/20`}>
                   <div className="card-body p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h5 className="font-bold text-lg">{strategy.title}</h5>
-                      <div className={`badge badge-${getActiveGrowthArea().color} badge-sm`}>{strategy.impact}</div>
+                    <div className="flex items-start justify-between mb-3 gap-3">
+                      <h5 className="font-bold text-lg flex-1">{strategy.title}</h5>
+                      <div className={`badge badge-${getActiveGrowthArea().color} badge-sm flex-shrink-0`}>{strategy.impact}</div>
                     </div>
                     <p className="text-sm text-base-content/80 mb-4">{strategy.description}</p>
                     <div className="space-y-2">
