@@ -384,7 +384,7 @@ const Overview = ({ onSectionChange, navigate }) => {
         >
           <div className="card-body text-center">
             <Smartphone className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="card-title justify-center">Interactive Prototypes</h3>
+            <h3 className="card-title justify-center">Interactive Mockups</h3>
             <p className="text-sm opacity-80">See my recommendations in action</p>
             <div className="card-actions justify-center">
               <ArrowRight className="w-5 h-5" />

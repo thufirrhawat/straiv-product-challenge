@@ -326,27 +326,29 @@ const InnovationStrategy = ({ onSectionChange }) => {
         <div className="card-body">
           <h2 className="text-2xl font-bold mb-6 text-center">My Competitive Differentiation Analysis</h2>
           
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>Competitor</th>
-                  <th>Their Approach</th>
-                  <th>My Strategic Advantage</th>
-                  <th>Market Gap</th>
-                </tr>
-              </thead>
-              <tbody>
-                {competitiveDifferentiation.map((comp, index) => (
-                  <tr key={index}>
-                    <td className="font-bold">{comp.competitor}</td>
-                    <td className="text-sm text-base-content/70">{comp.theirApproach}</td>
-                    <td className="text-sm text-success font-medium">{comp.myAdvantage}</td>
-                    <td className="text-sm text-accent">{comp.marketGap}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Mobile-friendly card layout */}
+          <div className="space-y-4">
+            {competitiveDifferentiation.map((comp, index) => (
+              <div key={index} className="card bg-base-200 border border-base-300">
+                <div className="card-body p-4">
+                  <h3 className="font-bold text-lg mb-3">{comp.competitor}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                      <div className="text-xs font-semibold text-base-content/60 mb-1">THEIR APPROACH</div>
+                      <div className="text-sm text-base-content/70">{comp.theirApproach}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-base-content/60 mb-1">MY ADVANTAGE</div>
+                      <div className="text-sm text-success font-medium">{comp.myAdvantage}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-base-content/60 mb-1">MARKET GAP</div>
+                      <div className="text-sm text-accent">{comp.marketGap}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

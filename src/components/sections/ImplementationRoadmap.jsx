@@ -492,37 +492,39 @@ const ImplementationRoadmap = ({ onSectionChange }) => {
         <div className="card-body">
           <h2 className="text-2xl font-bold mb-6 text-center">My Risk Mitigation Strategy</h2>
           
-          <div className="overflow-x-auto">
-            <table className="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>Risk Factor</th>
-                  <th>Probability</th>
-                  <th>Impact</th>
-                  <th>My Mitigation Strategy</th>
-                  <th>Contingency Plan</th>
-                </tr>
-              </thead>
-              <tbody>
-                {riskMitigation.map((risk, index) => (
-                  <tr key={index}>
-                    <td className="font-semibold">{risk.risk}</td>
-                    <td>
-                      <div className={`badge ${risk.probability === 'High' ? 'badge-error' : risk.probability === 'Medium' ? 'badge-warning' : 'badge-success'}`}>
+          {/* Mobile-friendly card layout */}
+          <div className="space-y-4">
+            {riskMitigation.map((risk, index) => (
+              <div key={index} className="card bg-base-100 border border-base-300">
+                <div className="card-body p-4">
+                  <h3 className="font-bold text-lg mb-3">{risk.risk}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-base-content/60">PROBABILITY:</span>
+                      <div className={`badge badge-sm ${risk.probability === 'High' ? 'badge-error' : risk.probability === 'Medium' ? 'badge-warning' : 'badge-success'}`}>
                         {risk.probability}
                       </div>
-                    </td>
-                    <td>
-                      <div className={`badge ${risk.impact === 'High' ? 'badge-error' : risk.impact === 'Medium' ? 'badge-warning' : 'badge-success'}`}>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-semibold text-base-content/60">IMPACT:</span>
+                      <div className={`badge badge-sm ${risk.impact === 'High' ? 'badge-error' : risk.impact === 'Medium' ? 'badge-warning' : 'badge-success'}`}>
                         {risk.impact}
                       </div>
-                    </td>
-                    <td className="text-sm">{risk.mitigation}</td>
-                    <td className="text-sm text-warning">{risk.contingency}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    </div>
+                  </div>
+                  <div className="mt-4 space-y-3">
+                    <div>
+                      <div className="text-xs font-semibold text-base-content/60 mb-1">MITIGATION STRATEGY</div>
+                      <div className="text-sm text-base-content/80">{risk.mitigation}</div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-base-content/60 mb-1">CONTINGENCY PLAN</div>
+                      <div className="text-sm text-warning">{risk.contingency}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -1333,7 +1333,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
           Experience My Strategy in Action
         </h1>
         <h2 className="text-2xl font-semibold text-accent mb-6">
-          Interactive Prototypes Demonstrating Key Features
+          Interactive Mockups Demonstrating Key Features
         </h2>
         <p className="text-lg text-base-content/80 max-w-4xl mx-auto">
           Step through interactive demonstrations of journey-stage intelligence, conversion optimization, 
@@ -1376,11 +1376,28 @@ const PrototypeDemo = ({ onSectionChange }) => {
             </p>
           </div>
 
-          {/* Demo Journey Steps - Moved up here for better visibility */}
+          {/* Demo Journey Steps - Mobile-friendly navigation */}
           {getActiveSteps().length > 0 && (
             <div className="mb-6">
               <h4 className="font-bold mb-3 text-center">Journey Steps</h4>
-              <div className="flex flex-wrap justify-center gap-2">
+              
+              {/* Mobile: Dropdown navigation */}
+              <div className="block sm:hidden mb-4">
+                <select 
+                  className="select select-bordered w-full"
+                  value={currentStep}
+                  onChange={(e) => setCurrentStep(parseInt(e.target.value))}
+                >
+                  {getActiveSteps().map((step, index) => (
+                    <option key={index} value={index}>
+                      {index + 1}. {step.screen}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              {/* Desktop: Button navigation */}
+              <div className="hidden sm:flex flex-wrap justify-center gap-2">
                 {getActiveSteps().map((step, index) => (
                   <button
                     key={index}
@@ -1388,8 +1405,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
                     onClick={() => setCurrentStep(index)}
                   >
                     <span className="text-xs mr-1">{index + 1}</span>
-                    <span className="hidden sm:inline">{step.screen}</span>
-                    <span className="sm:hidden">{step.screen.split(' ')[0]}</span>
+                    <span>{step.screen}</span>
                   </button>
                 ))}
               </div>
@@ -1636,16 +1652,16 @@ const PrototypeDemo = ({ onSectionChange }) => {
             </div>
           </div>
           
-          <div className="flex justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button 
-              className="btn btn-primary btn-lg"
+              className="btn btn-primary btn-lg w-full sm:w-auto"
               onClick={() => onSectionChange('overview')}
             >
               <ArrowRight className="w-5 h-5 mr-2" />
               Review Full Strategy
             </button>
             <button 
-              className="btn btn-outline btn-lg"
+              className="btn btn-outline btn-lg w-full sm:w-auto"
               onClick={() => onSectionChange('implementation-roadmap')}
             >
               <Calendar className="w-5 h-5 mr-2" />

@@ -291,11 +291,11 @@ const ConversionStrategy = ({ onSectionChange }) => {
           <h2 className="text-2xl font-bold mb-6 text-center">My Optimization Framework</h2>
           
           {/* Area Selection */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
             {conversionAreas.map((area) => (
               <button 
                 key={area.id}
-                className={`btn btn-sm sm:btn-md ${activeConversionArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
+                className={`btn btn-sm sm:btn-md ${activeConversionArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0 w-full sm:w-auto`}
                 onClick={() => setActiveConversionArea(area.id)}
               >
                 {area.icon}

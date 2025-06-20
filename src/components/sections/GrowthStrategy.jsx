@@ -235,11 +235,11 @@ const GrowthStrategy = ({ onSectionChange }) => {
           <h2 className="text-2xl font-bold mb-6 text-center">My Growth Framework</h2>
           
           {/* Growth Area Selection */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
             {growthAreas.map((area) => (
               <button 
                 key={area.id}
-                className={`btn btn-sm sm:btn-md ${activeGrowthArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
+                className={`btn btn-sm sm:btn-md ${activeGrowthArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0 w-full sm:w-auto`}
                 onClick={() => setActiveGrowthArea(area.id)}
               >
                 {area.icon}

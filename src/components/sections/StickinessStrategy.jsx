@@ -191,11 +191,11 @@ const StickinessStrategy = ({ onSectionChange }) => {
           <h2 className="text-2xl font-bold mb-6 text-center">My Three-Stage Journey Intelligence</h2>
           
           {/* Stage Navigation */}
-          <div className="flex flex-wrap justify-center gap-2 mb-8">
+          <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
             {journeyStages.map((stage) => (
               <button 
                 key={stage.id}
-                className={`btn btn-sm sm:btn-md ${activeTimeline === stage.id ? `btn-${stage.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
+                className={`btn btn-sm sm:btn-md ${activeTimeline === stage.id ? `btn-${stage.color}` : 'btn-outline'} gap-2 flex-shrink-0 w-full sm:w-auto`}
                 onClick={() => setActiveTimeline(stage.id)}
               >
                 {stage.icon}
