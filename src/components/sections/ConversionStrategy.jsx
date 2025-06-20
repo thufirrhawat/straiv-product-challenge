@@ -291,19 +291,18 @@ const ConversionStrategy = ({ onSectionChange }) => {
           <h2 className="text-2xl font-bold mb-6 text-center">My Optimization Framework</h2>
           
           {/* Area Selection */}
-          <div className="flex justify-center mb-8">
-            <div className="join">
-              {conversionAreas.map((area) => (
-                <button 
-                  key={area.id}
-                  className={`join-item btn ${activeConversionArea === area.id ? `btn-${area.color}` : 'btn-outline'}`}
-                  onClick={() => setActiveConversionArea(area.id)}
-                >
-                  {area.icon}
-                  {area.title}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {conversionAreas.map((area) => (
+              <button 
+                key={area.id}
+                className={`btn btn-sm sm:btn-md ${activeConversionArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
+                onClick={() => setActiveConversionArea(area.id)}
+              >
+                {area.icon}
+                <span className="hidden sm:inline">{area.title}</span>
+                <span className="sm:hidden">{area.title.split(' ')[0]}</span>
+              </button>
+            ))}
           </div>
 
           {/* Active Area Content */}

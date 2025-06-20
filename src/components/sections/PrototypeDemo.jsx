@@ -1150,7 +1150,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
             {/* Story Header */}
             <div className="text-center">
               <h3 className="text-lg font-bold text-gray-900">{mockup.title}</h3>
-              <div className="grid grid-cols-4 gap-2 mt-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
                 {mockup.photos.map((photo, index) => (
                   <div key={index} className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center text-2xl">
                     {photo.src}

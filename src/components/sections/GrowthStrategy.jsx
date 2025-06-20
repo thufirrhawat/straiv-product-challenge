@@ -235,19 +235,18 @@ const GrowthStrategy = ({ onSectionChange }) => {
           <h2 className="text-2xl font-bold mb-6 text-center">My Growth Framework</h2>
           
           {/* Growth Area Selection */}
-          <div className="flex justify-center mb-8">
-            <div className="join">
-              {growthAreas.map((area) => (
-                <button 
-                  key={area.id}
-                  className={`join-item btn ${activeGrowthArea === area.id ? `btn-${area.color}` : 'btn-outline'}`}
-                  onClick={() => setActiveGrowthArea(area.id)}
-                >
-                  {area.icon}
-                  {area.title}
-                </button>
-              ))}
-            </div>
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {growthAreas.map((area) => (
+              <button 
+                key={area.id}
+                className={`btn btn-sm sm:btn-md ${activeGrowthArea === area.id ? `btn-${area.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
+                onClick={() => setActiveGrowthArea(area.id)}
+              >
+                {area.icon}
+                <span className="hidden sm:inline">{area.title}</span>
+                <span className="sm:hidden">{area.title.split(' ')[0]}</span>
+              </button>
+            ))}
           </div>
 
           {/* Active Growth Area Content */}
