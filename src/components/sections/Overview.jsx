@@ -33,6 +33,7 @@ const Overview = ({ onSectionChange, navigate }) => {
   const [showImpactBeacon, setShowImpactBeacon] = useState(true);
   const [activeTooltip, setActiveTooltip] = useState(null);
   const [activeKpiTooltip, setActiveKpiTooltip] = useState(null);
+  const [expandedCard, setExpandedCard] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -63,12 +64,18 @@ const Overview = ({ onSectionChange, navigate }) => {
     }
   };
 
+  // Handle card click for mobile
+  const handleCardClick = (index) => {
+    setExpandedCard(expandedCard === index ? null : index);
+  };
+
   // Close tooltips when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.card')) {
         setActiveTooltip(null);
         setActiveKpiTooltip(null);
+        setExpandedCard(null);
       }
     };
 
@@ -232,9 +239,17 @@ const Overview = ({ onSectionChange, navigate }) => {
         <h2 className="text-3xl font-bold text-center mb-8">My Key Findings & Assessment</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           {keyFindings.map((finding, index) => (
-            <div key={index} className={`card bg-base-100 border border-base-300 hover:shadow-lg transition-shadow cursor-pointer group`}>
+            <div 
+              key={index} 
+              className={`card bg-base-100 border border-base-300 hover:shadow-lg transition-all cursor-pointer group ${
+                expandedCard === index ? 'shadow-lg border-primary/30' : ''
+              }`}
+              onClick={() => handleCardClick(index)}
+            >
               <div className="card-body p-6 text-center">
-                <div className={`w-16 h-16 rounded-full ${finding.bgColor} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                <div className={`w-16 h-16 rounded-full ${finding.bgColor} flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform ${
+                  expandedCard === index ? 'scale-110' : ''
+                }`}>
                   <div className={finding.color}>
                     {finding.icon}
                   </div>
@@ -246,9 +261,20 @@ const Overview = ({ onSectionChange, navigate }) => {
                 </div>
                 <p className="text-sm text-base-content/70">{finding.description}</p>
                 
-                {/* Tooltip details */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity mt-4 p-3 bg-base-200 rounded-lg text-xs">
+                {/* Details - Show on hover (desktop) or click (mobile) */}
+                <div className={`mt-4 p-3 bg-base-200 rounded-lg text-xs transition-all ${
+                  expandedCard === index 
+                    ? 'opacity-100 max-h-32' 
+                    : 'opacity-0 group-hover:opacity-100 max-h-0 group-hover:max-h-32 overflow-hidden'
+                }`}>
                   {finding.details}
+                </div>
+                
+                {/* Mobile tap indicator */}
+                <div className={`mt-2 text-xs text-base-content/50 transition-opacity ${
+                  expandedCard === index ? 'opacity-0' : 'opacity-100 md:opacity-0'
+                }`}>
+                  Tap for details
                 </div>
               </div>
             </div>
