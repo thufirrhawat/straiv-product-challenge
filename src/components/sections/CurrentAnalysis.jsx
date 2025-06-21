@@ -294,23 +294,23 @@ const CurrentAnalysis = ({ onSectionChange }) => {
       </div>
 
       {/* Issue Categories */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="space-y-6">
         {criticalIssues.map((category, categoryIndex) => (
           <div key={categoryIndex} className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-base-100 to-base-200 border-2 border-${getSeverityColor(category.severity)}/20 hover:border-${getSeverityColor(category.severity)}/40 transition-all duration-300 hover:shadow-xl hover:shadow-${getSeverityColor(category.severity)}/10`}>
             {/* Category Header */}
-            <div className="relative p-6 pb-4">
+            <div className="relative p-4 sm:p-6 pb-4">
               <div className="absolute top-4 right-4">
                 {getSeverityBadge(category.severity)}
               </div>
               
-              <div className="flex items-start gap-4 mb-4">
-                <div className={`p-4 rounded-xl bg-gradient-to-br from-${getSeverityColor(category.severity)}/20 to-${getSeverityColor(category.severity)}/10 group-hover:from-${getSeverityColor(category.severity)}/30 group-hover:to-${getSeverityColor(category.severity)}/20 transition-all duration-300`}>
+              <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4 pr-20 sm:pr-16">
+                <div className={`p-3 sm:p-4 rounded-xl bg-gradient-to-br from-${getSeverityColor(category.severity)}/20 to-${getSeverityColor(category.severity)}/10 group-hover:from-${getSeverityColor(category.severity)}/30 group-hover:to-${getSeverityColor(category.severity)}/20 transition-all duration-300 self-start`}>
                   <div className={`text-${getSeverityColor(category.severity)} group-hover:scale-110 transition-transform duration-300`}>
                     {category.icon}
                   </div>
                 </div>
-                <div className="flex-1 pt-1">
-                  <h3 className="text-xl font-bold text-base-content mb-2 group-hover:text-primary transition-colors">
+                <div className="flex-1">
+                  <h3 className="text-lg sm:text-xl font-bold text-base-content mb-2 group-hover:text-primary transition-colors">
                     {category.category}
                   </h3>
                   <p className="text-base-content/70 text-sm leading-relaxed">
@@ -320,7 +320,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
               </div>
 
               {/* Issues Count & Expand Button */}
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div className="flex items-center gap-3">
                   <div className={`px-3 py-1 rounded-full bg-${getSeverityColor(category.severity)}/10 border border-${getSeverityColor(category.severity)}/20`}>
                     <span className={`text-${getSeverityColor(category.severity)} font-bold text-lg`}>{category.count}</span>
@@ -330,7 +330,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
                 
                 <button
                   onClick={() => setExpandedCategory(expandedCategory === categoryIndex ? null : categoryIndex)}
-                  className={`btn btn-sm btn-ghost gap-2 hover:bg-${getSeverityColor(category.severity)}/10 transition-all duration-300`}
+                  className={`btn btn-sm btn-ghost gap-2 hover:bg-${getSeverityColor(category.severity)}/10 transition-all duration-300 self-start sm:self-auto`}
                 >
                   <span className="text-sm font-medium">
                     {expandedCategory === categoryIndex ? 'Hide Details' : 'View Details'}
@@ -345,7 +345,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
 
             {/* Expanded Issues List */}
             {expandedCategory === categoryIndex && (
-              <div className="px-6 pb-6 space-y-3 animate-in slide-in-from-top-2 duration-300">
+              <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-3 animate-in slide-in-from-top-2 duration-300">
                 <div className="h-px bg-gradient-to-r from-transparent via-base-300 to-transparent mb-4"></div>
                 
                 {category.issues.map((issue, issueIndex) => (
@@ -354,27 +354,27 @@ const CurrentAnalysis = ({ onSectionChange }) => {
                     className={`group/issue relative overflow-hidden rounded-xl bg-base-100 border border-${getSeverityColor(issue.severity)}/20 hover:border-${getSeverityColor(issue.severity)}/40 hover:shadow-lg transition-all duration-300 cursor-pointer`}
                     onClick={() => setSelectedIssue(selectedIssue === `${categoryIndex}-${issueIndex}` ? null : `${categoryIndex}-${issueIndex}`)}
                   >
-                    <div className="p-4">
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="flex items-start gap-3 flex-1">
-                          <div className="mt-1">
+                    <div className="p-3 sm:p-4">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-3 gap-3">
+                        <div className="flex flex-col sm:flex-row sm:items-start gap-3 flex-1">
+                          <div className="self-start">
                             {getSeverityBadge(issue.severity)}
                           </div>
                           <div className="flex-1">
-                            <h4 className="font-semibold text-base text-base-content group-hover/issue:text-primary transition-colors mb-1">
+                            <h4 className="font-semibold text-sm sm:text-base text-base-content group-hover/issue:text-primary transition-colors mb-1">
                               {issue.title}
                             </h4>
-                            <p className="text-sm text-base-content/70 leading-relaxed">
+                            <p className="text-xs sm:text-sm text-base-content/70 leading-relaxed">
                               {issue.description}
                             </p>
                           </div>
                         </div>
-                        <div className="flex flex-col items-end gap-2 ml-4">
+                        <div className="flex sm:flex-col items-center sm:items-end gap-2 self-start">
                           <ArrowRight className={`w-4 h-4 text-base-content/40 group-hover/issue:text-${getSeverityColor(issue.severity)} group-hover/issue:translate-x-1 transition-all duration-300`} />
                         </div>
                       </div>
                       
-                      <div className="flex items-center gap-3 text-xs">
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
                         <span className={`px-2 py-1 rounded-full bg-${getSeverityColor(issue.severity)}/10 text-${getSeverityColor(issue.severity)} font-medium`}>
                           Impact: {issue.impact}
                         </span>
@@ -386,20 +386,20 @@ const CurrentAnalysis = ({ onSectionChange }) => {
                       {/* Detailed Issue View */}
                       {selectedIssue === `${categoryIndex}-${issueIndex}` && (
                         <div className="mt-4 pt-4 border-t border-base-300 animate-in slide-in-from-top-1 duration-200">
-                          <div className="grid grid-cols-1 gap-4">
+                          <div className="grid grid-cols-1 gap-3 sm:gap-4">
                             <div className="p-3 rounded-lg bg-error/5 border border-error/20">
-                              <h5 className="font-semibold text-error mb-2 flex items-center gap-2">
+                              <h5 className="font-semibold text-error mb-2 flex items-center gap-2 text-sm">
                                 <AlertTriangle className="w-4 h-4" />
                                 Business Impact
                               </h5>
-                              <p className="text-sm text-base-content/80 leading-relaxed">{issue.businessImpact}</p>
+                              <p className="text-xs sm:text-sm text-base-content/80 leading-relaxed">{issue.businessImpact}</p>
                             </div>
                             <div className="p-3 rounded-lg bg-success/5 border border-success/20">
-                              <h5 className="font-semibold text-success mb-2 flex items-center gap-2">
+                              <h5 className="font-semibold text-success mb-2 flex items-center gap-2 text-sm">
                                 <CheckCircle className="w-4 h-4" />
                                 Recommended Solution
                               </h5>
-                              <p className="text-sm text-base-content/80 leading-relaxed">{issue.solution}</p>
+                              <p className="text-xs sm:text-sm text-base-content/80 leading-relaxed">{issue.solution}</p>
                             </div>
                           </div>
                         </div>
