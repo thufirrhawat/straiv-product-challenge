@@ -30,6 +30,27 @@ const PrototypeDemo = ({ onSectionChange }) => {
   const [currentStep, setCurrentStep] = useState(0);
   const intervalRef = useRef(null);
 
+  // Add CSS for hiding scrollbars and smooth scrolling
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .phone-content {
+        max-height: 100%;
+        overflow-y: auto;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
+
   const demoCategories = [
     {
       id: 'journey-intelligence',
@@ -53,7 +74,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
       subtitle: 'Intelligent assistant + Voice commands',
       icon: <Mic className="w-6 h-6" />,
       color: 'accent',
-      description: 'Interact with rebuilt Hermes AI and voice-controlled hotel services'
+      description: 'Interact with enhanced digital concierge and voice-controlled hotel services'
     },
     {
       id: 'social-viral',
@@ -270,7 +291,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
     'ai-voice-features': [
       {
         stage: 'AI Chat Assistant',
-        screen: 'Hermes AI',
+        screen: 'Digital Concierge',
         mockup: {
           type: 'ai-chat',
           conversation: [
@@ -516,40 +537,40 @@ const PrototypeDemo = ({ onSectionChange }) => {
     switch (mockup.type) {
       case 'countdown':
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Header with weather */}
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-lg font-bold text-gray-900">{mockup.title}</h3>
-                <p className="text-sm text-gray-600">{mockup.subtitle}</p>
+                <h3 className="text-base font-bold text-gray-900">{mockup.title}</h3>
+                <p className="text-xs text-gray-600">{mockup.subtitle}</p>
               </div>
               <div className="text-right">
-                <div className="text-2xl">{mockup.weather.icon}</div>
-                <div className="text-sm font-medium">{mockup.weather.temp}</div>
+                <div className="text-lg">{mockup.weather.icon}</div>
+                <div className="text-xs font-medium">{mockup.weather.temp}</div>
               </div>
             </div>
 
             {/* Countdown */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-4 rounded-lg text-center">
-              <div className="flex justify-center space-x-4">
-                <div><div className="text-2xl font-bold">{mockup.countdown.days}</div><div className="text-xs">DAYS</div></div>
-                <div><div className="text-2xl font-bold">{mockup.countdown.hours}</div><div className="text-xs">HRS</div></div>
-                <div><div className="text-2xl font-bold">{mockup.countdown.minutes}</div><div className="text-xs">MIN</div></div>
+            <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-lg text-center">
+              <div className="flex justify-center space-x-3">
+                <div><div className="text-lg font-bold">{mockup.countdown.days}</div><div className="text-xs">DAYS</div></div>
+                <div><div className="text-lg font-bold">{mockup.countdown.hours}</div><div className="text-xs">HRS</div></div>
+                <div><div className="text-lg font-bold">{mockup.countdown.minutes}</div><div className="text-xs">MIN</div></div>
               </div>
             </div>
 
             {/* Suggestions */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               {mockup.suggestions.map((suggestion, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                  <div className="flex items-center space-x-3">
-                    <span className="text-2xl">{suggestion.icon}</span>
-                    <div>
-                      <div className="font-medium text-gray-900">{suggestion.title}</div>
-                      <div className="text-sm text-gray-600">{suggestion.desc}</div>
+                <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg border gap-2">
+                  <div className="flex items-center space-x-2 flex-1 min-w-0">
+                    <span className="text-base flex-shrink-0">{suggestion.icon}</span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-medium text-gray-900 text-sm leading-tight">{suggestion.title}</div>
+                      <div className="text-xs text-gray-600 leading-tight">{suggestion.desc}</div>
                     </div>
                   </div>
-                  <button className="px-3 py-1 bg-blue-600 text-white text-xs rounded-full">
+                  <button className="px-2 py-1 bg-blue-600 text-white text-xs rounded-full flex-shrink-0">
                     {suggestion.action}
                   </button>
                 </div>
@@ -614,33 +635,33 @@ const PrototypeDemo = ({ onSectionChange }) => {
 
       case 'dashboard':
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Header */}
             <div className="flex justify-between items-center">
               <div>
-                <div className="text-lg font-bold text-gray-900">{mockup.greeting}</div>
-                <div className="text-sm text-gray-600">{mockup.time}</div>
+                <div className="text-base font-bold text-gray-900">{mockup.greeting}</div>
+                <div className="text-xs text-gray-600">{mockup.time}</div>
               </div>
               <div className="text-right">
-                <div className="text-2xl">{mockup.weather.icon}</div>
-                <div className="text-sm">{mockup.weather.temp}</div>
+                <div className="text-lg">{mockup.weather.icon}</div>
+                <div className="text-xs">{mockup.weather.temp}</div>
               </div>
             </div>
 
             {/* Contextual cards */}
-            <div className="space-y-3">
+            <div className="space-y-2">
               {mockup.contextualCards.map((card, index) => (
-                <div key={index} className={`p-4 rounded-lg border ${card.highlight ? 'bg-blue-50 border-blue-200 ring-2 ring-blue-100' : 'bg-gray-50 border-gray-200'}`}>
+                <div key={index} className={`p-3 rounded-lg border ${card.highlight ? 'bg-blue-50 border-blue-200 ring-1 ring-blue-100' : 'bg-gray-50 border-gray-200'}`}>
                   <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3">
-                      <span className="text-2xl">{card.icon}</span>
+                    <div className="flex items-start space-x-2">
+                      <span className="text-lg">{card.icon}</span>
                       <div>
-                        <div className="font-medium text-gray-900">{card.title}</div>
-                        <div className="text-sm text-gray-600">{card.desc}</div>
-                        {card.price && <div className="text-sm font-medium text-green-600 mt-1">{card.price}</div>}
+                        <div className="font-medium text-gray-900 text-sm">{card.title}</div>
+                        <div className="text-xs text-gray-600">{card.desc}</div>
+                        {card.price && <div className="text-xs font-medium text-green-600 mt-1">{card.price}</div>}
                       </div>
                     </div>
-                    <button className={`px-3 py-1 text-xs rounded-full ${card.highlight ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'}`}>
+                    <button className={`px-2 py-1 text-xs rounded-full ${card.highlight ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'}`}>
                       {card.action}
                     </button>
                   </div>
@@ -649,9 +670,9 @@ const PrototypeDemo = ({ onSectionChange }) => {
             </div>
 
             {/* Quick actions */}
-            <div className="grid grid-cols-3 gap-2 pt-2">
+            <div className="grid grid-cols-3 gap-1">
               {mockup.quickActions.map((action, index) => (
-                <button key={index} className="p-3 bg-gray-100 rounded-lg text-center text-sm">
+                <button key={index} className="p-2 bg-gray-100 rounded-lg text-center text-xs">
                   {action}
                 </button>
               ))}
@@ -661,13 +682,13 @@ const PrototypeDemo = ({ onSectionChange }) => {
 
       case 'memory':
         return (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Header */}
             <div className="text-center">
-              <h3 className="text-lg font-bold text-gray-900">{mockup.title}</h3>
-              <div className="flex justify-center space-x-2 mt-2">
+              <h3 className="text-base font-bold text-gray-900">{mockup.title}</h3>
+              <div className="flex justify-center space-x-1 mt-2">
                 {mockup.photos.map((photo, index) => (
-                  <div key={index} className="w-12 h-12 bg-gray-200 rounded-lg flex items-center justify-center text-xl">
+                  <div key={index} className="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center text-base">
                     {photo}
                   </div>
                 ))}
@@ -675,17 +696,17 @@ const PrototypeDemo = ({ onSectionChange }) => {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{mockup.stats.nights}</div>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="p-2 bg-blue-50 rounded-lg">
+                <div className="text-base font-bold text-blue-600">{mockup.stats.nights}</div>
                 <div className="text-xs text-gray-600">Nights</div>
               </div>
-              <div className="p-3 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{mockup.stats.services}</div>
+              <div className="p-2 bg-green-50 rounded-lg">
+                <div className="text-base font-bold text-green-600">{mockup.stats.services}</div>
                 <div className="text-xs text-gray-600">Services</div>
               </div>
-              <div className="p-3 bg-purple-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600">{mockup.stats.savings}</div>
+              <div className="p-2 bg-purple-50 rounded-lg">
+                <div className="text-base font-bold text-purple-600">{mockup.stats.savings}</div>
                 <div className="text-xs text-gray-600">Saved</div>
               </div>
             </div>
@@ -693,27 +714,27 @@ const PrototypeDemo = ({ onSectionChange }) => {
             {/* Achievements */}
             <div className="space-y-2">
               {mockup.achievements.map((achievement, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <span className="text-2xl">{achievement.badge}</span>
+                <div key={index} className="flex items-center space-x-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <span className="text-lg">{achievement.badge}</span>
                   <div>
-                    <div className="font-medium text-gray-900">{achievement.title}</div>
-                    <div className="text-sm text-gray-600">{achievement.desc}</div>
+                    <div className="font-medium text-gray-900 text-sm">{achievement.title}</div>
+                    <div className="text-xs text-gray-600">{achievement.desc}</div>
                   </div>
                 </div>
               ))}
             </div>
 
             {/* Sharing */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Share your story:</div>
-              <div className="grid grid-cols-3 gap-2">
+            <div className="space-y-2">
+              <div className="text-xs font-medium text-gray-900">Share your story:</div>
+              <div className="grid grid-cols-3 gap-1">
                 {mockup.sharing.platforms.map((platform, index) => (
                   <button key={index} className="p-2 bg-gray-100 rounded-lg text-center text-xs">
                     {platform}
                   </button>
                 ))}
               </div>
-              <div className="text-sm text-gray-600">Invite friends: {mockup.sharing.friends.join(', ')}</div>
+              <div className="text-xs text-gray-600">Invite friends: {mockup.sharing.friends.join(', ')}</div>
             </div>
           </div>
         );
@@ -927,7 +948,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
                 <span className="text-white text-sm font-bold">AI</span>
               </div>
               <div>
-                <div className="font-medium text-gray-900">Hermes Assistant</div>
+                <div className="font-medium text-gray-900">Digital Concierge</div>
                 <div className="text-xs text-green-600">● Online</div>
               </div>
             </div>
@@ -1342,189 +1363,93 @@ const PrototypeDemo = ({ onSectionChange }) => {
 
       {/* Demo Category Selection */}
       <div className="card bg-gradient-to-br from-accent/5 via-primary/5 to-secondary/5 border border-accent/20">
-        <div className="card-body">
-          <h2 className="text-2xl font-bold mb-6 text-center">Choose Your Experience</h2>
+        <div className="card-body p-4 sm:p-6">
+          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">Interactive Strategy Demo</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {demoCategories.map((category) => (
-              <button 
-                key={category.id}
-                className={`btn ${activeDemo === category.id ? `btn-${category.color}` : 'btn-outline'} h-auto py-4`}
-                onClick={() => {
-                  setActiveDemo(category.id);
-                  setCurrentStep(0);
-                  setIsPlaying(false);
-                }}
-              >
-                <div className="text-center">
-                  {category.icon}
-                  <div className="text-sm font-bold mt-2">{category.title}</div>
-                  <div className="text-xs mt-1 opacity-70">{category.subtitle}</div>
-                </div>
-              </button>
-            ))}
+          {/* Compact Category Selection */}
+          <div className="mb-6">
+            <div className="text-sm font-medium mb-3 text-center">Choose Experience:</div>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+              {demoCategories.map((category) => (
+                <button 
+                  key={category.id}
+                  className={`btn btn-sm ${activeDemo === category.id ? `btn-${category.color}` : 'btn-outline'} h-auto py-2 text-left`}
+                  onClick={() => {
+                    setActiveDemo(category.id);
+                    setCurrentStep(0);
+                    setIsPlaying(false);
+                  }}
+                >
+                  <div className="flex items-center gap-2 w-full">
+                    <div className="flex-shrink-0 text-sm">
+                      {category.icon}
+                    </div>
+                    <div className="flex-1 text-left min-w-0">
+                      <div className="text-xs font-bold leading-tight">{category.title}</div>
+                      <div className="text-xs opacity-70 leading-tight truncate">{category.subtitle}</div>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Active Demo Description */}
-          <div className="text-center mb-6">
-            <h3 className="text-xl font-bold mb-2">
-              {demoCategories.find(cat => cat.id === activeDemo)?.title}
-            </h3>
-            <p className="text-base-content/70">
+          {/* Active Demo Description - Compact */}
+          <div className="text-center mb-4">
+            <p className="text-sm text-base-content/70">
               {demoCategories.find(cat => cat.id === activeDemo)?.description}
             </p>
           </div>
-
-          {/* Demo Journey Steps - Mobile-friendly navigation */}
-          {getActiveSteps().length > 0 && (
-            <div className="mb-6">
-              <h4 className="font-bold mb-3 text-center">Journey Steps</h4>
-              
-              {/* Mobile: Dropdown navigation */}
-              <div className="block sm:hidden mb-4">
-                <select 
-                  className="select select-bordered w-full"
-                  value={currentStep}
-                  onChange={(e) => setCurrentStep(parseInt(e.target.value))}
-                >
-                  {getActiveSteps().map((step, index) => (
-                    <option key={index} value={index}>
-                      {index + 1}. {step.screen}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              
-              {/* Desktop: Button navigation */}
-              <div className="hidden sm:flex flex-wrap justify-center gap-2">
-                {getActiveSteps().map((step, index) => (
-                  <button
-                    key={index}
-                    className={`btn btn-sm ${currentStep === index ? 'btn-primary' : 'btn-outline'} flex-shrink-0`}
-                    onClick={() => setCurrentStep(index)}
-                  >
-                    <span className="text-xs mr-1">{index + 1}</span>
-                    <span>{step.screen}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
-      {/* Interactive Demo Interface */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Mobile Mockup */}
-        <div className="lg:col-span-2">
+      {/* Main Demo Interface - Single Viewport */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+        {/* Left Side - Step Navigation & Info */}
+        <div className="lg:col-span-3 space-y-4">
+          {/* Step Selection */}
           <div className="card bg-base-100 border border-base-300">
-            <div className="card-body">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold">Mobile Experience</h3>
-                <div className="text-sm text-base-content/60">
-                  {getCurrentStep() ? getCurrentStep().screen : 'Select a demo to begin'}
-                </div>
-              </div>
-
-              {/* Phone Mockup - Responsive Size */}
-              <div className="mx-auto w-full max-w-sm" style={{aspectRatio: '9/16', maxHeight: '70vh'}}>
-                <div className="relative bg-gray-800 rounded-3xl p-2 sm:p-3 shadow-2xl w-full h-full">
-                  <div className="bg-white rounded-2xl overflow-hidden text-gray-900 w-full h-full flex flex-col">
-                    {/* Phone Header - Responsive Height */}
-                    <div className="bg-primary text-white text-center flex-shrink-0 py-3 sm:py-4 flex flex-col justify-center">
-                      <div className="text-sm sm:text-base font-semibold">Straiv Guest App</div>
-                      <div className="text-xs sm:text-sm opacity-80">Hotel Stuttgart ★★★★</div>
-                    </div>
-
-                    {/* Content Area - Responsive */}
-                    <div className="flex-1 flex flex-col">
-                      {/* Current Step Content */}
-                      {getCurrentStep() && (
-                        <div key={`${activeDemo}-${currentStep}`} className="flex-1 flex flex-col p-2 sm:p-4 bg-white">
-                          {/* Header - Responsive */}
-                          <div className="text-center animate-fade-in flex-shrink-0 py-2 sm:py-3">
-                            <div className="badge badge-primary mb-1 sm:mb-2 text-white text-xs sm:text-sm">{getCurrentStep().stage}</div>
-                            <h4 className="text-sm sm:text-base font-bold text-gray-900">{getCurrentStep().screen}</h4>
-                          </div>
-
-                          {/* Scrollable Content - Responsive */}
-                          <div className="animate-fade-in flex-1 overflow-y-auto scrollbar-hide min-h-0">
-                            {renderMockup(getCurrentStep().mockup)}
-                          </div>
-
-                          {/* Footer - Responsive */}
-                          <div className="flex-shrink-0 space-y-2 sm:space-y-3 pt-2 sm:pt-3">
-                            {/* Interaction Prompt */}
-                            <div className="p-2 sm:p-3 bg-blue-50 rounded-lg border border-blue-200">
-                              <div className="flex items-center gap-2 mb-1">
-                                <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-blue-600" />
-                                <span className="text-xs sm:text-sm font-semibold text-blue-900">Try This:</span>
-                              </div>
-                              <p className="text-xs sm:text-sm text-blue-800">{getCurrentStep().interaction}</p>
-                            </div>
-
-                            {/* Impact Metric */}
-                            <div className="text-center">
-                              <div className="badge badge-success text-white font-semibold text-xs sm:text-sm">{getCurrentStep().impact}</div>
-                            </div>
-                          </div>
+            <div className="card-body p-4">
+              <h4 className="font-bold mb-3 text-sm">Journey Steps</h4>
+              
+              {getActiveSteps().length > 0 && (
+                <div className="space-y-2">
+                  {getActiveSteps().map((step, index) => (
+                    <button
+                      key={index}
+                      className={`btn btn-xs w-full justify-start ${currentStep === index ? 'btn-primary' : 'btn-ghost'} h-auto py-2`}
+                      onClick={() => setCurrentStep(index)}
+                    >
+                      <div className="text-left w-full">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold">{index + 1}</span>
+                          <span className="text-xs font-medium">{step.screen}</span>
                         </div>
-                      )}
-                      
-                      {/* Default state when no step is selected */}
-                      {!getCurrentStep() && (
-                        <div className="flex-1 flex flex-col p-2 sm:p-4 bg-white">
-                          {/* Main Content - Responsive */}
-                          <div className="flex-1 flex items-center justify-center">
-                            <div className="text-center">
-                              <Smartphone className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-3 sm:mb-4" />
-                              <h4 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">Select a Demo</h4>
-                              <p className="text-sm sm:text-base text-gray-600">Choose a strategy category above to see the mobile app flow</p>
-                            </div>
-                          </div>
-                          
-                          {/* Footer - Responsive */}
-                          <div className="flex-shrink-0 space-y-2 sm:space-y-3 pt-2 sm:pt-3">
-                            <div className="p-2 sm:p-3 bg-gray-50 rounded-lg border border-gray-200 opacity-50">
-                              <div className="flex items-center gap-2 mb-1">
-                                <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-                                <span className="text-xs sm:text-sm font-semibold text-gray-500">Interaction:</span>
-                              </div>
-                              <p className="text-xs sm:text-sm text-gray-500">Select a category to see interactive demo</p>
-                            </div>
-
-                            <div className="text-center">
-                              <div className="badge badge-ghost text-gray-500 font-semibold text-xs sm:text-sm">Ready to explore</div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                        <div className="text-xs opacity-70 mt-1">{step.stage}</div>
+                      </div>
+                    </button>
+                  ))}
                 </div>
-              </div>
+              )}
             </div>
           </div>
-        </div>
 
-        {/* Demo Controls & Info */}
-        <div className="space-y-6">
           {/* Navigation Controls */}
           <div className="card bg-base-100 border border-base-300">
-            <div className="card-body">
-              <h4 className="font-bold mb-4">Flow Navigation</h4>
+            <div className="card-body p-4">
+              <h4 className="font-bold mb-3 text-sm">Controls</h4>
               
-              <div className="space-y-4">
+              <div className="space-y-2">
                 <div className="flex gap-2">
                   <button 
-                    className="btn btn-sm btn-outline flex-1"
+                    className="btn btn-xs btn-outline flex-1"
                     onClick={prevStep}
                     disabled={currentStep === 0}
                   >
-                    ← Previous
+                    ← Prev
                   </button>
                   <button 
-                    className="btn btn-sm btn-outline flex-1"
+                    className="btn btn-xs btn-outline flex-1"
                     onClick={nextStep}
                     disabled={currentStep === getActiveSteps().length - 1}
                   >
@@ -1536,7 +1461,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
                   <div className="flex gap-2">
                     {!isPlaying ? (
                       <button 
-                        className="btn btn-sm btn-primary flex-1"
+                        className="btn btn-xs btn-primary flex-1"
                         onClick={startDemo}
                       >
                         <Play className="w-3 h-3 mr-1" />
@@ -1544,7 +1469,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
                       </button>
                     ) : (
                       <button 
-                        className="btn btn-sm btn-warning flex-1"
+                        className="btn btn-xs btn-warning flex-1"
                         onClick={stopDemo}
                       >
                         <Pause className="w-3 h-3 mr-1" />
@@ -1552,7 +1477,7 @@ const PrototypeDemo = ({ onSectionChange }) => {
                       </button>
                     )}
                     <button 
-                      className="btn btn-sm btn-ghost flex-1"
+                      className="btn btn-xs btn-ghost flex-1"
                       onClick={() => setCurrentStep(0)}
                     >
                       Reset
@@ -1561,12 +1486,12 @@ const PrototypeDemo = ({ onSectionChange }) => {
                 )}
                 
                 <div className="text-center">
-                  <div className="text-sm text-base-content/70 mb-2">
+                  <div className="text-xs text-base-content/70 mb-1">
                     Step {currentStep + 1} of {getActiveSteps().length}
                     {isPlaying && <span className="ml-2 text-primary animate-pulse">● Auto</span>}
                   </div>
                   <progress 
-                    className={`progress w-full ${isPlaying ? 'progress-primary' : 'progress-secondary'}`}
+                    className={`progress progress-xs w-full ${isPlaying ? 'progress-primary' : 'progress-secondary'}`}
                     value={currentStep + 1} 
                     max={getActiveSteps().length}
                   ></progress>
@@ -1578,94 +1503,202 @@ const PrototypeDemo = ({ onSectionChange }) => {
           {/* Step Information */}
           {getCurrentStep() && (
             <div className="card bg-primary/5 border border-primary/20">
-              <div className="card-body">
-                <h4 className="font-bold mb-3">Current Focus</h4>
-                <div className="space-y-3">
+              <div className="card-body p-4">
+                <h4 className="font-bold mb-3 text-sm">Current Focus</h4>
+                <div className="space-y-2">
                   <div>
                     <div className="text-xs font-semibold text-primary">STAGE</div>
-                    <div className="text-sm">{getCurrentStep().stage}</div>
+                    <div className="text-xs">{getCurrentStep().stage}</div>
                   </div>
                   <div>
                     <div className="text-xs font-semibold text-primary">SCREEN</div>
-                    <div className="text-sm">{getCurrentStep().screen}</div>
+                    <div className="text-xs">{getCurrentStep().screen}</div>
                   </div>
                   <div>
                     <div className="text-xs font-semibold text-primary">BUSINESS IMPACT</div>
-                    <div className="text-sm font-semibold text-success">{getCurrentStep().impact}</div>
+                    <div className="text-xs font-semibold text-success">{getCurrentStep().impact}</div>
                   </div>
                 </div>
               </div>
             </div>
           )}
+        </div>
 
+        {/* Center - Mobile Mockup */}
+        <div className="lg:col-span-6">
+          <div className="card bg-base-100 border border-base-300">
+            <div className="card-body p-3 sm:p-4">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-base sm:text-lg font-bold">Mobile Experience</h3>
+                <div className="text-xs text-base-content/60">
+                  {getCurrentStep() ? getCurrentStep().screen : 'Select a demo to begin'}
+                </div>
+              </div>
 
+              {/* Phone Mockup - Optimized for Single Viewport */}
+              <div className="flex justify-center">
+                <div className="w-full max-w-xs">
+                  <div className="relative bg-gray-800 rounded-3xl p-1 sm:p-2 shadow-2xl">
+                    {/* Fixed height for consistent viewport */}
+                    <div className="bg-white rounded-2xl overflow-hidden text-gray-900 h-[500px] sm:h-[550px] flex flex-col">
+                      {/* Phone Header */}
+                      <div className="bg-primary text-white text-center flex-shrink-0 py-3 flex flex-col justify-center">
+                        <div className="text-sm font-semibold">Straiv Guest App</div>
+                        <div className="text-xs opacity-80">Hotel Stuttgart ★★★★</div>
+                      </div>
 
-          {/* Key Insights */}
-          <div className="card bg-success/5 border border-success/20">
-            <div className="card-body">
-              <h4 className="font-bold mb-4">Key Insights</h4>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
-                  <Star className="w-4 h-4 text-success mt-0.5" />
-                  <span>Context-aware personalization increases relevance by 180%</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Zap className="w-4 h-4 text-success mt-0.5" />
-                  <span>Voice interface creates luxury feeling and 420% better accessibility</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Heart className="w-4 h-4 text-success mt-0.5" />
-                  <span>Social features turn 15% of guests into brand ambassadors</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <TrendingUp className="w-4 h-4 text-success mt-0.5" />
-                  <span>Journey-stage intelligence drives 340% higher conversion rates</span>
+                      {/* Content Area */}
+                      <div className="flex-1 flex flex-col min-h-0">
+                        {/* Current Step Content */}
+                        {getCurrentStep() && (
+                          <div key={`${activeDemo}-${currentStep}`} className="flex-1 flex flex-col">
+                            {/* Header */}
+                            <div className="text-center animate-fade-in flex-shrink-0 py-2 px-3 bg-gray-50 border-b border-gray-100">
+                              <div className="badge badge-primary mb-1 text-white text-xs">{getCurrentStep().stage}</div>
+                              <h4 className="text-sm font-bold text-gray-900">{getCurrentStep().screen}</h4>
+                            </div>
+
+                            {/* Scrollable Content */}
+                            <div className="animate-fade-in flex-1 overflow-y-auto px-3 py-2 bg-white scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+                              <div className="space-y-3">
+                                {renderMockup(getCurrentStep().mockup)}
+                              </div>
+                            </div>
+
+                            {/* Footer */}
+                            <div className="flex-shrink-0 px-3 py-2 bg-gray-50 border-t border-gray-100">
+                              <div className="space-y-2">
+                                {/* Interaction Prompt */}
+                                <div className="p-2 bg-blue-50 rounded-lg border border-blue-200">
+                                  <div className="flex items-start gap-2 mb-1">
+                                    <Eye className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                                    <span className="text-xs font-semibold text-blue-900">Try This:</span>
+                                  </div>
+                                  <p className="text-xs text-blue-800 leading-tight">{getCurrentStep().interaction}</p>
+                                </div>
+
+                                {/* Impact Metric */}
+                                <div className="text-center">
+                                  <div className="badge badge-success text-white font-semibold text-xs px-2 py-1">{getCurrentStep().impact}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Default state */}
+                        {!getCurrentStep() && (
+                          <div className="flex-1 flex flex-col">
+                            <div className="flex-1 flex items-center justify-center p-4">
+                              <div className="text-center">
+                                <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                                <h4 className="text-base font-bold text-gray-900 mb-2">Select a Demo</h4>
+                                <p className="text-sm text-gray-600">Choose a strategy category above to see the PWA experience flow</p>
+                              </div>
+                            </div>
+                            
+                            <div className="flex-shrink-0 px-3 py-2 bg-gray-50 border-t border-gray-100">
+                              <div className="space-y-2">
+                                <div className="p-2 bg-gray-100 rounded-lg border border-gray-200 opacity-75">
+                                  <div className="flex items-start gap-2 mb-1">
+                                    <Eye className="w-3 h-3 text-gray-400 mt-0.5 flex-shrink-0" />
+                                    <span className="text-xs font-semibold text-gray-500">Interaction:</span>
+                                  </div>
+                                  <p className="text-xs text-gray-500">Select a category to see interactive demo</p>
+                                </div>
+
+                                <div className="text-center">
+                                  <div className="badge badge-ghost text-gray-500 font-semibold text-xs px-2 py-1">Ready to explore</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Summary & Next Steps */}
-      <div className="card bg-gradient-to-r from-primary/10 to-success/10 border border-primary/20">
-        <div className="card-body text-center">
-          <h2 className="text-2xl font-bold mb-4">Ready to Transform Straiv's Guest Experience?</h2>
-          <p className="text-lg text-base-content/80 mb-6 max-w-3xl mx-auto">
-            These interactive demos showcase my strategic approach to fixing critical issues, optimizing conversions, 
-            and creating viral growth through AI-powered personalization and social engagement.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-primary">€2.3M+</div>
-              <div className="text-sm text-base-content/70">Annual Revenue Increase</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-secondary">12 Weeks</div>
-              <div className="text-sm text-base-content/70">Full Implementation</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-success">340%+</div>
-              <div className="text-sm text-base-content/70">Conversion Improvement</div>
+        {/* Right Side - Key Insights & Quick Actions */}
+        <div className="lg:col-span-3 space-y-4">
+          {/* Key Insights */}
+          <div className="card bg-success/5 border border-success/20">
+            <div className="card-body p-4">
+              <h4 className="font-bold mb-3 text-sm">Key Insights</h4>
+              <div className="space-y-2 text-xs">
+                <div className="flex items-start gap-2">
+                  <Star className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                  <span>Context-aware personalization increases relevance by 180%</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Zap className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                  <span>Voice interface creates luxury feeling and 420% better accessibility</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Heart className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                  <span>Social features turn 15% of guests into brand ambassadors</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <TrendingUp className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                  <span>Journey-stage intelligence drives 340% higher conversion rates</span>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button 
-              className="btn btn-primary btn-lg w-full sm:w-auto"
-              onClick={() => onSectionChange('overview')}
-            >
-              <ArrowRight className="w-5 h-5 mr-2" />
-              Review Full Strategy
-            </button>
-            <button 
-              className="btn btn-outline btn-lg w-full sm:w-auto"
-              onClick={() => onSectionChange('implementation-roadmap')}
-            >
-              <Calendar className="w-5 h-5 mr-2" />
-              Implementation Plan
-            </button>
+
+          {/* Quick Actions */}
+          <div className="card bg-base-100 border border-base-300">
+            <div className="card-body p-4">
+              <h4 className="font-bold mb-3 text-sm">Quick Actions</h4>
+              <div className="space-y-2">
+                <button 
+                  className="btn btn-xs btn-outline w-full justify-start"
+                  onClick={() => onSectionChange('overview')}
+                >
+                  <ArrowRight className="w-3 h-3 mr-2" />
+                  <span className="text-xs">Review Full Strategy</span>
+                </button>
+                <button 
+                  className="btn btn-xs btn-outline w-full justify-start"
+                  onClick={() => onSectionChange('implementation-roadmap')}
+                >
+                  <Calendar className="w-3 h-3 mr-2" />
+                  <span className="text-xs">Implementation Plan</span>
+                </button>
+                <button 
+                  className="btn btn-xs btn-outline w-full justify-start"
+                  onClick={() => onSectionChange('sources')}
+                >
+                  <Settings className="w-3 h-3 mr-2" />
+                  <span className="text-xs">View Sources</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Performance Metrics */}
+          <div className="card bg-primary/5 border border-primary/20">
+            <div className="card-body p-4">
+              <h4 className="font-bold mb-3 text-sm">Expected Results</h4>
+              <div className="space-y-2">
+                <div className="text-center p-2 bg-primary/10 rounded-lg">
+                  <div className="text-base font-bold text-primary">€2.3M+</div>
+                  <div className="text-xs text-base-content/70">Annual Revenue</div>
+                </div>
+                <div className="text-center p-2 bg-secondary/10 rounded-lg">
+                  <div className="text-base font-bold text-secondary">12 Weeks</div>
+                  <div className="text-xs text-base-content/70">Implementation</div>
+                </div>
+                <div className="text-center p-2 bg-success/10 rounded-lg">
+                  <div className="text-base font-bold text-success">340%+</div>
+                  <div className="text-xs text-base-content/70">Conversion Lift</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

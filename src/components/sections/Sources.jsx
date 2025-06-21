@@ -1,11 +1,173 @@
 import React, { useState } from 'react';
-import { ExternalLink, BookOpen, BarChart, Globe, Smartphone, TrendingUp, Users, Zap, Shield, Search, Brain, DollarSign } from 'lucide-react';
+import { ExternalLink, BookOpen, BarChart, Globe, Smartphone, TrendingUp, Users, Zap, Shield, Search, Brain, DollarSign, Mic, Target, Network } from 'lucide-react';
 
 const Sources = () => {
   const [activeCategory, setActiveCategory] = useState('hospitality');
   const [searchTerm, setSearchTerm] = useState('');
 
   const sourceCategories = {
+    innovation2024: {
+      title: "2024 Hotel Technology Innovation Research",
+      icon: <Brain className="w-6 h-6" />,
+      color: "primary",
+      sources: [
+        {
+          title: "2024 State of Hospitality Software",
+          url: "https://corp.sertifi.com/blog/posts/2024-state-of-hospitality-software/",
+          description: "Comprehensive analysis of hospitality software trends showing 40% IT budget growth and 100% hoteliers planning increased tech spending",
+          type: "Industry Report"
+        },
+        {
+          title: "Smart Hospitality Market Size, Share, Trends & Industry Statistics by 2030",
+          url: "https://www.marketsandmarkets.com/Market-Reports/smart-hospitality-market-93242156.html",
+          description: "Market analysis showing growth from $24.2B to $75.3B by 2033 in smart hospitality sector",
+          type: "Market Research"
+        },
+        {
+          title: "2024 Lodging Technology Study: Digital Transformation & ROI",
+          url: "https://hospitalitytech.com/2024-lodging-tech-study",
+          description: "ROI analysis and digital transformation benchmarks for lodging technology investments",
+          type: "Industry Benchmark"
+        },
+        {
+          title: "Key Hospitality Data & Industry Statistics to Watch for 2025",
+          url: "https://hospitalityinsights.ehl.edu/hospitality-industry-statistics",
+          description: "Forward-looking hospitality industry statistics and key performance indicators",
+          type: "Statistical Data"
+        }
+      ]
+    },
+    ai2024: {
+      title: "AI Implementation & Performance 2024",
+      icon: <Brain className="w-6 h-6" />,
+      color: "secondary",
+      sources: [
+        {
+          title: "AI Statistics in Hospitality: Insights for Industry Innovation",
+          url: "https://www.allaboutai.com/resources/ai-statistics-in-hospitality/",
+          description: "Comprehensive AI adoption statistics showing 80% of hotels use AI chatbots and 58% guest belief in AI improvement",
+          type: "Industry Analysis"
+        },
+        {
+          title: "How AI Chatbots for Hotels are Transforming Guest Engagement",
+          url: "https://www.canarytechnologies.com/post/ai-chatbots-for-hotels",
+          description: "Analysis of AI chatbot implementation achieving 10-15% revenue increases and 94% customer satisfaction",
+          type: "Technology Analysis"
+        },
+        {
+          title: "AI in Hospitality: Advantages and Use Cases",
+          url: "https://www.netsuite.com/portal/resource/articles/business-strategy/ai-hospitality.shtml",
+          description: "Oracle NetSuite analysis of AI applications showing 10-30% cost reductions in customer service",
+          type: "Use Case Study"
+        },
+        {
+          title: "Key Stats on Artificial Intelligence in 2024 – and What They Mean for Hotels",
+          url: "https://www.hftp.org/news/4122564/key-stats-on-artificial-intelligence-in-2024-and-what-they-mean-for-hotels",
+          description: "HFTP analysis of AI statistics and implications for hotel industry implementation",
+          type: "Industry Report"
+        }
+      ]
+    },
+    voice2024: {
+      title: "Voice Technology & Guest Experience 2024",
+      icon: <Mic className="w-6 h-6" />,
+      color: "accent",
+      sources: [
+        {
+          title: "5 ways voice-activated devices create tangible benefits for hotels",
+          url: "https://www.hotelmanagement.net/tech/guests-have-spoken-give-us-home-experience",
+          description: "Research showing 54% of hotels offer voice features with 76.8% daily usage rates and 83% weekend engagement",
+          type: "Technology Guide"
+        },
+        {
+          title: "Survey: Travelers want contactless hotel experiences",
+          url: "https://www.hotelmanagement.net/tech/survey-travelers-want-contactless-hotel-experiences",
+          description: "Guest preference data showing 47% prefer technology over phone calls for room service",
+          type: "Guest Survey"
+        },
+        {
+          title: "The 2025 State of Hotel Guest Tech Report",
+          url: "https://hoteltechreport.com/news/2025-state-of-hotel-guest-technology-report",
+          description: "Forward-looking analysis of hotel guest technology trends and voice interface adoption",
+          type: "Future Trends"
+        }
+      ]
+    },
+    predictive2024: {
+      title: "Predictive Analytics & Revenue Management 2024",
+      icon: <BarChart className="w-6 h-6" />,
+      color: "info",
+      sources: [
+        {
+          title: "The Role of Predictive Analytics in Hospitality Management",
+          url: "https://www.binarysemantics.com/blogs/future-of-predictive-analytics-in-the-hospitality-industry/",
+          description: "Analysis showing 80% of properties use AI for personalization with 10-15% RevPAR increases",
+          type: "Analytics Study"
+        },
+        {
+          title: "3 AI-Driven Insights for Hospitality Revenue Management Success in 2025",
+          url: "https://skift.com/2024/11/22/3-ai-driven-insights-for-hospitality-revenue-management-success-in-2025/",
+          description: "Skift analysis of AI-driven revenue management showing 17% revenue growth potential",
+          type: "Revenue Analysis"
+        },
+        {
+          title: "Hotel Website Personalization: The 2023 Expert Guide",
+          url: "https://info.thehotelsnetwork.com/hotel-website-personalization",
+          description: "Personalization strategies achieving 20% conversion rates for at-risk bookings",
+          type: "Strategy Guide"
+        }
+      ]
+    },
+    competitive2024: {
+      title: "Competitive Analysis & Market Intelligence 2024",
+      icon: <Target className="w-6 h-6" />,
+      color: "success",
+      sources: [
+        {
+          title: "Canary Technologies Raises $50M to Accelerate AI Guest Technology in Hospitality",
+          url: "https://www.prnewswire.com/news-releases/canary-technologies-raises-50m-to-accelerate-ai-guest-technology-in-hospitality-302170024.html",
+          description: "Analysis of Canary Technologies' $80M Series D funding and 20,000+ hotel network",
+          type: "Market Intelligence"
+        },
+        {
+          title: "10 Best Hotel Chatbots in 2025",
+          url: "https://hoteltechreport.com/marketing/hotel-chatbots",
+          description: "Competitive analysis of hotel chatbot solutions including HiJiffy's 85%+ automation rates",
+          type: "Competitive Analysis"
+        },
+        {
+          title: "Review of 2024 - The year in hotel tech",
+          url: "https://www.hospitalityinvestor.com/technology/review-2024-year-hotel-tech",
+          description: "Comprehensive review of 2024 hotel technology developments and market consolidation trends",
+          type: "Industry Review"
+        }
+      ]
+    },
+    investment2024: {
+      title: "Investment Patterns & Implementation Studies 2024",
+      icon: <DollarSign className="w-6 h-6" />,
+      color: "warning",
+      sources: [
+        {
+          title: "2024 Hospitality Industry Spend Survey",
+          url: "https://www.hospitalityupgrade.com/magazine-articles/2024-hospitality-industry-spend-survey",
+          description: "Survey data showing $1-1.2B annual technology investments by major hospitality companies",
+          type: "Investment Survey"
+        },
+        {
+          title: "Hotel Management Systems Market Size & Growth by 2032",
+          url: "https://www.businessresearchinsights.com/market-reports/hotel-management-systems-market-112272",
+          description: "Market analysis showing growth from $3.43B (2024) to $6.76B (2033) in hotel management systems",
+          type: "Market Forecast"
+        },
+        {
+          title: "GDPR for Hotels: Here's What You Should Know (2025)",
+          url: "https://hoteltechreport.com/news/data-protection-act",
+          description: "GDPR compliance requirements for hotels with potential fines up to €20M or 4% revenue",
+          type: "Compliance Guide"
+        }
+      ]
+    },
     hospitality: {
       title: "Hospitality App Performance & Usage",
       icon: <BookOpen className="w-6 h-6" />,
@@ -14,31 +176,31 @@ const Sources = () => {
         {
           title: "Mobile Apps Transforming Hospitality 2024",
           url: "https://fueled.com/blog/mobile-apps-transforming-hospitality-2024/",
-          description: "Comprehensive analysis of mobile app trends in hospitality industry",
+          description: "Comprehensive analysis of mobile app trends in hospitality industry with 80% guest willingness to download hotel apps",
           type: "Industry Report"
         },
         {
           title: "Hotels Struggle with Mobile App Adoption",
           url: "https://www.pcma.org/new-study-shows-hotels-struggle-with-mobile-app-adoption/",
-          description: "Study revealing the 73% vs 38% guest willingness/usage gap",
+          description: "Study revealing the 73% vs 38% guest willingness/usage gap and 4% vs 54% digital check-in opportunity",
           type: "Research Study"
         },
         {
           title: "Best Hotel Guest Apps Analysis",
           url: "https://thehotelgm.com/tools/best-hotel-guest-apps/",
-          description: "Evaluation of top-performing hotel guest applications",
+          description: "Evaluation of top-performing hotel guest applications and feature analysis",
           type: "Comparative Analysis"
         },
         {
           title: "Hotel App Usage Patterns",
           url: "https://www.hotelmanagement.net/tech/hotel-app-users-actually-use-app",
-          description: "Data on actual vs intended hotel app usage patterns",
+          description: "Data on actual vs intended hotel app usage patterns showing real adoption rates",
           type: "Usage Analytics"
         },
         {
           title: "Hotel Guest Apps in 2025: Data Insights",
           url: "https://www.hotelspeak.com/2025/03/hotel-guest-apps-in-2025-what-the-data-says-about-features-guests-actually-use/",
-          description: "Latest data on guest app feature usage and preferences",
+          description: "Latest data on guest app feature usage and preferences from 2025 research",
           type: "Market Research"
         }
       ]
@@ -596,6 +758,86 @@ const Sources = () => {
           type: "Best Practices"
         }
       ]
+    },
+    european2024: {
+      title: "European Growth Strategy & Market Analysis 2024",
+      icon: <Globe className="w-6 h-6" />,
+      color: "primary",
+      sources: [
+        {
+          title: "Global market size of the hospitality industry 2023 | Statista",
+          url: "https://www.statista.com/statistics/1247012/global-market-size-of-the-hospitality-industry/",
+          description: "€187.9 billion European hotel market analysis with comprehensive industry size and growth projections",
+          type: "Market Research"
+        },
+        {
+          title: "Europe Hotels Industry Market Analysis 2024 - TruerCatering",
+          url: "https://www.truercatering.com/europe-hotels-industry-market-analysis-2024/",
+          description: "Detailed European hotel industry analysis showing post-COVID 3x digital interaction acceleration and 50% mobile check-in preference",
+          type: "Industry Analysis"
+        },
+        {
+          title: "Smart Hospitality Market | Size, Growth | 2024 to 2029",
+          url: "https://www.marketdataforecast.com/market-reports/smart-hospitality-market",
+          description: "26.18% CAGR growth in smart hospitality market through 2029 with European focus",
+          type: "Market Forecast"
+        },
+        {
+          title: "DACH Region Hotels & Chains Report 2024 – Horwath HTL",
+          url: "https://horwathhtl.com/publication/dach-region-hotels-chains-report-2024/",
+          description: "Germany 40%+ branded hotel growth, Austria 7.7% capacity growth, Switzerland 30%+ branded penetration analysis",
+          type: "Regional Analysis"
+        },
+        {
+          title: "How to help Europe's small and independent hotel market succeed | EY",
+          url: "https://www.ey.com/en_gl/insights/strategy/how-to-help-europes-small-and-independent-hotel-market-succeed",
+          description: "60% European market share of independent hotels and underserved mid-market opportunities",
+          type: "Strategy Guide"
+        },
+        {
+          title: "European Hotel Industry & Investment Survey 2024 | Deloitte UK",
+          url: "https://www.deloitte.com/uk/en/Industries/consumer/research/european-hotel-industry-and-investment-survey-2024.html",
+          description: "UK €6.2B investment market, France €2B+ investment opportunities and European expansion strategies",
+          type: "Investment Survey"
+        }
+      ]
+    },
+    partnerships2024: {
+      title: "Strategic Partnerships & Technology Integration 2024",
+      icon: <Network className="w-6 h-6" />,
+      color: "accent",
+      sources: [
+        {
+          title: "Dutch hotel tech unicorn Mews bags $100M to fuel acquisition spree",
+          url: "https://thenextweb.com/news/dutch-hotel-tech-unicorn-mews-100-million-funding",
+          description: "Mews 15% DACH market penetration with 5,500+ customers and strategic partnership opportunities",
+          type: "Partnership Analysis"
+        },
+        {
+          title: "Hospitality Integration Platform - PMS and POS | Oracle",
+          url: "https://www.oracle.com/hospitality/integration-platform/",
+          description: "Oracle OHIP platform with 2,000+ pre-built integrations for enterprise scalability",
+          type: "Technology Integration"
+        },
+        {
+          title: "Compare The Best Payment Gateways For UK SMEs (2025)",
+          url: "https://www.merchantsavvy.co.uk/payment-gateways/",
+          description: "Adyen 40+ European countries coverage, Checkout.com triple-digit UK growth analysis",
+          type: "Payment Analysis"
+        },
+        {
+          title: "Expedia Group Welcomes New Partners to its Global Travel Ecosystem",
+          url: "https://www.prnewswire.com/news-releases/expedia-group-welcomes-new-partners-to-its-global-travel-ecosystem-302088224.html",
+          description: "10-30% commission structures and white-label distribution solutions",
+          type: "Distribution Partnership"
+        },
+        {
+          title: "What's Next for Hotel Commission Structures? | HSMAI Global",
+          url: "https://global.hsmai.org/insight/whats-next-for-hotel-commission-structures/",
+          description: "15-18% Booking.com commission rates and 58% European hotel revenue share analysis",
+          type: "Revenue Model"
+        }
+      ]
     }
   };
 
@@ -674,7 +916,12 @@ const Sources = () => {
       "Performance Case Study": "badge-primary",
       "Revenue Case Study": "badge-success",
       "Engagement Case Study": "badge-secondary",
-      "Upselling Case Study": "badge-warning"
+      "Upselling Case Study": "badge-warning",
+      "Partnership Analysis": "badge-error",
+      "Technology Integration": "badge-neutral",
+      "Payment Analysis": "badge-primary",
+      "Distribution Partnership": "badge-success",
+      "Revenue Model": "badge-warning"
     };
     return colors[type] || "badge-ghost";
   };
@@ -828,27 +1075,49 @@ const Sources = () => {
       {/* Key Statistics Summary */}
       <div className="card bg-base-200 border border-base-300">
         <div className="card-body">
-          <h2 className="text-2xl font-bold mb-6 text-center">Key Statistics Referenced</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Key Statistics Referenced (2024 Research)</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div className="stat bg-base-100 rounded-lg border border-base-300">
+              <div className="stat-title">European Hotel Market</div>
+              <div className="stat-value text-primary">€187.9B</div>
+              <div className="stat-desc">Total market opportunity</div>
+            </div>
+            <div className="stat bg-base-100 rounded-lg border border-base-300">
+              <div className="stat-title">Smart Hospitality Growth</div>
+              <div className="stat-value text-secondary">26.18%</div>
+              <div className="stat-desc">CAGR through 2029</div>
+            </div>
+            <div className="stat bg-base-100 rounded-lg border border-base-300">
+              <div className="stat-title">Digital Acceleration</div>
+              <div className="stat-value text-accent">3x</div>
+              <div className="stat-desc">More digital interactions</div>
+            </div>
+            <div className="stat bg-base-100 rounded-lg border border-base-300">
+              <div className="stat-title">Independent Hotels</div>
+              <div className="stat-value text-success">60%</div>
+              <div className="stat-desc">Of European market share</div>
+            </div>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="stat bg-base-100 rounded-lg border border-base-300">
-              <div className="stat-title">Mobile vs Desktop Gap</div>
-              <div className="stat-value text-error">2.9x</div>
-              <div className="stat-desc">2.6% vs 7.6% conversion rates</div>
+              <div className="stat-title">Mobile Check-in Preference</div>
+              <div className="stat-value text-info">50%</div>
+              <div className="stat-desc">Guest preference rate</div>
             </div>
             <div className="stat bg-base-100 rounded-lg border border-base-300">
-              <div className="stat-title">Check-in Opportunity</div>
-              <div className="stat-value text-warning">12.5x</div>
-              <div className="stat-desc">4% usage vs 54% demand</div>
+              <div className="stat-title">Contactless Demand</div>
+              <div className="stat-value text-warning">53.6%</div>
+              <div className="stat-desc">Prefer contactless procedures</div>
             </div>
             <div className="stat bg-base-100 rounded-lg border border-base-300">
-              <div className="stat-title">Onboarding Benchmark</div>
-              <div className="stat-value text-info">19%</div>
-              <div className="stat-desc">Hospitality completion rate</div>
+              <div className="stat-title">DACH Branded Growth</div>
+              <div className="stat-value text-success">40%+</div>
+              <div className="stat-desc">Branded hotel penetration</div>
             </div>
             <div className="stat bg-base-100 rounded-lg border border-base-300">
-              <div className="stat-title">Revenue Impact</div>
-              <div className="stat-value text-success">€2.5M+</div>
-              <div className="stat-desc">Annual hotel value creation</div>
+              <div className="stat-title">Partnership Revenue</div>
+              <div className="stat-value text-error">15-25%</div>
+              <div className="stat-desc">Revenue sharing potential</div>
             </div>
           </div>
         </div>

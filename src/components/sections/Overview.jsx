@@ -48,7 +48,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       icon: <TrendingUp className="w-6 h-6" />,
       color: "text-error",
       bgColor: "bg-error/10",
-      summary: "Check-in process buried, incomplete transaction feedback, and AI chatbot errors"
+      summary: "Check-in process buried, incomplete transaction feedback, and digital concierge limitations"
     }
   };
 
@@ -57,10 +57,10 @@ const Overview = ({ onSectionChange, navigate }) => {
       priority: "Immediate (0-6 weeks)",
       title: "Foundation Enhancement",
       subtitle: "Optimize core functionality and user experience",
-      description: "My analysis identified 18 strategic opportunities including search UX enhancement, weather widget redesign, navigation optimization, and AI chatbot advancement. Establishing strong foundation builds user trust and engagement.",
+      description: "My analysis identified 18 strategic opportunities including search UX enhancement, weather widget redesign, navigation optimization, and digital concierge improvement. Establishing strong foundation builds user trust and engagement.",
       icon: <Target className="w-8 h-8" />,
       color: "neutral",
-      actions: ["Enhance search experience", "Redesign weather widget", "Streamline navigation", "Advance AI chatbot", "Optimize performance"]
+      actions: ["Enhance search experience", "Redesign weather widget", "Streamline navigation", "Improve digital concierge", "Optimize performance"]
     },
     {
       priority: "Phase 1 (1-3 months)",
@@ -72,7 +72,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       actions: ["Journey-stage detection", "Contextual content", "Personalized recommendations", "Proactive service delivery", "Habit-forming features"]
     },
     {
-      priority: "Phase 2 (3-6 months)",
+      priority: "Phase 2 (Weeks 5-8)",
       title: "Conversion Optimization",
       subtitle: "Optimize critical touchpoints for revenue impact",
       description: "My strategy focuses on onboarding streamlining, check-in/checkout optimization, and intelligent upselling. Target 28% → 60% onboarding conversion and 13% → 25% purchase conversion.",
@@ -81,7 +81,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       actions: ["Streamlined onboarding", "Express check-in prominence", "Dynamic upselling", "Contextual offers", "Frictionless payments"]
     },
     {
-      priority: "Phase 3 (6-12 months)",
+      priority: "Phase 3 (Weeks 9-16)",
       title: "Innovation & Growth",
       subtitle: "Competitive differentiation and market expansion",
       description: "My innovation approach: AI-powered guest intelligence, predictive service delivery, voice interfaces, and IoT integration. Focus on features that create viral moments and drive adoption.",
@@ -139,7 +139,7 @@ const Overview = ({ onSectionChange, navigate }) => {
               <div className="stats shadow border border-accent/20">
                 <div className="stat place-items-center">
                   <div className="stat-title text-accent">Implementation</div>
-                  <div className="stat-value text-primary">12</div>
+                  <div className="stat-value text-primary">16</div>
                   <div className="stat-desc">Weeks to Impact</div>
                 </div>
               </div>

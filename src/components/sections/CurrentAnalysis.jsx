@@ -202,7 +202,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
           timeline: "3 weeks"
         },
         {
-          title: "AI Chatbot Issues",
+          title: "Digital Concierge Limitations",
           severity: "high",
           impact: "Medium",
           description: "Redundant UI, error responses, and poor visual design reduce trust and engagement",
@@ -288,7 +288,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
           <div className="stat-figure text-secondary">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-secondary text-3xl font-bold">12</div>
+          <div className="stat-value text-secondary text-3xl font-bold">16</div>
           <div className="stat-title text-sm text-base-content/70 font-medium">Weeks to Impact</div>
         </div>
       </div>
@@ -475,7 +475,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
             <div className="space-y-4">
               <h3 className="font-bold text-error flex items-center gap-2">
                 <Star className="w-5 h-5" />
-                Long-term Strategic (8-12 weeks)
+                Long-term Strategic (8-16 weeks)
               </h3>
               <div className="space-y-2">
                 <div className="p-3 bg-error/10 rounded border border-error/20">
