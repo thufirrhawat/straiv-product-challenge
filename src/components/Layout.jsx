@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LogOut, Menu, X, Home } from 'lucide-react';
 import { setAuthStatus, getDemoState, saveDemoState } from '../utils/storage';

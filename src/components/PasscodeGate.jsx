@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Lock, Eye, EyeOff } from 'lucide-react';
 import { setAuthStatus } from '../utils/storage';
 import { PASSCODE, APP_CONFIG } from '../utils/constants';
