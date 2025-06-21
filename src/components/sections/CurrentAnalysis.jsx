@@ -303,8 +303,8 @@ const CurrentAnalysis = ({ onSectionChange }) => {
                 {getSeverityBadge(category.severity)}
               </div>
               
-              <div className="flex flex-col sm:flex-row sm:items-start gap-4 mb-4 pr-20 sm:pr-16">
-                <div className={`p-3 sm:p-4 rounded-xl bg-gradient-to-br from-${getSeverityColor(category.severity)}/20 to-${getSeverityColor(category.severity)}/10 group-hover:from-${getSeverityColor(category.severity)}/30 group-hover:to-${getSeverityColor(category.severity)}/20 transition-all duration-300 self-start`}>
+              <div className="flex items-start gap-4 mb-4 pr-24">
+                <div className={`p-3 sm:p-4 rounded-xl bg-gradient-to-br from-${getSeverityColor(category.severity)}/20 to-${getSeverityColor(category.severity)}/10 group-hover:from-${getSeverityColor(category.severity)}/30 group-hover:to-${getSeverityColor(category.severity)}/20 transition-all duration-300`}>
                   <div className={`text-${getSeverityColor(category.severity)} group-hover:scale-110 transition-transform duration-300`}>
                     {category.icon}
                   </div>
@@ -320,7 +320,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
               </div>
 
               {/* Issues Count & Expand Button */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className={`px-3 py-1 rounded-full bg-${getSeverityColor(category.severity)}/10 border border-${getSeverityColor(category.severity)}/20`}>
                     <span className={`text-${getSeverityColor(category.severity)} font-bold text-lg`}>{category.count}</span>
@@ -330,7 +330,7 @@ const CurrentAnalysis = ({ onSectionChange }) => {
                 
                 <button
                   onClick={() => setExpandedCategory(expandedCategory === categoryIndex ? null : categoryIndex)}
-                  className={`btn btn-sm btn-ghost gap-2 hover:bg-${getSeverityColor(category.severity)}/10 transition-all duration-300 self-start sm:self-auto`}
+                  className={`btn btn-sm btn-ghost gap-2 hover:bg-${getSeverityColor(category.severity)}/10 transition-all duration-300`}
                 >
                   <span className="text-sm font-medium">
                     {expandedCategory === categoryIndex ? 'Hide Details' : 'View Details'}
