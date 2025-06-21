@@ -24,199 +24,199 @@ const CurrentAnalysis = ({ onSectionChange }) => {
 
   const criticalIssues = [
     {
-      category: "Core Functionality Failures",
+      category: "Performance & Technical Issues",
       severity: "critical",
-      count: 4,
-      icon: <AlertTriangle className="w-6 h-6" />,
-      description: "Basic app functions that are completely broken",
+      count: 5,
+      icon: <Clock className="w-6 h-6" />,
+      description: "Critical performance gaps and technical implementation issues",
       issues: [
         {
-          title: "Search Functionality Completely Broken",
+          title: "Loading Time Performance Gap",
           severity: "critical",
           impact: "High",
-          description: "General search doesn't work at all, making content discovery impossible",
-          businessImpact: "Users can't find services → 0% search-driven conversions",
-          solution: "Implement Elasticsearch with intelligent autocomplete and category filtering",
-          timeline: "1 week"
-        },
-        {
-          title: "AI Chatbot Non-Functional",
-          severity: "critical", 
-          impact: "High",
-          description: "Hermes AI throws errors on every message, completely unusable",
-          businessImpact: "No automated guest support → 100% dependency on staff",
-          solution: "Rebuild with OpenAI integration and proper error handling",
+          description: "Studies show acceptable launch time is 2-3 seconds. Beyond that, user frustration and abandonment rates spike",
+          businessImpact: "72% of users expect app onboarding under 60 seconds - current performance fails this benchmark",
+          solution: "Performance optimization, code splitting, lazy loading implementation",
           timeline: "2 weeks"
         },
         {
-          title: "PWA Installation Invisible",
+          title: "PWA Installation Missing",
           severity: "critical",
-          impact: "Medium",
-          description: "No install prompt appears, defeating PWA purpose",
-          businessImpact: "Mobile engagement limited to browser sessions only",
+          impact: "High",
+          description: "No automatic installation prompts detected - PWAs require proper manifest file and beforeinstallprompt event implementation",
+          businessImpact: "Mobile engagement limited to browser sessions only, reduces stickiness",
           solution: "Implement proper PWA manifest and install prompt triggers",
+          timeline: "1 week"
+        },
+        {
+          title: "iOS PWA Limitations",
+          severity: "medium",
+          impact: "Medium",
+          description: "Safari doesn't provide automatic installation prompts, users must manually add via Share Sheet",
+          businessImpact: "Reduced iOS user adoption and engagement",
+          solution: "Custom iOS installation guidance and Share Sheet optimization",
+          timeline: "1 week"
+        },
+        {
+          title: "One-Second Delay Impact",
+          severity: "high",
+          impact: "High",
+          description: "A one-second delay can lose nearly 10% of total visitors from a mobile application",
+          businessImpact: "Direct correlation between performance and user retention",
+          solution: "Implement performance monitoring and optimization strategies",
+          timeline: "3 weeks"
+        },
+        {
+          title: "Mobile Experience Issues",
+          severity: "high",
+          impact: "High",
+          description: "70% of users may abandon an app due to prolonged loading times",
+          businessImpact: "High abandonment rates reduce overall app effectiveness",
+          solution: "Mobile-first optimization and progressive loading strategies",
+          timeline: "2 weeks"
+        }
+      ]
+    },
+    {
+      category: "Core Functionality Problems",
+      severity: "critical",
+      count: 4,
+      icon: <Search className="w-6 h-6" />,
+      description: "Essential features that are non-functional or poorly implemented",
+      issues: [
+        {
+          title: "Non-Functional Search",
+          severity: "critical",
+          impact: "High",
+          description: "Primary search feature is completely non-functional",
+          businessImpact: "Creates frustration and abandonment during content discovery",
+          solution: "Implement functional search with autocomplete and intelligent filtering",
+          timeline: "1 week"
+        },
+        {
+          title: "Limited Menu Search",
+          severity: "high",
+          impact: "Medium",
+          description: "Menu search only searches categories rather than individual items",
+          businessImpact: "Poor food ordering experience reduces F&B revenue potential",
+          solution: "Implement comprehensive search across all menu items and descriptions",
+          timeline: "1 week"
+        },
+        {
+          title: "Navigation Disappears",
+          severity: "critical",
+          impact: "High",
+          description: "Bottom navigation disappears in detailed views (Menu, Shop, Spa sections)",
+          businessImpact: "Users get trapped in flows, leading to abandonment and revenue loss",
+          solution: "Implement consistent navigation architecture across all sections",
           timeline: "3 days"
         },
         {
-          title: "Check-in Page Slow Loading",
+          title: "Button Overlap Issues",
+          severity: "medium",
+          impact: "Medium",
+          description: "Navigation buttons overlap with AI chat button in multiple sections",
+          businessImpact: "Poor user experience reduces engagement and functionality",
+          solution: "Redesign layout with proper spacing and z-index management",
+          timeline: "2 days"
+        }
+      ]
+    },
+    {
+      category: "User Interface & Design Gaps",
+      severity: "high",
+      count: 5,
+      icon: <Smartphone className="w-6 h-6" />,
+      description: "UX design issues that confuse users and reduce engagement",
+      issues: [
+        {
+          title: "Weather Widget UX Problems",
+          severity: "high",
+          impact: "Medium",
+          description: "No visual indication that temperature unit can be changed, poor toggle design contradicts UX patterns",
+          businessImpact: "Missed contextual recommendations and poor weather integration",
+          solution: "Redesign with clear unit labels and proper toggle UX patterns",
+          timeline: "3 days"
+        },
+        {
+          title: "Redundant Pages",
+          severity: "medium",
+          impact: "Medium",
+          description: "Check In and My Reservation are identical pre-login pages",
+          businessImpact: "Cognitive overload reduces conversion rates",
+          solution: "Consolidate redundant functionality with clear user journey paths",
+          timeline: "1 week"
+        },
+        {
+          title: "Feature Sprawl",
           severity: "high",
           impact: "High",
-          description: "3+ seconds load time exceeds user tolerance (53% abandon after 3s)",
-          businessImpact: "Lost check-ins → front desk overflow → poor guest experience",
-          solution: "Code splitting, lazy loading, performance optimization",
+          description: "18 menu items in pre-check-in stage creates cognitive overload",
+          businessImpact: "Decision paralysis reduces engagement and stickiness",
+          solution: "Journey-stage intelligence to show relevant actions only",
+          timeline: "2 weeks"
+        },
+        {
+          title: "External Dependencies",
+          severity: "medium",
+          impact: "Medium",
+          description: "Multiple features redirect to external websites with no return path",
+          businessImpact: "Users leave app with no monetization opportunity",
+          solution: "Implement in-app webviews with proper return navigation",
+          timeline: "1 week"
+        },
+        {
+          title: "Inconsistent Patterns",
+          severity: "low",
+          impact: "Low",
+          description: "Different interaction patterns across similar features (Attractions vs Insider Tips)",
+          businessImpact: "Confusing user experience reduces overall app quality",
+          solution: "Standardize interaction patterns across similar feature sets",
           timeline: "1 week"
         }
       ]
     },
     {
-      category: "Critical UX Problems",
-      severity: "high",
-      count: 6,
-      icon: <Smartphone className="w-6 h-6" />,
-      description: "Major user experience issues causing confusion and abandonment",
+      category: "Conversion & Engagement Barriers",
+      severity: "critical",
+      count: 4,
+      icon: <ShoppingCart className="w-6 h-6" />,
+      description: "Issues directly blocking revenue generation and user engagement",
       issues: [
         {
-          title: "Weather Widget UX Nightmare",
-          severity: "high",
-          impact: "Medium",
-          description: "Opens in Fahrenheit with no visual indication it's clickable, confusing toggle design (dark=Celsius, bright=Fahrenheit)",
-          businessImpact: "Poor weather integration → missed contextual recommendations",
-          solution: "Redesign with clear unit labels, proper toggle UX, and contextual weather suggestions",
-          timeline: "3 days"
-        },
-        {
-          title: "Redundant Pages Everywhere",
-          severity: "high",
-          impact: "Medium", 
-          description: "Check-in and My Reservation are identical pages, causing user confusion",
-          businessImpact: "Cognitive overload → reduced conversion rates",
-          solution: "Consolidate redundant functionality, clear user journey paths",
-          timeline: "1 week"
-        },
-        {
-          title: "Bottom Navigation Disappears",
-          severity: "high",
+          title: "Check-in Process Buried",
+          severity: "critical",
           impact: "High",
-          description: "Critical navigation vanishes in Menu, Shop, Table Reservation flows",
-          businessImpact: "Users get trapped → abandon purchases → revenue loss",
-          solution: "Consistent navigation architecture across all flows",
-          timeline: "2 days"
-        },
-        {
-          title: "Broken Menu Search Logic",
-          severity: "medium",
-          impact: "Medium",
-          description: "Search only shows categories, not actual items - confusing and useless",
-          businessImpact: "Poor food ordering experience → reduced F&B revenue",
-          solution: "Implement proper search hierarchy: items → categories → descriptions",
-          timeline: "1 week"
-        },
-        {
-          title: "No Check-in Prominence",
-          severity: "high",
-          impact: "High",
-          description: "Check-in buried in menu despite being primary use case for hotel apps",
-          businessImpact: "Low digital check-in adoption → staff workload → operational costs",
+          description: "Primary check-in functionality buried in menu rather than prominent homepage placement",
+          businessImpact: "Low digital check-in adoption increases staff workload and operational costs",
           solution: "Promote check-in to homepage hero section with progress indicators",
           timeline: "2 days"
         },
         {
-          title: "Information Overload on Homepage",
-          severity: "medium",
-          impact: "Medium",
-          description: "18 menu items presented equally, no prioritization or journey awareness",
-          businessImpact: "Decision paralysis → reduced engagement → poor stickiness",
-          solution: "Journey-stage intelligence to show relevant actions only",
-          timeline: "2 weeks"
-        }
-      ]
-    },
-    {
-      category: "Revenue-Killing Flow Issues",
-      severity: "high",
-      count: 4,
-      icon: <ShoppingCart className="w-6 h-6" />,
-      description: "Problems directly impacting monetization and conversions",
-      issues: [
-        {
-          title: "Shop & Services: No Order Tracking",
+          title: "Incomplete Transaction Feedback",
           severity: "high",
           impact: "High",
-          description: "Users submit requests with no follow-up system or status tracking",
-          businessImpact: "Poor service experience → negative reviews → brand damage",
-          solution: "Real-time order tracking with PMS integration and automated updates",
+          description: "Shop, Spa, Table Reservation provide no confirmation tracking or clear next steps",
+          businessImpact: "Poor service experience leads to negative reviews and brand damage",
+          solution: "Implement real-time order tracking with PMS integration",
           timeline: "3 weeks"
         },
         {
-          title: "External Links Break App Flow",
-          severity: "medium",
+          title: "AI Chatbot Issues",
+          severity: "high",
           impact: "Medium",
-          description: "Attractions, TV Schedule lead to external sites with no return path",
-          businessImpact: "Users leave app → no monetization opportunity → lost engagement",
-          solution: "In-app webviews with return navigation and cross-selling opportunities",
-          timeline: "1 week"
+          description: "Redundant UI, error responses, and poor visual design reduce trust and engagement",
+          businessImpact: "Prevents customer service automation, increases staff dependency",
+          solution: "Rebuild with modern interface and proper error handling",
+          timeline: "2 weeks"
         },
         {
-          title: "No Upselling Integration",
+          title: "Missing Revenue Integration",
           severity: "high",
           impact: "High",
-          description: "Booking flow lacks upgrade prompts, room selection, or package offers",
-          businessImpact: "Missed €15-45 per booking in additional revenue",
-          solution: "Dynamic upselling engine with real-time availability and personalization",
-          timeline: "4 weeks"
-        },
-        {
-          title: "Generic Product Presentation",
-          severity: "medium",
-          impact: "Medium",
-          description: "Shop and services show all items regardless of guest context or weather",
-          businessImpact: "Poor conversion rates → 13% vs industry 25% potential",
-          solution: "Context-aware product curation based on weather, time, guest profile",
-          timeline: "2 weeks"
-        }
-      ]
-    },
-    {
-      category: "Technical Architecture Problems",
-      severity: "medium", 
-      count: 4,
-      icon: <WifiOff className="w-6 h-6" />,
-      description: "Underlying technical issues affecting performance and reliability",
-      issues: [
-        {
-          title: "No Offline Capability",
-          severity: "medium",
-          impact: "Medium",
-          description: "App completely breaks without internet connection",
-          businessImpact: "Poor hotel wifi → app unusable → guest frustration",
-          solution: "Service worker implementation with offline-first architecture",
-          timeline: "2 weeks"
-        },
-        {
-          title: "Poor Mobile Responsiveness",
-          severity: "medium",
-          impact: "Medium", 
-          description: "UI elements overlap, navigation issues on various screen sizes",
-          businessImpact: "Poor mobile experience → 70% of users on mobile → lost engagement",
-          solution: "Mobile-first responsive design with proper viewport handling",
-          timeline: "1 week"
-        },
-        {
-          title: "No Localization Strategy",
-          severity: "low",
-          impact: "Medium",
-          description: "Hard-coded English text, no multi-language support for German market",
-          businessImpact: "Limited market reach → missed international guest engagement",
-          solution: "Internationalization framework with German/English language switching",
-          timeline: "2 weeks"
-        },
-        {
-          title: "Legacy UI That Looks Outdated",
-          severity: "low",
-          impact: "Low",
-          description: "Design doesn't meet modern mobile app standards, feels old",
-          businessImpact: "Poor brand perception → reduced trust → lower adoption",
-          solution: "Modern UI redesign with current design system and microinteractions",
+          description: "No connection to booking systems or upselling opportunities",
+          businessImpact: "Missed revenue opportunities and incomplete guest journey tracking",
+          solution: "Integrate with hotel revenue systems and implement dynamic upselling",
           timeline: "4 weeks"
         }
       ]
@@ -226,8 +226,8 @@ const CurrentAnalysis = ({ onSectionChange }) => {
   const overallStats = {
     totalIssues: criticalIssues.reduce((sum, cat) => sum + cat.count, 0),
     criticalIssues: criticalIssues.filter(cat => cat.severity === 'critical').reduce((sum, cat) => sum + cat.count, 0),
-    estimatedRevenueLoss: "€47K+ (projected)",
-    fixTimeframe: "8-12 weeks"
+    estimatedRevenueLoss: "35% Gap",
+    fixTimeframe: "12 weeks"
   };
 
   const getSeverityColor = (severity) => {
@@ -249,16 +249,15 @@ const CurrentAnalysis = ({ onSectionChange }) => {
     <div className="space-y-8">
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="badge badge-error badge-lg mb-4">Critical Analysis</div>
         <h1 className="text-4xl font-bold text-base-content mb-4">
-          Current App Analysis
+          Critical Improvement Areas
         </h1>
         <h2 className="text-2xl font-semibold text-error mb-6">
-          18 Critical Issues Identified
+          18 Systematic Improvements Identified
         </h2>
         <p className="text-lg text-base-content/80 max-w-4xl mx-auto">
-          Based on comprehensive analysis of the current Straiv Guest App, I've identified systematic issues 
-          across functionality, UX design, revenue optimization, and technical architecture that require immediate attention.
+          Based on systematic evaluation of Straiv's guest app across key user experience and technical performance metrics, 
+          I've identified critical areas requiring immediate attention to bridge the adoption gap.
         </p>
       </div>
 
@@ -279,18 +278,18 @@ const CurrentAnalysis = ({ onSectionChange }) => {
           <div className="stat-title text-sm text-base-content/70 font-medium">Critical Priority</div>
         </div>
         <div className="stat bg-base-100 border border-base-300 rounded-lg p-6 text-center shadow-sm">
-          <div className="stat-figure text-success">
+          <div className="stat-figure text-warning">
             <ShoppingCart className="w-8 h-8" />
           </div>
-          <div className="stat-value text-success text-2xl leading-tight font-bold">€47K+</div>
-          <div className="stat-title text-sm text-base-content/70 font-medium">Annual Revenue Loss</div>
+          <div className="stat-value text-warning text-3xl leading-tight font-bold">35%</div>
+          <div className="stat-title text-sm text-base-content/70 font-medium">Adoption Gap</div>
         </div>
         <div className="stat bg-base-100 border border-base-300 rounded-lg p-6 text-center shadow-sm">
           <div className="stat-figure text-secondary">
             <CheckCircle className="w-8 h-8" />
           </div>
-          <div className="stat-value text-secondary text-3xl font-bold">{overallStats.fixTimeframe}</div>
-          <div className="stat-title text-sm text-base-content/70 font-medium">Fix Timeframe</div>
+          <div className="stat-value text-secondary text-3xl font-bold">12</div>
+          <div className="stat-title text-sm text-base-content/70 font-medium">Weeks to Impact</div>
         </div>
       </div>
 
@@ -370,74 +369,86 @@ const CurrentAnalysis = ({ onSectionChange }) => {
         ))}
       </div>
 
-      {/* Priority Matrix */}
+      {/* Strategic Priority Framework */}
       <div className="card bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border border-primary/20">
         <div className="card-body">
-          <h2 className="text-2xl font-bold mb-6 text-center">My Recommended Fix Priority</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Strategic Priority Framework</h2>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Week 1-2: Critical Fixes */}
+            {/* Quick Wins (2-4 weeks) */}
             <div className="space-y-4">
-              <h3 className="font-bold text-error flex items-center gap-2">
+              <h3 className="font-bold text-success flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                Week 1-2: Critical Fixes
+                Quick Wins (2-4 weeks)
               </h3>
               <div className="space-y-2">
-                <div className="p-3 bg-error/10 rounded border border-error/20">
-                  <div className="font-medium text-sm">Search Functionality</div>
-                  <div className="text-xs text-base-content/70">Fix core search + autocomplete</div>
+                <div className="p-3 bg-success/10 rounded border border-success/20">
+                  <div className="font-medium text-sm">Fix Non-Functional Search</div>
+                  <div className="text-xs text-base-content/70">Implement working search with autocomplete</div>
                 </div>
-                <div className="p-3 bg-error/10 rounded border border-error/20">
-                  <div className="font-medium text-sm">AI Chatbot Repair</div>
-                  <div className="text-xs text-base-content/70">Basic error handling + OpenAI</div>
+                <div className="p-3 bg-success/10 rounded border border-success/20">
+                  <div className="font-medium text-sm">Resolve Navigation Button Overlaps</div>
+                  <div className="text-xs text-base-content/70">Fix UI spacing and z-index issues</div>
                 </div>
-                <div className="p-3 bg-error/10 rounded border border-error/20">
-                  <div className="font-medium text-sm">Performance Optimization</div>
-                  <div className="text-xs text-base-content/70">Check-in page load time</div>
+                <div className="p-3 bg-success/10 rounded border border-success/20">
+                  <div className="font-medium text-sm">Improve Weather Widget UX</div>
+                  <div className="text-xs text-base-content/70">Clear unit indicators and proper toggle</div>
+                </div>
+                <div className="p-3 bg-success/10 rounded border border-success/20">
+                  <div className="font-medium text-sm">Implement PWA Install Prompts</div>
+                  <div className="text-xs text-base-content/70">Proper manifest and installation triggers</div>
                 </div>
               </div>
             </div>
 
-            {/* Week 3-4: UX Improvements */}
+            {/* Medium Impact (4-8 weeks) */}
             <div className="space-y-4">
               <h3 className="font-bold text-warning flex items-center gap-2">
                 <Navigation className="w-5 h-5" />
-                Week 3-4: UX Improvements
+                Medium Impact (4-8 weeks)
               </h3>
               <div className="space-y-2">
                 <div className="p-3 bg-warning/10 rounded border border-warning/20">
-                  <div className="font-medium text-sm">Navigation Consistency</div>
-                  <div className="text-xs text-base-content/70">Fix missing bottom nav</div>
+                  <div className="font-medium text-sm">Consolidate Redundant Pages</div>
+                  <div className="text-xs text-base-content/70">Merge Check In and My Reservation</div>
                 </div>
                 <div className="p-3 bg-warning/10 rounded border border-warning/20">
-                  <div className="font-medium text-sm">Weather Widget UX</div>
-                  <div className="text-xs text-base-content/70">Clear unit indicators</div>
+                  <div className="font-medium text-sm">Optimize Check-in Process Placement</div>
+                  <div className="text-xs text-base-content/70">Promote to homepage hero section</div>
                 </div>
                 <div className="p-3 bg-warning/10 rounded border border-warning/20">
-                  <div className="font-medium text-sm">Remove Redundancy</div>
-                  <div className="text-xs text-base-content/70">Merge duplicate pages</div>
+                  <div className="font-medium text-sm">Implement Proper Transaction Feedback</div>
+                  <div className="text-xs text-base-content/70">Real-time order tracking system</div>
+                </div>
+                <div className="p-3 bg-warning/10 rounded border border-warning/20">
+                  <div className="font-medium text-sm">Streamline Menu Structure</div>
+                  <div className="text-xs text-base-content/70">Journey-stage intelligence implementation</div>
                 </div>
               </div>
             </div>
 
-            {/* Week 5-8: Revenue Optimization */}
+            {/* Long-term Strategic (8-12 weeks) */}
             <div className="space-y-4">
-              <h3 className="font-bold text-success flex items-center gap-2">
+              <h3 className="font-bold text-error flex items-center gap-2">
                 <Star className="w-5 h-5" />
-                Week 5-8: Revenue Features
+                Long-term Strategic (8-12 weeks)
               </h3>
               <div className="space-y-2">
-                <div className="p-3 bg-success/10 rounded border border-success/20">
-                  <div className="font-medium text-sm">Order Tracking System</div>
-                  <div className="text-xs text-base-content/70">Real-time status updates</div>
+                <div className="p-3 bg-error/10 rounded border border-error/20">
+                  <div className="font-medium text-sm">Integrate External Features Natively</div>
+                  <div className="text-xs text-base-content/70">In-app webviews with return navigation</div>
                 </div>
-                <div className="p-3 bg-success/10 rounded border border-success/20">
-                  <div className="font-medium text-sm">Upselling Engine</div>
-                  <div className="text-xs text-base-content/70">Dynamic upgrade offers</div>
+                <div className="p-3 bg-error/10 rounded border border-error/20">
+                  <div className="font-medium text-sm">Develop Local Partnership Revenue Models</div>
+                  <div className="text-xs text-base-content/70">Commission opportunities and monetization</div>
                 </div>
-                <div className="p-3 bg-success/10 rounded border border-success/20">
-                  <div className="font-medium text-sm">Context-Aware Products</div>
-                  <div className="text-xs text-base-content/70">Weather-based suggestions</div>
+                <div className="p-3 bg-error/10 rounded border border-error/20">
+                  <div className="font-medium text-sm">Implement Comprehensive Booking System Integration</div>
+                  <div className="text-xs text-base-content/70">PMS integration and dynamic upselling</div>
+                </div>
+                <div className="p-3 bg-error/10 rounded border border-error/20">
+                  <div className="font-medium text-sm">Modernize Overall UI Design</div>
+                  <div className="text-xs text-base-content/70">Current design system and microinteractions</div>
                 </div>
               </div>
             </div>
@@ -445,26 +456,34 @@ const CurrentAnalysis = ({ onSectionChange }) => {
         </div>
       </div>
 
-      {/* Business Impact Summary */}
+      {/* Business Impact Analysis */}
       <div className="card bg-error/5 border border-error/20">
         <div className="card-body">
-          <h2 className="text-2xl font-bold mb-4 text-error">Current Cost of These Issues</h2>
+          <h2 className="text-2xl font-bold mb-4 text-error">Business Impact Analysis</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-error">€47K+</div>
-              <div className="text-sm">Projected Annual Revenue Loss</div>
-              <div className="text-xs text-base-content/60">Per 200-room hotel from poor conversion</div>
+              <div className="text-3xl font-bold text-error">80%</div>
+              <div className="text-sm font-medium">User Abandonment</div>
+              <div className="text-xs text-base-content/60">Delete app after first use due to bad UX, slow load times, and crashes</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-warning">73%</div>
-              <div className="text-sm">Guest Willingness Wasted</div>
-              <div className="text-xs text-base-content/60">Want apps but poor experience drives them away</div>
+              <div className="text-3xl font-bold text-warning">70%</div>
+              <div className="text-sm font-medium">Mobile Experience Impact</div>
+              <div className="text-xs text-base-content/60">Users abandon apps due to prolonged loading times</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-info">4x</div>
-              <div className="text-sm">Staff Workload Increase</div>
-              <div className="text-xs text-base-content/60">Due to non-functional digital services</div>
+              <div className="text-3xl font-bold text-info">10%</div>
+              <div className="text-sm font-medium">Per-Second Performance Loss</div>
+              <div className="text-xs text-base-content/60">Visitors lost for each second of loading delay</div>
             </div>
+          </div>
+          <div className="mt-8 p-4 bg-base-200 rounded-lg">
+            <h3 className="font-bold text-lg mb-2">Key Finding</h3>
+            <p className="text-base-content/80">
+              While Straiv's app has comprehensive feature coverage, fundamental UX and technical issues prevent 
+              optimal user adoption and revenue realization. Addressing these systematically will unlock the 
+              identified 35% adoption gap opportunity.
+            </p>
           </div>
         </div>
       </div>

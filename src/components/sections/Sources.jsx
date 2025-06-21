@@ -438,6 +438,85 @@ const Sources = () => {
           type: "Strategy Guide"
         }
       ]
+    },
+    appanalysis: {
+      title: "App Performance & User Expectations",
+      icon: <Smartphone className="w-6 h-6" />,
+      color: "error",
+      sources: [
+        {
+          title: "Mobile App Performance in 2024: Enhancements and Expectations",
+          url: "#",
+          description: "User tolerance and loading time expectations for mobile applications",
+          type: "Performance Study"
+        },
+        {
+          title: "7 Proven Mobile App Loading Speed Tips in 2024",
+          url: "#",
+          description: "Industry benchmarks and optimization strategies for app performance",
+          type: "Optimization Guide"
+        },
+        {
+          title: "Mobile App User Expectations: You Have Two Seconds (or Less) to Impress",
+          url: "#",
+          description: "User abandonment patterns and expectations for mobile applications",
+          type: "User Behavior Study"
+        },
+        {
+          title: "How App Load Time Affects User Acquisition",
+          url: "#",
+          description: "Impact of performance on user retention and acquisition rates",
+          type: "Acquisition Analysis"
+        },
+        {
+          title: "Response Time Limits: Article by Jakob Nielsen",
+          url: "https://www.nngroup.com/articles/response-times-3-important-limits/",
+          description: "Classic UX response time guidelines and user interface expectations",
+          type: "UX Guidelines"
+        },
+        {
+          title: "Making PWAs Installable - Progressive Web Apps | MDN",
+          url: "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installable_PWAs",
+          description: "Technical implementation requirements for PWA installation",
+          type: "Technical Documentation"
+        },
+        {
+          title: "Installation Prompt | web.dev",
+          url: "https://web.dev/install-criteria/",
+          description: "Browser installation patterns and user experience for PWAs",
+          type: "Developer Guide"
+        },
+        {
+          title: "How to Provide Your Own In-App Install Experience",
+          url: "https://web.dev/customize-install/",
+          description: "Custom installation flow implementation for Progressive Web Apps",
+          type: "Implementation Guide"
+        },
+        {
+          title: "PWA on iOS - Current Status & Limitations",
+          url: "#",
+          description: "iOS-specific PWA constraints and workarounds for mobile apps",
+          type: "Platform Analysis"
+        },
+        {
+          title: "Effective Tips to Optimize Mobile App Loading Times",
+          url: "#",
+          description: "Performance optimization techniques for mobile applications",
+          type: "Performance Guide"
+        },
+        {
+          title: "Mobile App Performance: How to Improve and Test It?",
+          url: "#",
+          description: "Testing methodologies and metrics for mobile app performance",
+          type: "Testing Guide"
+        },
+        {
+          title: "How To Make Apps Load Faster in 2025? 7 Proven Tips",
+          url: "#",
+          description: "Current optimization best practices for mobile app performance",
+          type: "Best Practices"
+        }
+      ]
     }
   };
 
@@ -499,7 +578,19 @@ const Sources = () => {
       "Industry Analysis": "badge-success",
       "Global Survey": "badge-warning",
       "Impact Study": "badge-error",
-      "Localization Strategy": "badge-neutral"
+      "Localization Strategy": "badge-neutral",
+      "Performance Study": "badge-error",
+      "Optimization Guide": "badge-primary",
+      "User Behavior Study": "badge-secondary",
+      "Acquisition Analysis": "badge-accent",
+      "UX Guidelines": "badge-info",
+      "Technical Documentation": "badge-success",
+      "Developer Guide": "badge-warning",
+      "Implementation Guide": "badge-error",
+      "Platform Analysis": "badge-neutral",
+      "Performance Guide": "badge-primary",
+      "Testing Guide": "badge-secondary",
+      "Best Practices": "badge-accent"
     };
     return colors[type] || "badge-ghost";
   };
