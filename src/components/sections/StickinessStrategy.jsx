@@ -38,34 +38,34 @@ const StickinessStrategy = ({ onSectionChange }) => {
         'Generic experience regardless of guest type or trip purpose'
       ],
       myStrategy: [
-        'Smart notification sequence: 7 days, 2 days, arrival day',
-        'Contextualized preparation: weather, local events, personalized suggestions',
-        'Frictionless express check-in with progress gamification',
-        'Digital key pre-activation and room assignment optimization'
+        'Automated push notifications at key intervals: booking confirmation, 7 days out, day before, arrival day',
+        'Weather API integration for location-specific packing suggestions and local event feeds',
+        'Progressive check-in completion with clear steps and immediate room assignment',
+        'Express check-in preparation 4 hours before arrival (room assignment, digital key setup when available)'
       ],
       features: [
         {
-          title: 'Journey Countdown',
-          description: 'Interactive timeline showing trip approach with personalized milestones',
-          impact: '+45% pre-arrival engagement',
+          title: 'Pre-Arrival Timeline Dashboard',
+          description: 'Visual countdown with actionable steps: complete check-in (day 7), get weather forecast (day 2), activate digital key (arrival day)',
+          impact: 'Clear next actions',
           icon: <Clock className="w-5 h-5" />
         },
         {
-          title: 'Contextual Prep Assistant',
-          description: 'Weather-aware packing suggestions, local event alerts, transport optimization',
-          impact: '+60% travel satisfaction',
+          title: 'Smart Pre-Arrival Checklist',
+          description: 'Weather-based packing tips, local event alerts from city APIs, transport options with real-time data',
+          impact: 'Practical preparation',
           icon: <Brain className="w-5 h-5" />
         },
         {
-          title: 'Express Check-in Gamification',
-          description: 'Complete check-in to unlock local insider tips and bonus amenities',
-          impact: '+280% digital check-in adoption',
+          title: 'Progressive Check-in Flow',
+          description: 'Complete profile → select preferences → get room assignment → prepare digital access. Each step unlocks next feature',
+          impact: 'Higher completion rates',
           icon: <Target className="w-5 h-5" />
         },
         {
-          title: 'Anticipation Content Hub',
-          description: 'Photo stories of hotel experiences, guest testimonials, curated local highlights',
-          impact: '+120% app session time',
+          title: 'Hotel Preview Gallery',
+          description: 'Real guest photos by room type, facility walkthroughs, staff introductions, and recent guest testimonials',
+          impact: 'Builds anticipation',
           icon: <Eye className="w-5 h-5" />
         }
       ]
@@ -84,34 +84,34 @@ const StickinessStrategy = ({ onSectionChange }) => {
         'Broken service flows (shop, restaurant, spa booking)'
       ],
       myStrategy: [
-        'Contextual dashboard adapting to time, weather, guest preferences',
-        'Proactive service suggestions based on guest behavior patterns',
-        'Seamless service delivery tracking with real-time updates',
-        'Smart upselling integrated into natural service moments'
+        'Time-based dashboard: breakfast/weather (6-10am), activities (10am-5pm), dining/entertainment (5-10pm)',
+        'Service suggestions based on booking patterns and time-of-day preferences: morning gym bookings → spa offers, dining reservations → late checkout options',
+        'Real-time service status updates with PMS integration and staff notification system',
+        'Context-aware upselling: check-in → room upgrade, spa booking → package deals, dining → wine pairings'
       ],
       features: [
         {
-          title: 'Contextual Smart Dashboard',
-          description: 'Morning: breakfast & weather. Evening: dining & entertainment. Personalized based on preferences',
-          impact: '+190% service engagement',
+          title: 'Time-Adaptive Dashboard',
+          description: 'Homepage changes by time: Morning shows breakfast hours + weather. Evening shows restaurant availability + events',
+          impact: 'Relevant content always',
           icon: <Smartphone className="w-5 h-5" />
         },
         {
-          title: 'Proactive Service Assistant',
-          description: 'AI suggests spa time before dinner, umbrella before rain, late checkout for leisure guests',
-          impact: '+85% service attachment rate',
+          title: 'Predictive Service Alerts',
+          description: 'Monitor wait times, suggest optimal spa/dining slots, track service requests. Based on booking history and time-of-day patterns',
+          impact: 'Reduced wait times',
           icon: <Bell className="w-5 h-5" />
         },
         {
-          title: 'Seamless Service Tracking',
-          description: 'Real-time updates: "Your coffee is brewing", "Spa slot confirmed", "Room service in 12 minutes"',
-          impact: '+95% service satisfaction',
+          title: 'Live Service Status Tracking',
+          description: 'PMS integration shows real updates: "Housekeeping notified", "Kitchen received order", "Spa confirms 3pm slot"',
+          impact: 'Eliminates uncertainty',
           icon: <CheckCircle className="w-5 h-5" />
         },
         {
-          title: 'Natural Upselling Moments',
-          description: 'Suggest room upgrade during express check-in, spa package after gym booking',
-          impact: '+340% upselling conversion',
+          title: 'Contextual Revenue Opportunities',
+          description: 'Room upgrade during check-in, spa packages after gym visits, wine recommendations during restaurant bookings',
+          impact: 'Natural upselling',
           icon: <TrendingUp className="w-5 h-5" />
         }
       ]
@@ -130,34 +130,34 @@ const StickinessStrategy = ({ onSectionChange }) => {
         'No social sharing or experience amplification'
       ],
       myStrategy: [
-        'Personalized journey memory creation with photo compilation',
-        'Strategic follow-up sequence: gratitude → feedback → re-engagement',
-        'Social sharing triggers with branded content creation',
-        'Loyalty progression visible and gamified across hotel network'
+        'Automated photo compilation from hotel galleries, guest uploads, and location check-ins during stay',
+        'Timed follow-up sequence: immediate thank you, 3-day photo delivery, 2-week local updates, 3-month return offers',
+        'One-tap social sharing with branded templates and automatic friend tagging capabilities',
+        'Existing loyalty program integration with visible progress tracking and cross-property benefits'
       ],
       features: [
         {
-          title: 'Journey Memory Creation',
-          description: 'Auto-generate personalized photo/video recap of stay with shareable highlights',
-          impact: '+450% social media sharing',
+          title: 'Automated Photo Compilation',
+          description: 'Generate shareable stay highlights with hotel branding, guest photos, and location memories for social media',
+          impact: 'Increases social sharing',
           icon: <Star className="w-5 h-5" />
         },
         {
-          title: 'Strategic Re-engagement Sequence',
-          description: 'Day 3: thank you + photos. Week 2: local events. Month 3: return incentives',
-          impact: '+180% repeat booking rate',
+          title: 'Timed Re-engagement Campaign',
+          description: 'Day 3: Thank you + photo compilation. Week 2: Local events happening now. Month 3: Return incentives',
+          impact: 'Maintains connection',
           icon: <Calendar className="w-5 h-5" />
         },
         {
-          title: 'Loyalty Network Progression',
-          description: 'Points, status, perks visible across 3,400+ hotels with achievement unlocks',
-          impact: '+65% network booking preference',
+          title: 'Loyalty Program Integration',
+          description: 'Connect with existing Straiv loyalty system. Show points earned, status progress, and available perks across network',
+          impact: 'Leverages existing system',
           icon: <Shield className="w-5 h-5" />
         },
         {
-          title: 'Referral Amplification Engine',
-          description: 'Easy sharing with friends: "Alex stayed here and loved it" + booking incentives',
-          impact: '+290% referral conversions',
+          title: 'Friend Referral System',
+          description: 'Share stay experience with contacts, automatic booking links, referral tracking, and mutual incentives',
+          impact: 'Drives new bookings',
           icon: <Users className="w-5 h-5" />
         }
       ]
@@ -172,7 +172,6 @@ const StickinessStrategy = ({ onSectionChange }) => {
     <div className="space-y-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="badge badge-primary badge-lg mb-4">Part 1: Stickiness</div>
         <h1 className="text-4xl font-bold text-base-content mb-4">
           My Stickiness Strategy
         </h1>
@@ -180,15 +179,15 @@ const StickinessStrategy = ({ onSectionChange }) => {
           Journey-Stage Intelligence Framework
         </h2>
         <p className="text-lg text-base-content/80 max-w-4xl mx-auto">
-          My core recommendation: Transform Straiv's app from static information portal to intelligent companion 
-          that anticipates needs, creates habit-forming interactions, and becomes integral to every guest journey.
+          My core recommendation: Transform Straiv's app from static information portal to journey-aware service platform 
+          that adapts content by time and context, integrates with hotel operations, and maintains guest relationships beyond checkout.
         </p>
       </div>
 
       {/* Journey-Stage Framework */}
       <div className="card bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border border-primary/20">
         <div className="card-body">
-          <h2 className="text-2xl font-bold mb-6 text-center">My Three-Stage Journey Intelligence</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Journey-Aware Service Platform Strategy</h2>
           
           {/* Stage Navigation */}
           <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">

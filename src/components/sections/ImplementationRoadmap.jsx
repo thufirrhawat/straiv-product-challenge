@@ -319,7 +319,6 @@ const ImplementationRoadmap = ({ onSectionChange }) => {
     <div className="space-y-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="badge badge-primary badge-lg mb-4">Implementation</div>
         <h1 className="text-4xl font-bold text-base-content mb-4">
           My Implementation Roadmap
         </h1>

@@ -232,7 +232,6 @@ const ConversionStrategy = ({ onSectionChange }) => {
     <div className="space-y-12">
       {/* Header */}
       <div className="text-center mb-12">
-        <div className="badge badge-secondary badge-lg mb-4">Part 1: Conversion</div>
         <h1 className="text-4xl font-bold text-base-content mb-4">
           My Conversion Strategy
         </h1>

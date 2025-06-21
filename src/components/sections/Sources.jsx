@@ -599,7 +599,6 @@ const Sources = () => {
       <div className="hero bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 rounded-3xl border border-primary/10">
         <div className="hero-content text-center py-12 px-8">
           <div className="max-w-4xl">
-            <div className="badge badge-primary badge-lg mb-4">Research Foundation</div>
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               <span className="text-base-content">Research Sources &</span><br />
               <span className="text-primary">Data References</span>
