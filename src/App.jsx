@@ -48,7 +48,7 @@ function App() {
 
   return (
     <div data-theme="straiv">
-      <Router>
+      <Router basename="/straiv-product-challenge">
         {isAuthenticated ? (
           <Routes>
             <Route path="/" element={<Navigate to="/overview" replace />} />
