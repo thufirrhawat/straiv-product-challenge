@@ -294,77 +294,121 @@ const CurrentAnalysis = ({ onSectionChange }) => {
       </div>
 
       {/* Issue Categories */}
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {criticalIssues.map((category, categoryIndex) => (
-          <div key={categoryIndex} className={`card bg-base-100 border border-${getSeverityColor(category.severity)}/20`}>
-            <div className="card-body">
-              <div 
-                className="flex items-center justify-between cursor-pointer"
-                onClick={() => setExpandedCategory(expandedCategory === categoryIndex ? null : categoryIndex)}
-              >
-                <div className="flex items-center gap-4">
-                  <div className={`p-3 rounded-lg bg-${getSeverityColor(category.severity)}/10`}>
-                    <div className={`text-${getSeverityColor(category.severity)}`}>
-                      {category.icon}
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold">{category.category}</h3>
-                    <p className="text-base-content/70">{category.description}</p>
+          <div key={categoryIndex} className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-base-100 to-base-200 border-2 border-${getSeverityColor(category.severity)}/20 hover:border-${getSeverityColor(category.severity)}/40 transition-all duration-300 hover:shadow-xl hover:shadow-${getSeverityColor(category.severity)}/10`}>
+            {/* Category Header */}
+            <div className="relative p-6 pb-4">
+              <div className="absolute top-4 right-4">
+                {getSeverityBadge(category.severity)}
+              </div>
+              
+              <div className="flex items-start gap-4 mb-4">
+                <div className={`p-4 rounded-xl bg-gradient-to-br from-${getSeverityColor(category.severity)}/20 to-${getSeverityColor(category.severity)}/10 group-hover:from-${getSeverityColor(category.severity)}/30 group-hover:to-${getSeverityColor(category.severity)}/20 transition-all duration-300`}>
+                  <div className={`text-${getSeverityColor(category.severity)} group-hover:scale-110 transition-transform duration-300`}>
+                    {category.icon}
                   </div>
                 </div>
-                <div className="text-right">
-                  {getSeverityBadge(category.severity)}
-                  <div className="text-2xl font-bold mt-2">{category.count}</div>
-                  <div className="text-xs">Issues</div>
-                  {expandedCategory === categoryIndex ? <ChevronUp className="w-5 h-5 mt-2" /> : <ChevronDown className="w-5 h-5 mt-2" />}
+                <div className="flex-1 pt-1">
+                  <h3 className="text-xl font-bold text-base-content mb-2 group-hover:text-primary transition-colors">
+                    {category.category}
+                  </h3>
+                  <p className="text-base-content/70 text-sm leading-relaxed">
+                    {category.description}
+                  </p>
                 </div>
               </div>
 
-              {/* Expanded Issues List */}
-              {expandedCategory === categoryIndex && (
-                <div className="mt-6 space-y-4">
-                  {category.issues.map((issue, issueIndex) => (
-                    <div 
-                      key={issueIndex} 
-                      className={`p-4 border border-${getSeverityColor(issue.severity)}/20 rounded-lg hover:bg-base-200 cursor-pointer transition-all`}
-                      onClick={() => setSelectedIssue(selectedIssue === `${categoryIndex}-${issueIndex}` ? null : `${categoryIndex}-${issueIndex}`)}
-                    >
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-start gap-3 mb-2">
+              {/* Issues Count & Expand Button */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`px-3 py-1 rounded-full bg-${getSeverityColor(category.severity)}/10 border border-${getSeverityColor(category.severity)}/20`}>
+                    <span className={`text-${getSeverityColor(category.severity)} font-bold text-lg`}>{category.count}</span>
+                    <span className="text-base-content/60 text-sm ml-1">issues</span>
+                  </div>
+                </div>
+                
+                <button
+                  onClick={() => setExpandedCategory(expandedCategory === categoryIndex ? null : categoryIndex)}
+                  className={`btn btn-sm btn-ghost gap-2 hover:bg-${getSeverityColor(category.severity)}/10 transition-all duration-300`}
+                >
+                  <span className="text-sm font-medium">
+                    {expandedCategory === categoryIndex ? 'Hide Details' : 'View Details'}
+                  </span>
+                  {expandedCategory === categoryIndex ? 
+                    <ChevronUp className="w-4 h-4" /> : 
+                    <ChevronDown className="w-4 h-4" />
+                  }
+                </button>
+              </div>
+            </div>
+
+            {/* Expanded Issues List */}
+            {expandedCategory === categoryIndex && (
+              <div className="px-6 pb-6 space-y-3 animate-in slide-in-from-top-2 duration-300">
+                <div className="h-px bg-gradient-to-r from-transparent via-base-300 to-transparent mb-4"></div>
+                
+                {category.issues.map((issue, issueIndex) => (
+                  <div 
+                    key={issueIndex} 
+                    className={`group/issue relative overflow-hidden rounded-xl bg-base-100 border border-${getSeverityColor(issue.severity)}/20 hover:border-${getSeverityColor(issue.severity)}/40 hover:shadow-lg transition-all duration-300 cursor-pointer`}
+                    onClick={() => setSelectedIssue(selectedIssue === `${categoryIndex}-${issueIndex}` ? null : `${categoryIndex}-${issueIndex}`)}
+                  >
+                    <div className="p-4">
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-start gap-3 flex-1">
+                          <div className="mt-1">
                             {getSeverityBadge(issue.severity)}
-                            <h4 className="font-semibold text-lg">{issue.title}</h4>
                           </div>
-                          <p className="text-base-content/80 mb-2">{issue.description}</p>
-                          <div className="flex items-center gap-4 text-sm">
-                            <span className="badge badge-outline">Impact: {issue.impact}</span>
-                            <span className="badge badge-outline">Fix: {issue.timeline}</span>
+                          <div className="flex-1">
+                            <h4 className="font-semibold text-base text-base-content group-hover/issue:text-primary transition-colors mb-1">
+                              {issue.title}
+                            </h4>
+                            <p className="text-sm text-base-content/70 leading-relaxed">
+                              {issue.description}
+                            </p>
                           </div>
                         </div>
-                        <ArrowRight className="w-5 h-5 text-base-content/50" />
+                        <div className="flex flex-col items-end gap-2 ml-4">
+                          <ArrowRight className={`w-4 h-4 text-base-content/40 group-hover/issue:text-${getSeverityColor(issue.severity)} group-hover/issue:translate-x-1 transition-all duration-300`} />
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-3 text-xs">
+                        <span className={`px-2 py-1 rounded-full bg-${getSeverityColor(issue.severity)}/10 text-${getSeverityColor(issue.severity)} font-medium`}>
+                          Impact: {issue.impact}
+                        </span>
+                        <span className="px-2 py-1 rounded-full bg-base-200 text-base-content/70 font-medium">
+                          Fix: {issue.timeline}
+                        </span>
                       </div>
 
                       {/* Detailed Issue View */}
                       {selectedIssue === `${categoryIndex}-${issueIndex}` && (
-                        <div className="mt-4 pt-4 border-t border-base-300">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                              <h5 className="font-semibold text-error mb-2">Business Impact</h5>
-                              <p className="text-sm text-base-content/80 mb-4">{issue.businessImpact}</p>
+                        <div className="mt-4 pt-4 border-t border-base-300 animate-in slide-in-from-top-1 duration-200">
+                          <div className="grid grid-cols-1 gap-4">
+                            <div className="p-3 rounded-lg bg-error/5 border border-error/20">
+                              <h5 className="font-semibold text-error mb-2 flex items-center gap-2">
+                                <AlertTriangle className="w-4 h-4" />
+                                Business Impact
+                              </h5>
+                              <p className="text-sm text-base-content/80 leading-relaxed">{issue.businessImpact}</p>
                             </div>
-                            <div>
-                              <h5 className="font-semibold text-success mb-2">Recommended Solution</h5>
-                              <p className="text-sm text-base-content/80 mb-4">{issue.solution}</p>
+                            <div className="p-3 rounded-lg bg-success/5 border border-success/20">
+                              <h5 className="font-semibold text-success mb-2 flex items-center gap-2">
+                                <CheckCircle className="w-4 h-4" />
+                                Recommended Solution
+                              </h5>
+                              <p className="text-sm text-base-content/80 leading-relaxed">{issue.solution}</p>
                             </div>
                           </div>
                         </div>
                       )}
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
