@@ -258,9 +258,14 @@ const ConversionStrategy = ({ onSectionChange }) => {
               <h3 className="text-lg font-bold text-error mb-4">Current Performance</h3>
               <div className="space-y-3">
                 {Object.entries(overallImpactMetrics.conversionFunnel.current).map(([stage, rate]) => (
-                  <div key={stage} className="flex items-center justify-between p-3 bg-error/10 rounded border border-error/20">
+                  <div key={stage} className="flex items-center justify-between p-3 bg-error/10 rounded border border-error/20 min-h-[60px]">
                     <span className="capitalize font-medium">{stage}</span>
-                    <span className="font-bold text-error">{rate}</span>
+                    <div className="text-right">
+                      <span className="font-bold text-error">{rate}</span>
+                      <div className="text-xs text-error/70">
+                        Current baseline
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -271,13 +276,12 @@ const ConversionStrategy = ({ onSectionChange }) => {
               <h3 className="text-lg font-bold text-success mb-4">My Target Performance</h3>
               <div className="space-y-3">
                 {Object.entries(overallImpactMetrics.conversionFunnel.target).map(([stage, rate]) => (
-                  <div key={stage} className="flex items-center justify-between p-3 bg-success/10 rounded border border-success/20">
+                  <div key={stage} className="flex items-center justify-between p-3 bg-success/10 rounded border border-success/20 min-h-[60px]">
                     <span className="capitalize font-medium">{stage}</span>
                     <div className="text-right">
                       <span className="font-bold text-success">{rate}</span>
                       <div className="text-xs text-success/70">
-                        {stage !== 'awareness' && stage !== 'loyalty' && 'Target improvement'}
-                        {stage === 'loyalty' && 'Target improvement'}
+                        Target improvement
                       </div>
                     </div>
                   </div>
@@ -328,9 +332,9 @@ const ConversionStrategy = ({ onSectionChange }) => {
                 <h4 className="font-bold text-error mb-4">Current Problems:</h4>
                 <div className="space-y-3">
                   {getActiveArea().currentProblems.map((problem, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-error/5 rounded border border-error/20">
-                      <div className="w-2 h-2 bg-error rounded-full mt-2"></div>
-                      <span className="text-sm text-base-content/80">{problem}</span>
+                    <div key={index} className="flex items-start gap-3 p-3 bg-error/5 rounded border border-error/20 min-h-[80px]">
+                      <div className="w-2 h-2 bg-error rounded-full mt-2 shrink-0"></div>
+                      <span className="text-sm text-base-content/80 leading-relaxed">{problem}</span>
                     </div>
                   ))}
                 </div>
@@ -339,9 +343,9 @@ const ConversionStrategy = ({ onSectionChange }) => {
                 <h4 className="font-bold text-success mb-4">My Strategy:</h4>
                 <div className="space-y-3">
                   {getActiveArea().myStrategy.map((strategy, index) => (
-                    <div key={index} className="flex items-start gap-3 p-3 bg-success/5 rounded border border-success/20">
-                      <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                      <span className="text-sm text-base-content/80">{strategy}</span>
+                    <div key={index} className="flex items-start gap-3 p-3 bg-success/5 rounded border border-success/20 min-h-[80px]">
+                      <CheckCircle className="w-4 h-4 text-success mt-0.5 shrink-0" />
+                      <span className="text-sm text-base-content/80 leading-relaxed">{strategy}</span>
                     </div>
                   ))}
                 </div>
@@ -353,9 +357,9 @@ const ConversionStrategy = ({ onSectionChange }) => {
               {getActiveArea().improvements.map((improvement, index) => (
                 <div key={index} className={`card bg-base-100 border border-${getActiveArea().color}/20`}>
                   <div className="card-body p-6">
-                    <div className="flex items-start justify-between mb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                       <h5 className="font-bold text-lg">{improvement.title}</h5>
-                      <div className={`badge badge-${getActiveArea().color} badge-sm`}>{improvement.impact}</div>
+                      <div className={`badge badge-${getActiveArea().color} badge-sm shrink-0 self-start`}>{improvement.impact}</div>
                     </div>
                     <p className="text-sm text-base-content/80 mb-4">{improvement.description}</p>
                     <div className="p-3 bg-base-200 rounded-lg">
@@ -374,13 +378,13 @@ const ConversionStrategy = ({ onSectionChange }) => {
       <div className="card bg-gradient-to-r from-success/10 to-primary/10 border border-success/20">
         <div className="card-body">
           <h2 className="text-2xl font-bold mb-6 text-center">Projected Revenue Impact</h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {Object.entries(overallImpactMetrics.revenueImpact).map(([category, data]) => (
               <div key={category} className="text-center">
                 <div className="text-2xl font-bold text-success mb-1">{data.target}</div>
                 <div className="text-sm text-base-content/70 mb-1">{category.replace(/([A-Z])/g, ' $1').trim()}</div>
                 <div className="text-xs text-base-content/50 mb-2">vs {data.current}</div>
-                <div className="badge badge-success badge-sm">{data.improvement}</div>
+                <div className="badge badge-success badge-sm whitespace-nowrap">{data.improvement}</div>
               </div>
             ))}
           </div>
