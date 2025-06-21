@@ -57,12 +57,18 @@ const Layout = ({ onLogout }) => {
     if (!urlToSection[section]) {
       navigate('/overview', { replace: true });
     }
+    
+    // Scroll to top when section changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [section, navigate]);
 
   const handleSectionChange = (sectionValue) => {
     const urlSlug = sectionToUrl[sectionValue];
     navigate(`/${urlSlug}`);
     setIsMobileMenuOpen(false);
+    
+    // Scroll to top immediately when navigation is triggered
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     
     // Update demo state
     const updatedState = {

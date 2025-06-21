@@ -11,6 +11,14 @@ import {
 } from 'lucide-react';
 
 const Overview = ({ onSectionChange, navigate }) => {
+  
+  // Helper function to handle navigation with scroll-to-top
+  const handleNavigation = (path) => {
+    if (navigate) {
+      navigate(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
 
   const currentAppAnalysis = {
@@ -203,7 +211,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <button 
           className="card bg-gradient-to-r from-error to-warning text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => navigate ? navigate('/current-analysis') : onSectionChange('current-analysis')}
+          onClick={() => navigate ? handleNavigation('/current-analysis') : onSectionChange('current-analysis')}
         >
           <div className="card-body text-center">
             <AlertTriangle className="w-12 h-12 mx-auto mb-4" />
@@ -217,7 +225,7 @@ const Overview = ({ onSectionChange, navigate }) => {
 
         <button 
           className="card bg-gradient-to-r from-primary to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => navigate ? navigate('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
+          onClick={() => navigate ? handleNavigation('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
         >
           <div className="card-body text-center">
             <Zap className="w-12 h-12 mx-auto mb-4" />
@@ -231,7 +239,7 @@ const Overview = ({ onSectionChange, navigate }) => {
 
         <button 
           className="card bg-gradient-to-r from-accent to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => navigate ? navigate('/prototype-demo') : onSectionChange('prototype-demo')}
+          onClick={() => navigate ? handleNavigation('/prototype-demo') : onSectionChange('prototype-demo')}
         >
           <div className="card-body text-center">
             <Smartphone className="w-12 h-12 mx-auto mb-4" />
@@ -245,7 +253,7 @@ const Overview = ({ onSectionChange, navigate }) => {
 
         <button 
           className="card bg-gradient-to-r from-info to-success text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => navigate ? navigate('/sources') : onSectionChange('sources')}
+          onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
         >
           <div className="card-body text-center">
             <BookOpen className="w-12 h-12 mx-auto mb-4" />
