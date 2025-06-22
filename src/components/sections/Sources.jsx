@@ -24,7 +24,8 @@ import {
   BarChart3,
   Lightbulb,
   Settings,
-  CheckCircle
+  CheckCircle,
+  ArrowRight
 } from 'lucide-react';
 
 const Sources = ({ onSectionChange, navigate }) => {
@@ -508,14 +509,40 @@ const Sources = ({ onSectionChange, navigate }) => {
     ...category,
     subcategories: category.subcategories.map(subcategory => ({
       ...subcategory,
-      sources: subcategory.sources.filter(source =>
-      source.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        source.organization.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      source.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        source.keyInsights.some(insight => insight.toLowerCase().includes(searchTerm.toLowerCase()))
-      )
+      sources: subcategory.sources.filter(source => {
+        const searchLower = searchTerm.toLowerCase();
+        const matches = (
+          source.title.toLowerCase().includes(searchLower) ||
+          source.organization.toLowerCase().includes(searchLower) ||
+          source.description.toLowerCase().includes(searchLower) ||
+          source.type.toLowerCase().includes(searchLower) ||
+          source.keyInsights.some(insight => insight.toLowerCase().includes(searchLower)) ||
+          category.title.toLowerCase().includes(searchLower) ||
+          subcategory.title.toLowerCase().includes(searchLower)
+        );
+        
+        // Debug logging
+        if (searchTerm && matches) {
+          console.log('Match found:', {
+            searchTerm: searchLower,
+            source: source.title,
+            type: source.type,
+            category: category.title,
+            subcategory: subcategory.title
+          });
+        }
+        
+        return matches;
+      })
     })).filter(subcategory => subcategory.sources.length > 0)
   })).filter(category => category.subcategories.length > 0);
+
+  // Debug logging for filtered results
+  if (searchTerm) {
+    console.log('Search term:', searchTerm);
+    console.log('Filtered categories:', filteredCategories);
+    console.log('Total sources found:', filteredCategories.reduce((total, cat) => total + cat.subcategories.reduce((subTotal, sub) => subTotal + sub.sources.length, 0), 0));
+  }
 
   const getTypeColor = (type) => {
     const colors = {
@@ -563,7 +590,7 @@ const Sources = ({ onSectionChange, navigate }) => {
   return (
     <div className="space-y-16">
       {/* Header Section */}
-      <div className="text-center">
+      <div className="text-center max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
           <span className="text-primary">Industry Research</span><br />
           <span className="text-secondary">& Supporting Evidence</span>
@@ -600,39 +627,51 @@ const Sources = ({ onSectionChange, navigate }) => {
           </div>
         </div>
       </div>
-
-        {/* Research Context */}
-        <Tooltip content="All research sources provide direct links to original industry reports, case studies, and benchmarking data supporting strategic recommendations">
-          <div className="alert alert-info max-w-4xl mx-auto cursor-help">
-            <Info className="w-4 h-4" />
-            <div className="text-sm">
-              <div className="font-semibold">Research Foundation:</div>
-              <div>All sources provide direct links to original industry reports, case studies, and benchmarking data</div>
-            </div>
-          </div>
-        </Tooltip>
       </div>
 
       {/* Search Functionality */}
-      <div className="max-w-md mx-auto">
-        <div className="form-control">
-          <div className="input-group">
-            <input
-              type="text"
-              placeholder="Search research sources..." 
-              className="input input-bordered w-full" 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button className="btn btn-square">
-              <Search className="w-5 h-5" />
-            </button>
+      <div className="max-w-4xl mx-auto">
+        <div className="card bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 shadow-lg">
+          <div className="card-body p-6">
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-bold flex items-center justify-center gap-2">
+                <Search className="w-5 h-5 text-primary" />
+                Search All Research Sources
+              </h3>
+              <p className="text-sm text-base-content/70">
+                {searchTerm ? `Searching across all ${sourceCategories.length} categories` : `Search through 50+ sources across ${sourceCategories.length} research categories`}
+              </p>
+            </div>
+            <div className="form-control">
+              <div className="join w-full">
+                <input
+                  type="text"
+                  placeholder="Search titles, organizations, descriptions, or insights..." 
+                  className="input input-bordered input-primary join-item flex-1" 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button className="btn btn-primary join-item">
+                  <Search className="w-5 h-5" />
+                </button>
+              </div>
+              {searchTerm && (
+                <div className="mt-2 text-xs text-base-content/60">
+                  {filteredCategories.reduce((total, cat) => total + cat.subcategories.reduce((subTotal, sub) => subTotal + sub.sources.length, 0), 0)} results found
+                  {filteredCategories.length > 0 && (
+                    <span className="ml-2">
+                      across {filteredCategories.length} categor{filteredCategories.length === 1 ? 'y' : 'ies'}
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Category Navigation */}
-      <div>
+            {/* Category Navigation */}
+      <div className={searchTerm ? 'hidden' : ''}>
         <h2 className="text-3xl font-bold text-center mb-8">Research Categories</h2>
         
         {/* Category Navigation Buttons */}
@@ -643,134 +682,230 @@ const Sources = ({ onSectionChange, navigate }) => {
               className={`btn ${activeCategory === index ? `btn-${category.color}` : 'btn-outline'} gap-2 flex-shrink-0`}
               onClick={() => setActiveCategory(index)}
           >
-            {category.icon}
+            {React.cloneElement(category.icon, { 
+              className: `w-5 h-5 ${activeCategory === index ? 'text-white' : `text-${category.color}`}` 
+            })}
               <span className="hidden sm:inline text-xs">{category.title.split(' ')[0]}</span>
           </button>
         ))}
+        </div>
       </div>
 
-        {/* Active Category Display */}
-        <div className={`card bg-gradient-to-br ${sourceCategories[activeCategory].bgGradient} border-2 ${sourceCategories[activeCategory].borderColor}`}>
-          <div className="card-body p-8">
-            <div className="flex items-start gap-6 mb-8">
-              <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${sourceCategories[activeCategory].borderColor}`}>
-                {sourceCategories[activeCategory].icon}
-              </div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold mb-2">{sourceCategories[activeCategory].title}</h3>
-                <p className="text-base-content/80">{sourceCategories[activeCategory].description}</p>
-            </div>
-            </div>
-
-            {/* Subcategories */}
-            <div className="space-y-8">
-              {(searchTerm ? filteredCategories.find(c => c.id === sourceCategories[activeCategory].id)?.subcategories : sourceCategories[activeCategory].subcategories)?.map((subcategory, subIndex) => (
-                <div key={subIndex} className="space-y-6">
-                  <div className="flex items-center gap-3 mb-4">
-                    {subcategory.icon}
-                    <h4 className="text-xl font-bold">{subcategory.title}</h4>
+      {/* Search Results Display */}
+      {searchTerm ? (
+        <div className="space-y-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold mb-4">Search Results</h2>
+            <p className="text-base-content/70">
+              Found {filteredCategories.reduce((total, cat) => total + cat.subcategories.reduce((subTotal, sub) => subTotal + sub.sources.length, 0), 0)} sources 
+              matching "{searchTerm}"
+            </p>
           </div>
-
-                  {/* Sources Grid */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {subcategory.sources.map((source, sourceIndex) => (
-                      <div key={sourceIndex} className="card bg-base-100 border border-base-300 hover:shadow-lg transition-shadow">
-                <div className="card-body p-6">
-                  <div className="flex items-start justify-between mb-3">
-                            <h5 className="font-bold text-base leading-tight flex-1">{source.title}</h5>
-                            <div className={`badge ${getTypeColor(source.type)} badge-sm ml-2 flex-shrink-0`}>
-                      {source.type}
+            
+            {filteredCategories.map((category, catIndex) => (
+              <div key={category.id} className={`card bg-gradient-to-br ${category.bgGradient} border-2 ${category.borderColor}`}>
+                <div className="card-body p-8">
+                  <div className="flex items-start gap-6 mb-8">
+                    <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${category.borderColor}`}>
+                      {category.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-bold mb-2">{category.title}</h3>
+                      <p className="text-base-content/80">{category.description}</p>
+                      <div className="badge badge-outline mt-2">
+                        {category.subcategories.reduce((total, sub) => total + sub.sources.length, 0)} matching sources
+                      </div>
                     </div>
                   </div>
-                          
-                          <div className="text-sm text-base-content/70 font-medium mb-3">{source.organization}</div>
-                          <p className="text-sm text-base-content/80 mb-4">{source.description}</p>
-                          
-                          {/* Key Insights */}
-                          <div className="mb-4">
-                            <div className="text-xs font-semibold text-base-content/60 mb-2">KEY INSIGHTS</div>
-                            <div className="space-y-1">
-                              {source.keyInsights.map((insight, insightIndex) => (
-                                <div key={insightIndex} className="flex items-start gap-2">
-                                  <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                                  <span className="text-xs text-base-content/80">{insight}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
 
-                          {/* External Link */}
-                          <div className="card-actions">
-                    <a
-                      href={source.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                              className="btn btn-sm btn-outline gap-2"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      View Source
-                    </a>
+                  {/* Subcategories */}
+                  <div className="space-y-8">
+                    {category.subcategories.map((subcategory, subIndex) => (
+                      <div key={subIndex} className="space-y-6">
+                        <div className="flex items-center gap-3 mb-4">
+                          {subcategory.icon}
+                          <h4 className="text-xl font-bold">{subcategory.title}</h4>
+                          <div className="badge badge-sm">{subcategory.sources.length} sources</div>
+                        </div>
+
+                        {/* Sources Grid */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          {subcategory.sources.map((source, sourceIndex) => (
+                            <div key={sourceIndex} className="card bg-base-100 border border-base-300 hover:shadow-lg transition-shadow">
+                              <div className="card-body p-6">
+                                <div className="flex items-start justify-between mb-3">
+                                  <h5 className="font-bold text-base leading-tight flex-1">{source.title}</h5>
+                                  <div className={`badge ${getTypeColor(source.type)} badge-sm ml-2 flex-shrink-0`}>
+                                    {source.type}
+                                  </div>
+                                </div>
+                                
+                                <div className="text-sm text-base-content/70 font-medium mb-3">{source.organization}</div>
+                                <p className="text-sm text-base-content/80 mb-4">{source.description}</p>
+                                
+                                {/* Key Insights */}
+                                <div className="mb-4">
+                                  <div className="text-xs font-semibold text-base-content/60 mb-2">KEY INSIGHTS</div>
+                                  <div className="space-y-1">
+                                    {source.keyInsights.map((insight, insightIndex) => (
+                                      <div key={insightIndex} className="flex items-start gap-2">
+                                        <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                                        <span className="text-xs text-base-content/80">{insight}</span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                {/* External Link */}
+                                <div className="card-actions">
+                                  <a
+                                    href={source.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn btn-sm btn-outline gap-2"
+                                  >
+                                    <ExternalLink className="w-4 h-4" />
+                                    View Source
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
             ))}
+            
+            {filteredCategories.length === 0 && (
+              <div className="text-center py-12">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-xl font-bold mb-2">No results found</h3>
+                <p className="text-base-content/70">Try adjusting your search terms or browse by category below</p>
+                <button 
+                  className="btn btn-primary mt-4"
+                  onClick={() => setSearchTerm('')}
+                >
+                  Clear Search
+                </button>
+              </div>
+            )}
           </div>
-            </div>
-              ))}
-        </div>
-      </div>
+        ) : (
+          /* Active Category Display */
+          <div className={`card bg-gradient-to-br ${sourceCategories[activeCategory].bgGradient} border-2 ${sourceCategories[activeCategory].borderColor}`}>
+            <div className="card-body p-8">
+              <div className="flex items-start gap-6 mb-8">
+                <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${sourceCategories[activeCategory].borderColor}`}>
+                  {sourceCategories[activeCategory].icon}
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-bold mb-2">{sourceCategories[activeCategory].title}</h3>
+                  <p className="text-base-content/80">{sourceCategories[activeCategory].description}</p>
+                </div>
+              </div>
+
+              {/* Subcategories */}
+              <div className="space-y-8">
+                {sourceCategories[activeCategory].subcategories?.map((subcategory, subIndex) => (
+                  <div key={subIndex} className="space-y-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      {subcategory.icon}
+                      <h4 className="text-xl font-bold">{subcategory.title}</h4>
+                    </div>
+
+                    {/* Sources Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      {subcategory.sources.map((source, sourceIndex) => (
+                        <div key={sourceIndex} className="card bg-base-100 border border-base-300 hover:shadow-lg transition-shadow">
+                          <div className="card-body p-6">
+                            <div className="flex items-start justify-between mb-3">
+                              <h5 className="font-bold text-base leading-tight flex-1">{source.title}</h5>
+                              <div className={`badge ${getTypeColor(source.type)} badge-sm ml-2 flex-shrink-0`}>
+                                {source.type}
+                              </div>
+                            </div>
+                            
+                            <div className="text-sm text-base-content/70 font-medium mb-3">{source.organization}</div>
+                            <p className="text-sm text-base-content/80 mb-4">{source.description}</p>
+                            
+                            {/* Key Insights */}
+                            <div className="mb-4">
+                              <div className="text-xs font-semibold text-base-content/60 mb-2">KEY INSIGHTS</div>
+                              <div className="space-y-1">
+                                {source.keyInsights.map((insight, insightIndex) => (
+                                  <div key={insightIndex} className="flex items-start gap-2">
+                                    <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                                    <span className="text-xs text-base-content/80">{insight}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+
+                            {/* External Link */}
+                            <div className="card-actions">
+                              <a
+                                href={source.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn btn-sm btn-outline gap-2"
+                              >
+                                <ExternalLink className="w-4 h-4" />
+                                View Source
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-
+          </div>
+        )}
 
       {/* Strategic Framework Navigation */}
       <div>
-        <h2 className="text-3xl font-bold text-center mb-8">Complete Strategic Framework</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <h2 className="text-3xl font-bold text-center mb-8">Strategic Framework</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           
           <button 
-            className="card bg-gradient-to-r from-primary to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/overview') : onSectionChange('overview')}
           >
             <div className="card-body text-center p-6">
-              <BookOpen className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <BookOpen className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Strategic Overview</h3>
               <p className="text-sm opacity-80">Complete strategy summary and framework</p>
               <div className="card-actions justify-center mt-4">
-                <ExternalLink className="w-5 h-5" />
-            </div>
-            </div>
-          </button>
-
-          <button 
-            className="card bg-gradient-to-r from-success to-info text-base-content hover:scale-105 transition-transform cursor-pointer"
-            onClick={() => navigate ? handleNavigation('/implementation-roadmap') : onSectionChange('implementation-roadmap')}
-          >
-            <div className="card-body text-center p-6">
-              <FileText className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="card-title justify-center text-base">Implementation Roadmap</h3>
-              <p className="text-sm opacity-80">Detailed timeline and execution plan</p>
-              <div className="card-actions justify-center mt-4">
-                <ExternalLink className="w-5 h-5" />
-            </div>
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-accent to-warning text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-secondary to-accent text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/prototype-demo') : onSectionChange('prototype-demo')}
           >
             <div className="card-body text-center p-6">
-              <Eye className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Eye className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Prototype Demo</h3>
               <p className="text-sm opacity-80">Interactive demonstrations of key features</p>
               <div className="card-actions justify-center mt-4">
-                <ExternalLink className="w-5 h-5" />
-          </div>
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
           </button>
-            </div>
+        </div>
       </div>
+
     </div>
   );
 };

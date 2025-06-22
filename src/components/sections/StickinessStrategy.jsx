@@ -41,7 +41,7 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
 
   // Tooltip component for research data
   const Tooltip = ({ children, content }) => (
-    <div className="tooltip tooltip-info" data-tip={content}>
+    <div className="tooltip tooltip-info tooltip-top sm:tooltip-right" data-tip={content}>
       {children}
     </div>
   );
@@ -66,7 +66,7 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
       color: "primary",
       bgGradient: "from-primary/5 to-info/5",
       borderColor: "border-primary/20",
-      icon: <Calendar className="w-12 h-12" />,
+      icon: <Calendar className="w-5 h-5" />,
       businessImpact: {
         costReduction: "$9-10 per check-in front desk operational costs",
         automation: "85%+ AI automation capability for guest inquiries", 
@@ -103,7 +103,7 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
       color: "secondary",
       bgGradient: "from-secondary/5 to-accent/5", 
       borderColor: "border-secondary/20",
-      icon: <Smartphone className="w-12 h-12" />,
+      icon: <Smartphone className="w-5 h-5" />,
       businessImpact: {
         waitTime: "85% shorter wait times through digital check-in automation",
         costReduction: "15% operational cost reduction in check-in processes",
@@ -140,7 +140,7 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
       color: "accent",
       bgGradient: "from-accent/5 to-success/5",
       borderColor: "border-accent/20", 
-      icon: <TrendingUp className="w-12 h-12" />,
+      icon: <TrendingUp className="w-5 h-5" />,
       businessImpact: {
         upselling: "Target 10-20% upselling potential of total guest charges",
         conversion: "Improve from 6.04% industry average to 20%+ top performer upsell rates",
@@ -283,9 +283,11 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
         <div className={`card bg-gradient-to-br ${stickinessFeatures[activeFeature].bgGradient} border-2 ${stickinessFeatures[activeFeature].borderColor} mb-8`}>
           <div className="card-body p-8">
             <div className="flex items-start gap-6 mb-6">
-              <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${stickinessFeatures[activeFeature].borderColor}`}>
+              <div className={`w-16 h-16 rounded-xl bg-base-100 flex items-center justify-center border-2 ${stickinessFeatures[activeFeature].borderColor}`}>
                 <div className={`text-${stickinessFeatures[activeFeature].color}`}>
-                  {stickinessFeatures[activeFeature].icon}
+                  <div className="w-8 h-8">
+                    {React.cloneElement(stickinessFeatures[activeFeature].icon, { className: 'w-8 h-8' })}
+                  </div>
                 </div>
               </div>
               <div className="flex-1">
@@ -354,25 +356,25 @@ const StickinessStrategy = ({ onSectionChange, navigate }) => {
         </div>
 
         {/* Feature Tooltip */}
-        <Tooltip content={stickinessFeatures[activeFeature].tooltip}>
-          <div className="text-center cursor-help">
-            <div className="inline-flex items-center gap-2 text-base-content/60">
+        <div className="text-center">
+          <div className="tooltip tooltip-info tooltip-top" data-tip={stickinessFeatures[activeFeature].tooltip}>
+            <div className="inline-flex items-center gap-2 text-base-content/60 cursor-help">
               <Info className="w-4 h-4" />
               <span className="text-sm">Research Insight Available</span>
             </div>
           </div>
-        </Tooltip>
+        </div>
       </div>
 
       {/* Implementation Framework */}
       <div>
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">Implementation Framework</h2>
-          <Tooltip content="Builds strategically on Straiv's existing technical infrastructure and proven customer satisfaction">
+          <div className="tooltip tooltip-info tooltip-top" data-tip="Builds strategically on Straiv's existing technical infrastructure and proven customer satisfaction">
             <p className="text-lg text-base-content/80 max-w-3xl mx-auto cursor-help">
               Strategic approach leveraging Straiv's existing technical advantages and market position
             </p>
-          </Tooltip>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

@@ -92,7 +92,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "success",
       bgGradient: "from-success/5 to-primary/5",
       borderColor: "border-success/20",
-      icon: <Home className="w-8 h-8 text-success" />,
+      icon: <Home className="w-5 h-5 text-success" />,
       details: {
         marketSize: "60% independent hotels in European market (underserved segment)",
         painPoints: ["Technology gap vs major chains", "Limited digital capabilities", "High operational costs"],
@@ -111,7 +111,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "primary",
       bgGradient: "from-primary/5 to-secondary/5",
       borderColor: "border-primary/20",
-      icon: <Building2 className="w-8 h-8 text-primary" />,
+      icon: <Building2 className="w-5 h-5 text-primary" />,
       details: {
         marketSize: "Regional chains seeking competitive differentiation",
         painPoints: ["Guest experience expectations", "Competition with major brands", "Operational efficiency"],
@@ -130,7 +130,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "secondary",
       bgGradient: "from-secondary/5 to-accent/5",
       borderColor: "border-secondary/20",
-      icon: <Crown className="w-8 h-8 text-secondary" />,
+      icon: <Crown className="w-5 h-5 text-secondary" />,
       details: {
         marketSize: "Major chains with complex operational requirements",
         painPoints: ["Operational cost pressures", "Front desk automation needs", "Scale requirements"],
@@ -148,7 +148,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "info",
       bgGradient: "from-info/5 to-success/5",
       borderColor: "border-info/20",
-      icon: <Megaphone className="w-8 h-8 text-info" />,
+      icon: <Megaphone className="w-5 h-5 text-info" />,
       strategies: [
         {
           strategy: "Co-branded Campaigns",
@@ -176,7 +176,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "primary",
       bgGradient: "from-primary/5 to-info/5", 
       borderColor: "border-primary/20",
-      icon: <LinkIcon className="w-8 h-8 text-primary" />,
+      icon: <LinkIcon className="w-5 h-5 text-primary" />,
       strategies: [
         {
           strategy: "Booking Platform Partnerships",
@@ -204,7 +204,7 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
       color: "accent",
       bgGradient: "from-accent/5 to-warning/5",
       borderColor: "border-accent/20",
-      icon: <Gift className="w-8 h-8 text-accent" />,
+      icon: <Gift className="w-5 h-5 text-accent" />,
       strategies: [
         {
           strategy: "Local Experience Partnerships",
@@ -359,7 +359,9 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
                   className={`btn ${activeTier === index ? `btn-${tier.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
                   onClick={() => setActiveTier(index)}
                 >
-                  {tier.icon}
+                  <div className={activeTier === index ? 'text-white' : `text-${tier.color}`}>
+                    {React.cloneElement(tier.icon, { className: 'w-5 h-5' })}
+                  </div>
                   <span className="hidden sm:inline">{tier.tier}</span>
                 </button>
               ))}
@@ -369,8 +371,10 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
             <div className={`card bg-gradient-to-br ${marketTiers[activeTier].bgGradient} border-2 ${marketTiers[activeTier].borderColor}`}>
               <div className="card-body p-8">
                 <div className="flex items-start gap-6 mb-6">
-                  <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${marketTiers[activeTier].borderColor}`}>
-                    {marketTiers[activeTier].icon}
+                  <div className={`w-16 h-16 rounded-xl bg-base-100 flex items-center justify-center border-2 ${marketTiers[activeTier].borderColor}`}>
+                    <div className="w-8 h-8">
+                      {React.cloneElement(marketTiers[activeTier].icon, { className: 'w-8 h-8' })}
+                    </div>
                   </div>
                   <div className="flex-1">
                     <h4 className="text-2xl font-bold mb-2">
@@ -481,7 +485,9 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
                   className={`btn ${activeChannel === index ? `btn-${channel.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
                   onClick={() => setActiveChannel(index)}
                 >
-                  {channel.icon}
+                  <div className={activeChannel === index ? 'text-white' : `text-${channel.color}`}>
+                    {React.cloneElement(channel.icon, { className: 'w-5 h-5' })}
+                  </div>
                   <span className="hidden sm:inline">{channel.channel}</span>
                 </button>
               ))}
@@ -491,8 +497,10 @@ const GrowthStrategy = ({ onSectionChange, navigate }) => {
             <div className={`card bg-gradient-to-br ${adoptionChannels[activeChannel].bgGradient} border-2 ${adoptionChannels[activeChannel].borderColor}`}>
               <div className="card-body p-8">
                 <div className="flex items-start gap-6 mb-6">
-                  <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${adoptionChannels[activeChannel].borderColor}`}>
-                    {adoptionChannels[activeChannel].icon}
+                  <div className={`w-16 h-16 rounded-xl bg-base-100 flex items-center justify-center border-2 ${adoptionChannels[activeChannel].borderColor}`}>
+                    <div className="w-8 h-8">
+                      {React.cloneElement(adoptionChannels[activeChannel].icon, { className: 'w-8 h-8' })}
+                    </div>
                   </div>
                   <div className="flex-1">
                     <h4 className="text-2xl font-bold mb-2">

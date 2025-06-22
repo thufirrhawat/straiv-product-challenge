@@ -44,7 +44,7 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
 
   // Tooltip component for research data
   const Tooltip = ({ children, content }) => (
-    <div className="tooltip tooltip-info" data-tip={content}>
+    <div className="tooltip tooltip-info tooltip-top sm:tooltip-right" data-tip={content}>
       {children}
     </div>
   );
@@ -65,7 +65,7 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
       color: "primary",
       bgGradient: "from-primary/5 to-info/5",
       borderColor: "border-primary/20",
-      icon: <UserPlus className="w-12 h-12" />,
+      icon: <UserPlus className="w-5 h-5" />,
       currentChallenge: {
         average: "19.2% onboarding completion (hospitality-specific)",
         expectation: "72% expect onboarding to take 60 seconds or less",
@@ -117,7 +117,7 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
       color: "secondary", 
       bgGradient: "from-secondary/5 to-accent/5",
       borderColor: "border-secondary/20",
-      icon: <Calendar className="w-12 h-12" />,
+      icon: <Calendar className="w-5 h-5" />,
       currentChallenge: {
         checkIn: "4% digital check-in adoption vs 54% consumer demand",
         process: "Poor checkout experience with no personalization",
@@ -159,7 +159,7 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
       color: "accent",
       bgGradient: "from-accent/5 to-success/5", 
       borderColor: "border-accent/20",
-      icon: <TrendingUp className="w-12 h-12" />,
+      icon: <TrendingUp className="w-5 h-5" />,
       currentOpportunity: {
         industry: "6.04% upsell conversion rate",
         topPerformers: "Achieve 20%+ conversion rates",
@@ -309,9 +309,11 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
         <div className={`card bg-gradient-to-br ${conversionStrategies[activeStrategy].bgGradient} border-2 ${conversionStrategies[activeStrategy].borderColor} mb-8`}>
           <div className="card-body p-8">
             <div className="flex items-start gap-6 mb-6">
-              <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${conversionStrategies[activeStrategy].borderColor}`}>
+              <div className={`w-16 h-16 rounded-xl bg-base-100 flex items-center justify-center border-2 ${conversionStrategies[activeStrategy].borderColor}`}>
                 <div className={`text-${conversionStrategies[activeStrategy].color}`}>
-                  {conversionStrategies[activeStrategy].icon}
+                  <div className="w-8 h-8">
+                    {React.cloneElement(conversionStrategies[activeStrategy].icon, { className: 'w-8 h-8' })}
+                  </div>
                 </div>
               </div>
               <div className="flex-1">
@@ -324,14 +326,34 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
             {activeStrategy === 0 && (
               <div className="space-y-6">
                 {/* Current Challenge */}
-                <div className="alert alert-warning py-3">
-                  <AlertTriangle className="w-4 h-4" />
-                  <div className="text-sm">
-                    <div className="font-semibold">Current Challenge:</div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
-                      <div>{conversionStrategies[activeStrategy].currentChallenge.average}</div>
-                      <div>{conversionStrategies[activeStrategy].currentChallenge.expectation}</div>
-                      <div>{conversionStrategies[activeStrategy].currentChallenge.impact}</div>
+                <div className="card bg-gradient-to-r from-warning/10 to-error/10 border border-warning/20">
+                  <div className="card-body p-6">
+                    <h4 className="card-title text-lg mb-4 flex items-center gap-2">
+                      <AlertTriangle className="w-5 h-5 text-warning" />
+                      Current Challenge
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <BarChart3 className="w-5 h-5 text-error flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">Completion Rate</div>
+                          <div className="text-sm font-semibold text-error">{conversionStrategies[activeStrategy].currentChallenge.average}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <Clock className="w-5 h-5 text-warning flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">User Expectation</div>
+                          <div className="text-sm font-semibold text-warning">{conversionStrategies[activeStrategy].currentChallenge.expectation}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <Users className="w-5 h-5 text-error flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">Abandonment Risk</div>
+                          <div className="text-sm font-semibold text-error">{conversionStrategies[activeStrategy].currentChallenge.impact}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -426,14 +448,34 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
             {activeStrategy === 2 && (
               <div className="space-y-6">
                 {/* Current Opportunity */}
-                <div className="alert alert-info py-3">
-                  <Info className="w-4 h-4" />
-                  <div className="text-sm">
-                    <div className="font-semibold">Current Opportunity:</div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 mt-2">
-                      <div>Industry: {conversionStrategies[activeStrategy].currentOpportunity.industry}</div>
-                      <div>Top performers: {conversionStrategies[activeStrategy].currentOpportunity.topPerformers}</div>
-                      <div>Potential: {conversionStrategies[activeStrategy].currentOpportunity.potential}</div>
+                <div className="card bg-gradient-to-r from-info/10 to-primary/10 border border-info/20">
+                  <div className="card-body p-6">
+                    <h4 className="card-title text-lg mb-4 flex items-center gap-2">
+                      <Info className="w-5 h-5 text-info" />
+                      Current Opportunity
+                    </h4>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <BarChart3 className="w-5 h-5 text-error flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">Industry Average</div>
+                          <div className="text-sm font-semibold text-error">{conversionStrategies[activeStrategy].currentOpportunity.industry}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <Star className="w-5 h-5 text-success flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">Top Performers</div>
+                          <div className="text-sm font-semibold text-success">{conversionStrategies[activeStrategy].currentOpportunity.topPerformers}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3 p-3 bg-base-100 rounded-lg border border-base-300">
+                        <DollarSign className="w-5 h-5 text-primary flex-shrink-0" />
+                        <div>
+                          <div className="text-xs text-base-content/60 font-medium">Revenue Potential</div>
+                          <div className="text-sm font-semibold text-primary">{conversionStrategies[activeStrategy].currentOpportunity.potential}</div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -490,14 +532,14 @@ const ConversionStrategy = ({ onSectionChange, navigate }) => {
         </div>
 
         {/* Strategy Tooltip */}
-        <Tooltip content={conversionStrategies[activeStrategy].tooltip}>
-          <div className="text-center cursor-help">
-            <div className="inline-flex items-center gap-2 text-base-content/60">
+        <div className="text-center">
+          <div className="tooltip tooltip-info tooltip-top" data-tip={conversionStrategies[activeStrategy].tooltip}>
+            <div className="inline-flex items-center gap-2 text-base-content/60 cursor-help">
               <Info className="w-4 h-4" />
               <span className="text-sm">Research Insight Available</span>
             </div>
           </div>
-        </Tooltip>
+        </div>
       </div>
 
       {/* Success Metrics Dashboard */}

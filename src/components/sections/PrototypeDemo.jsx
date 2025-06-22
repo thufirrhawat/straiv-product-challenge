@@ -57,7 +57,7 @@ const PrototypeDemo = ({ onSectionChange, navigate }) => {
             >
               <div className="flex items-center gap-3 mb-2">
                 <CheckCircle className="w-6 h-6 text-green-500" />
-                <span className="font-bold text-gray-900 text-lg">Room Ready - Check In Now</span>
+                <span className="font-bold text-gray-900 text-lg">Profile Complete - Check In Now!</span>
               </div>
               <div className="text-sm text-gray-700 font-medium mb-3">Digital key activated • Skip the front desk</div>
               <button className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors">
@@ -402,7 +402,7 @@ const PrototypeDemo = ({ onSectionChange, navigate }) => {
           
           <div className="flex-1 p-6 space-y-4">
             <div className="bg-white rounded-xl p-4 shadow-lg border-l-4 border-indigo-500">
-              <div className="text-lg font-bold mb-3">🔮 Predictive Insights</div>
+              <div className="text-lg font-bold mb-3 text-black">🔮 Predictive Insights</div>
               <div className="space-y-3">
                 <div className="bg-indigo-50 p-3 rounded-lg">
                   <div className="font-medium text-indigo-800">Guest likely to order breakfast</div>
@@ -420,18 +420,18 @@ const PrototypeDemo = ({ onSectionChange, navigate }) => {
             </div>
 
             <div className="bg-white rounded-xl p-4 shadow-lg">
-              <div className="text-lg font-bold mb-3">🎯 Proactive Actions</div>
+              <div className="text-lg font-bold mb-3 text-black">🎯 Proactive Actions</div>
             <div className="space-y-2">
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                  <span className="text-sm">Pre-order breakfast suggestion</span>
+                  <span className="text-sm text-black">Pre-order breakfast suggestion</span>
                   <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Send</button>
                 </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                  <span className="text-sm">Spa appointment availability</span>
+                  <span className="text-sm text-black">Spa appointment availability</span>
                   <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Notify</button>
             </div>
                 <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
-                  <span className="text-sm">Weather alert + umbrella offer</span>
+                  <span className="text-sm text-black">Weather alert + umbrella offer</span>
                   <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Alert</button>
                   </div>
             </div>
@@ -612,37 +612,36 @@ const PrototypeDemo = ({ onSectionChange, navigate }) => {
         </div>
 
         {/* Strategic Framework Navigation */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <button 
-            className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            className="card bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/overview') : onSectionChange('overview')}
           >
-            <div className="text-center">
-              <BookOpen className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold">Strategic Overview</h3>
-              <p className="text-sm opacity-90">Complete framework analysis</p>
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <BookOpen className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Strategic Overview</h3>
+              <p className="text-sm opacity-80">Complete framework analysis</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
           </button>
 
           <button 
-            className="group bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
-            onClick={() => navigate ? handleNavigation('/innovation-strategy') : onSectionChange('innovation-strategy')}
+            className="card bg-gradient-to-r from-success to-info text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
           >
-            <div className="text-center">
-              <Brain className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold">Innovation Strategy</h3>
-              <p className="text-sm opacity-90">AI & voice capabilities</p>
-            </div>
-          </button>
-
-          <button 
-            className="group bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
-            onClick={() => navigate ? handleNavigation('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
-          >
-            <div className="text-center">
-              <Star className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-lg font-bold">Stickiness Strategy</h3>
-              <p className="text-sm opacity-90">Journey-stage intelligence</p>
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <FileText className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Research Sources</h3>
+              <p className="text-sm opacity-80">Industry benchmarks and supporting studies</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
           </button>
         </div>

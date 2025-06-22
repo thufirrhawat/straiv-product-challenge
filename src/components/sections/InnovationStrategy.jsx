@@ -46,7 +46,7 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
 
   // Tooltip component for research data
   const Tooltip = ({ children, content }) => (
-    <div className="tooltip tooltip-info" data-tip={content}>
+    <div className="tooltip tooltip-info tooltip-top sm:tooltip-right" data-tip={content}>
       {children}
     </div>
   );
@@ -71,7 +71,7 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
       color: "primary",
       bgGradient: "from-primary/5 to-info/5",
       borderColor: "border-primary/20",
-      icon: <Brain className="w-12 h-12" />,
+      icon: <Brain className="w-5 h-5" />,
       marketContext: "80% of hotels use AI chatbots, 10-15% revenue increases through AI pricing optimization",
       coreCapability: "AI-powered anticipation of guest needs using integrated hotel operational data",
       uniqueAdvantage: "Leverages Straiv's 50+ technology partner integrations unavailable to competitors",
@@ -117,7 +117,7 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
       color: "secondary",
       bgGradient: "from-secondary/5 to-accent/5",
       borderColor: "border-secondary/20", 
-      icon: <Mic className="w-12 h-12" />,
+      icon: <Mic className="w-5 h-5" />,
       marketContext: "54% of hotels offer or plan voice-controlled features, 76.8% daily usage rates",
       coreCapability: "GDPR-compliant natural language processing for guest requests",
       uniqueAdvantage: "European privacy-first voice technology that US competitors cannot easily replicate",
@@ -233,7 +233,9 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
               className={`btn ${activeInnovation === index ? `btn-${innovation.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
               onClick={() => setActiveInnovation(index)}
             >
-              {innovation.icon}
+              {React.cloneElement(innovation.icon, { 
+                className: `w-5 h-5 ${activeInnovation === index ? 'text-white' : `text-${innovation.color}`}` 
+              })}
               <span className="hidden sm:inline">{innovation.title.split(' ')[0]}</span>
               </button>
             ))}
@@ -243,9 +245,11 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
         <div className={`card bg-gradient-to-br ${innovations[activeInnovation].bgGradient} border-2 ${innovations[activeInnovation].borderColor} mb-8`}>
           <div className="card-body p-8">
             <div className="flex items-start gap-6 mb-6">
-              <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${innovations[activeInnovation].borderColor}`}>
+              <div className={`w-16 h-16 rounded-xl bg-base-100 flex items-center justify-center border-2 ${innovations[activeInnovation].borderColor}`}>
                 <div className={`text-${innovations[activeInnovation].color}`}>
-                  {innovations[activeInnovation].icon}
+                  <div className="w-8 h-8">
+                    {React.cloneElement(innovations[activeInnovation].icon, { className: 'w-8 h-8' })}
+                  </div>
                 </div>
               </div>
               <div className="flex-1">
@@ -399,25 +403,25 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
         </div>
 
         {/* Innovation Tooltip */}
-        <Tooltip content={innovations[activeInnovation].tooltip}>
-          <div className="text-center cursor-help">
-            <div className="inline-flex items-center gap-2 text-base-content/60">
+        <div className="text-center">
+          <div className="tooltip tooltip-info tooltip-top" data-tip={innovations[activeInnovation].tooltip}>
+            <div className="inline-flex items-center gap-2 text-base-content/60 cursor-help">
               <Info className="w-4 h-4" />
               <span className="text-sm">Research Insight Available</span>
             </div>
           </div>
-        </Tooltip>
+        </div>
       </div>
 
       {/* Technical Feasibility Assessment */}
       <div>
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-4">Technical Feasibility Assessment</h2>
-          <Tooltip content="Innovation builds on Straiv's proven technical foundation while addressing verified market demand for AI and voice capabilities">
+          <div className="tooltip tooltip-info tooltip-top" data-tip="Innovation builds on Straiv's proven technical foundation while addressing verified market demand for AI and voice capabilities">
             <p className="text-lg text-base-content/80 max-w-3xl mx-auto cursor-help">
               Strategic innovation approach leveraging existing infrastructure and proven capabilities
             </p>
-          </Tooltip>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -515,11 +519,13 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
         <button 
-          className="card bg-gradient-to-r from-success to-primary text-base-content hover:scale-105 transition-transform cursor-pointer"
+          className="card bg-gradient-to-r from-success to-primary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/implementation-roadmap') : onSectionChange('implementation-roadmap')}
           >
             <div className="card-body text-center p-6">
-              <Calendar className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Calendar className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Implementation Roadmap</h3>
               <p className="text-sm opacity-80">Detailed timeline and resource requirements</p>
               <div className="card-actions justify-center mt-4">
@@ -529,11 +535,13 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
         </button>
 
         <button 
-            className="card bg-gradient-to-r from-info to-success text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-info to-success text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/growth-strategy') : onSectionChange('growth-strategy')}
           >
             <div className="card-body text-center p-6">
-              <TrendingUp className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <TrendingUp className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Growth Strategy</h3>
               <p className="text-sm opacity-80">European market expansion and scaling approach</p>
               <div className="card-actions justify-center mt-4">
@@ -543,11 +551,13 @@ const InnovationStrategy = ({ onSectionChange, navigate }) => {
         </button>
 
           <button 
-            className="card bg-gradient-to-r from-primary to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
           >
             <div className="card-body text-center p-6">
-              <Database className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Database className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Research Sources</h3>
               <p className="text-sm opacity-80">Industry benchmarks and supporting studies</p>
               <div className="card-actions justify-center mt-4">

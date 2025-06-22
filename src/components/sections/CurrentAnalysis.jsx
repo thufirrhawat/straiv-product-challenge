@@ -306,7 +306,7 @@ const CurrentAnalysis = ({ onSectionChange, navigate }) => {
                   <div className="alert alert-info py-3">
                     <Info className="w-4 h-4" />
                     <div className="text-sm">
-                      <div className="font-semibold">Research Finding:</div>
+                      <div className="font-semibold">App Benchmark Finding:</div>
                       <div>{priority.researchContext}</div>
                     </div>
                   </div>
@@ -429,10 +429,14 @@ const CurrentAnalysis = ({ onSectionChange, navigate }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {opportunityAreas.map((opportunity, index) => (
               <div key={index} className="card bg-base-100 border border-base-300 hover:shadow-lg transition-all">
-                <div className="card-body text-center p-6">
-                  <h4 className="card-title justify-center text-base mb-3">{opportunity.title}</h4>
-                  <p className="text-sm text-base-content/80 mb-4">{opportunity.impact}</p>
-                  <div className="badge badge-primary badge-lg">{opportunity.value}</div>
+                <div className="card-body text-center p-4 sm:p-6">
+                  <h4 className="card-title justify-center text-sm sm:text-base mb-3 leading-tight">{opportunity.title}</h4>
+                  <p className="text-xs sm:text-sm text-base-content/80 mb-4 leading-relaxed">{opportunity.impact}</p>
+                  <div className="flex justify-center">
+                    <div className="badge badge-primary text-xs sm:text-sm px-3 py-2 sm:px-4 sm:py-3 font-semibold whitespace-nowrap">
+                      {opportunity.value}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

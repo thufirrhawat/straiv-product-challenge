@@ -14,7 +14,11 @@ import {
   CheckCircle,
   BarChart3,
   Clock,
-  Globe
+  Globe,
+  FileText,
+  Calendar,
+  Eye,
+  Layers
 } from 'lucide-react';
 
 const Overview = ({ onSectionChange, navigate }) => {
@@ -155,7 +159,7 @@ const Overview = ({ onSectionChange, navigate }) => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Massive Mobile Optimization Gap in Hospitality
           </h2>
-          <Tooltip content="Industry research shows mobile apps are critical revenue drivers but significantly underperforming compared to desktop experiences">
+          <Tooltip content="Industry research shows mobile solutions are critical revenue drivers but significantly underperforming compared to desktop experiences">
             <div className="inline-flex items-center gap-2 text-lg text-base-content/80 cursor-help">
               <Info className="w-5 h-5" />
               Research-Backed Market Opportunity
@@ -189,7 +193,7 @@ const Overview = ({ onSectionChange, navigate }) => {
                 </div>
                 
                 <div className="flex items-center justify-between p-4 bg-base-100 rounded-lg">
-                  <span className="text-base-content/80">Revenue Increases</span>
+                  <span className="text-base-content/80">Documented Revenue Increases</span>
                   <span className="font-bold text-info">15-37.8%</span>
                 </div>
               </div>
@@ -310,19 +314,21 @@ const Overview = ({ onSectionChange, navigate }) => {
         </div>
       </div>
 
-      {/* Navigation to Detailed Analysis */}
+      {/* Navigation to All Pages */}
       <div>
-        <h2 className="text-3xl font-bold text-center mb-8">Explore Detailed Analysis</h2>
+        <h2 className="text-3xl font-bold text-center mb-8">Complete Strategic Framework</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           
           <button 
-            className="card bg-gradient-to-r from-error to-warning text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-error to-warning text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/current-analysis') : onSectionChange('current-analysis')}
           >
             <div className="card-body text-center p-6">
-              <AlertTriangle className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="card-title justify-center text-base">Current App Analysis</h3>
-              <p className="text-sm opacity-80">Systematic UX evaluation findings and critical improvement areas</p>
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <AlertTriangle className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Current Analysis</h3>
+              <p className="text-sm opacity-80">UX evaluation findings</p>
               <div className="card-actions justify-center mt-4">
                 <ArrowRight className="w-5 h-5" />
               </div>
@@ -330,13 +336,15 @@ const Overview = ({ onSectionChange, navigate }) => {
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-primary to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-primary to-secondary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
           >
             <div className="card-body text-center p-6">
-              <Zap className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Zap className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Stickiness Strategy</h3>
-              <p className="text-sm opacity-80">Journey-Stage Intelligence for maximum engagement and retention</p>
+              <p className="text-sm opacity-80">Journey-stage intelligence</p>
               <div className="card-actions justify-center mt-4">
                 <ArrowRight className="w-5 h-5" />
               </div>
@@ -344,13 +352,15 @@ const Overview = ({ onSectionChange, navigate }) => {
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-accent to-info text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-accent to-info text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/conversion-strategy') : onSectionChange('conversion-strategy')}
           >
             <div className="card-body text-center p-6">
-              <TrendingUp className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <TrendingUp className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Conversion Strategy</h3>
-              <p className="text-sm opacity-80">Transform onboarding and optimize critical revenue touchpoints</p>
+              <p className="text-sm opacity-80">Revenue optimization</p>
               <div className="card-actions justify-center mt-4">
                 <ArrowRight className="w-5 h-5" />
               </div>
@@ -358,42 +368,84 @@ const Overview = ({ onSectionChange, navigate }) => {
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-success to-info text-base-content hover:scale-105 transition-transform cursor-pointer"
-            onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
+            className="card bg-gradient-to-r from-success to-info text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/innovation-strategy') : onSectionChange('innovation-strategy')}
           >
             <div className="card-body text-center p-6">
-              <BookOpen className="w-12 h-12 mx-auto mb-4" />
-              <h3 className="card-title justify-center text-base">Research Sources</h3>
-              <p className="text-sm opacity-80">Industry benchmarks and studies supporting strategic recommendations</p>
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Brain className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Innovation Strategy</h3>
+              <p className="text-sm opacity-80">AI & voice capabilities</p>
               <div className="card-actions justify-center mt-4">
                 <ArrowRight className="w-5 h-5" />
               </div>
             </div>
           </button>
-        </div>
-      </div>
 
-      {/* Market Context Footer */}
-      <div className="card bg-gradient-to-r from-base-200 to-base-300 border border-base-content/10">
-        <div className="card-body text-center p-8">
-          <h3 className="text-2xl font-bold mb-4">Market Opportunity Context</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
-            <div>
-              <DollarSign className="w-8 h-8 mx-auto mb-2 text-primary" />
-              <div className="font-bold">€187.9 Billion</div>
-              <div className="text-base-content/70">European Hotel Market</div>
+          <button 
+            className="card bg-gradient-to-r from-warning to-error text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/growth-strategy') : onSectionChange('growth-strategy')}
+          >
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Globe className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Growth Strategy</h3>
+              <p className="text-sm opacity-80">European expansion</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
-            <div>
-              <BarChart3 className="w-8 h-8 mx-auto mb-2 text-success" />
-              <div className="font-bold">26.18% CAGR</div>
-              <div className="text-base-content/70">Smart Hospitality Growth</div>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-info to-primary text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/implementation-roadmap') : onSectionChange('implementation-roadmap')}
+          >
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Calendar className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Implementation</h3>
+              <p className="text-sm opacity-80">Detailed roadmap</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
-            <div>
-              <Users className="w-8 h-8 mx-auto mb-2 text-info" />
-              <div className="font-bold">100%</div>
-              <div className="text-base-content/70">Hoteliers Plan Tech Investment</div>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-secondary to-accent text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/prototype-demo') : onSectionChange('prototype-demo')}
+          >
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Eye className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Prototype Demo</h3>
+              <p className="text-sm opacity-80">Interactive showcase</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
-          </div>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-success to-info text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
+          >
+            <div className="card-body text-center p-6">
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <BookOpen className="w-8 h-8" />
+              </div>
+              <h3 className="card-title justify-center text-base">Research Sources</h3>
+              <p className="text-sm opacity-80">Industry benchmarks</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+          </button>
         </div>
       </div>
     </div>

@@ -373,7 +373,9 @@ const ImplementationRoadmap = ({ onSectionChange, navigate }) => {
               className={`btn ${activePhase === index ? `btn-${phase.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
               onClick={() => setActivePhase(index)}
             >
-              {phase.icon}
+              {React.cloneElement(phase.icon, { 
+                className: `w-5 h-5 ${activePhase === index ? 'text-white' : `text-${phase.color}`}` 
+              })}
               <span className="hidden sm:inline">Phase {index + 1}</span>
             </button>
           ))}
@@ -575,7 +577,9 @@ const ImplementationRoadmap = ({ onSectionChange, navigate }) => {
               className={`btn ${activeRisk === index ? `btn-${category.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
               onClick={() => setActiveRisk(index)}
             >
-              {category.icon}
+              {React.cloneElement(category.icon, { 
+                className: `w-5 h-5 ${activeRisk === index ? 'text-white' : `text-${category.color}`}` 
+              })}
               <span className="hidden sm:inline">{category.category.split(' ')[0]}</span>
             </button>
           ))}
@@ -661,11 +665,13 @@ const ImplementationRoadmap = ({ onSectionChange, navigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           
           <button 
-            className="card bg-gradient-to-r from-info to-primary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-info to-primary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/prototype-demo') : onSectionChange('prototype-demo')}
           >
             <div className="card-body text-center p-6">
-              <Eye className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Eye className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Prototype Demo</h3>
               <p className="text-sm opacity-80">Interactive demonstrations of key features</p>
               <div className="card-actions justify-center mt-4">
@@ -675,11 +681,13 @@ const ImplementationRoadmap = ({ onSectionChange, navigate }) => {
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-success to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-success to-secondary text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
           >
             <div className="card-body text-center p-6">
-              <FileText className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <FileText className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Research Sources</h3>
               <p className="text-sm opacity-80">Industry benchmarks and supporting studies</p>
               <div className="card-actions justify-center mt-4">
@@ -689,11 +697,13 @@ const ImplementationRoadmap = ({ onSectionChange, navigate }) => {
           </button>
 
           <button 
-            className="card bg-gradient-to-r from-primary to-accent text-base-content hover:scale-105 transition-transform cursor-pointer"
+            className="card bg-gradient-to-r from-primary to-accent text-white hover:scale-105 transition-transform cursor-pointer"
             onClick={() => navigate ? handleNavigation('/overview') : onSectionChange('overview')}
           >
             <div className="card-body text-center p-6">
-              <Star className="w-12 h-12 mx-auto mb-4" />
+              <div className="w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                <Star className="w-8 h-8" />
+              </div>
               <h3 className="card-title justify-center text-base">Strategic Overview</h3>
               <p className="text-sm opacity-80">Complete strategy summary and framework</p>
               <div className="card-actions justify-center mt-4">
