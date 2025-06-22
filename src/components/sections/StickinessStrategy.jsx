@@ -3,293 +3,493 @@ import {
   Zap,
   Calendar,
   MapPin,
-  Coffee,
-  Car,
-  Users,
-  Star,
   Clock,
-  Brain,
+  Users,
+  Target,
   ArrowRight,
   CheckCircle,
   TrendingUp,
   Bell,
   Smartphone,
-  Heart,
-  Target,
-  Eye,
-  Shield
+  Brain,
+  Settings,
+  BarChart3,
+  Info,
+  DollarSign,
+  Shield,
+  Star,
+  Globe,
+  Wifi,
+  Key,
+  Coffee,
+  Car,
+  ShoppingBag,
+  Utensils,
+  Sparkles
 } from 'lucide-react';
 
-const StickinessStrategy = ({ onSectionChange }) => {
-  const [activeTimeline, setActiveTimeline] = useState('pre-arrival');
+const StickinessStrategy = ({ onSectionChange, navigate }) => {
+  const [activeFeature, setActiveFeature] = useState(0);
 
-  const journeyStages = [
+  // Helper function to handle navigation with scroll-to-top
+  const handleNavigation = (path) => {
+    if (navigate) {
+      navigate(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Tooltip component for research data
+  const Tooltip = ({ children, content }) => (
+    <div className="tooltip tooltip-info" data-tip={content}>
+      {children}
+    </div>
+  );
+
+  // Industry context data
+  const industryContext = {
+    day1Retention: "16.5-20.9%",
+    day7Retention: "7.6%", 
+    day30Retention: "2.8-4.5%",
+    targetRetention: "8-12%",
+    mobileCheckInPreference: "50%",
+    contactlessPreference: "53.6%"
+  };
+
+  // Three strategic stickiness features
+  const stickinessFeatures = [
     {
       id: 'pre-arrival',
-      title: 'Pre-Arrival Anticipation',
-      timeframe: '7 days before → Check-in',
-      description: 'Build excitement and reduce friction before guests arrive',
-      color: 'primary',
-      icon: <Calendar className="w-6 h-6" />,
-      currentProblems: [
-        'No pre-arrival engagement beyond booking confirmation',
-        'Check-in process buried in menu navigation',
-        'No contextual preparation or excitement building',
-        'Generic experience regardless of guest type or trip purpose'
-      ],
-      myStrategy: [
-        'Automated push notifications at key intervals: booking confirmation, 7 days out, day before, arrival day',
-        'Weather API integration for location-specific packing suggestions and local event feeds',
-        'Progressive check-in completion with clear steps and immediate room assignment',
-        'Express check-in preparation 4 hours before arrival (room assignment, digital key setup when available)'
-      ],
-      features: [
+      title: "Pre-Arrival Preparation Intelligence",
+      subtitle: "Proactive Service Delivery Starting Before Departure",
+      timing: "2 weeks to 24 hours before arrival",
+      color: "primary",
+      bgGradient: "from-primary/5 to-info/5",
+      borderColor: "border-primary/20",
+      icon: <Calendar className="w-12 h-12" />,
+      businessImpact: {
+        costReduction: "$9-10 per check-in front desk operational costs",
+        automation: "85%+ AI automation capability for guest inquiries", 
+        demand: "54% consumer demand for digital check-in proactively addressed"
+      },
+      guestValue: "Personalized arrival experience starting before departure",
+      tooltip: "Shifts guest services from reactive to proactive, reducing hotel operational overhead while improving satisfaction",
+      functionality: [
         {
-          title: 'Pre-Arrival Timeline Dashboard',
-          description: 'Visual countdown with actionable steps: complete check-in (day 7), get weather forecast (day 2), activate digital key (arrival day)',
-          impact: 'Clear next actions',
-          icon: <Clock className="w-5 h-5" />
+          feature: "Automatic Room Preference Collection",
+          description: "Intelligent pre-arrival surveys adapting based on guest profile and booking type",
+          icon: <Settings className="w-6 h-6 text-primary" />,
+          implementation: "Leverage existing 1,000,000+ digital check-ins data for pattern recognition"
         },
         {
-          title: 'Smart Pre-Arrival Checklist',
-          description: 'Weather-based packing tips, local event alerts from city APIs, transport options with real-time data',
-          impact: 'Practical preparation',
-          icon: <Brain className="w-5 h-5" />
+          feature: "Local Area Recommendations",
+          description: "Context-aware suggestions based on guest profile, weather, and local events",
+          icon: <MapPin className="w-6 h-6 text-primary" />,
+          implementation: "Build on 98.89% customer satisfaction foundation with personalized content"
         },
         {
-          title: 'Progressive Check-in Flow',
-          description: 'Complete profile → select preferences → get room assignment → prepare digital access. Each step unlocks next feature',
-          impact: 'Higher completion rates',
-          icon: <Target className="w-5 h-5" />
+          feature: "Proactive Check-in Process Preparation",
+          description: "Digital key setup and room assignment optimization before arrival",
+          icon: <Key className="w-6 h-6 text-primary" />,
+          implementation: "Address 54% consumer demand for digital check-in proactively"
+        }
+      ]
+    },
+    {
+      id: 'arrival',
+      title: "Smart Arrival Optimization", 
+      subtitle: "Seamless Arrival Without Front Desk Dependency",
+      timing: "Day of arrival (6 hours before to 2 hours after check-in)",
+      color: "secondary",
+      bgGradient: "from-secondary/5 to-accent/5", 
+      borderColor: "border-secondary/20",
+      icon: <Smartphone className="w-12 h-12" />,
+      businessImpact: {
+        waitTime: "85% shorter wait times through digital check-in automation",
+        costReduction: "15% operational cost reduction in check-in processes",
+        adoption: "Improve from 4% to 15-25% digital check-in adoption target"
+      },
+      guestValue: "Seamless arrival without front desk dependency",
+      tooltip: "Addresses the massive gap between 54% consumer demand and 4% actual digital check-in utilization",
+      functionality: [
+        {
+          feature: "Digital Key Activation",
+          description: "Immediate room access upon arrival with seamless key management",
+          icon: <Key className="w-6 h-6 text-secondary" />,
+          implementation: "PWA technology advantage with offline capabilities"
         },
         {
-          title: 'Hotel Preview Gallery',
-          description: 'Real guest photos by room type, facility walkthroughs, staff introductions, and recent guest testimonials',
-          impact: 'Builds anticipation',
-          icon: <Eye className="w-5 h-5" />
+          feature: "Real-time Parking Availability",
+          description: "Live parking status and navigation to available spots",
+          icon: <Car className="w-6 h-6 text-secondary" />,
+          implementation: "50+ technology partner integrations for parking systems"
+        },
+        {
+          feature: "Instant WiFi Credentials",
+          description: "Automatic WiFi connection and essential hotel information delivery",
+          icon: <Wifi className="w-6 h-6 text-secondary" />,
+          implementation: "European GDPR compliance with privacy-first approach"
         }
       ]
     },
     {
       id: 'in-stay',
-      title: 'In-Stay Value Creation',
-      timeframe: 'Check-in → Check-out',
-      description: 'Become indispensable during the stay through proactive service delivery',
-      color: 'secondary',
-      icon: <Coffee className="w-6 h-6" />,
-      currentProblems: [
-        'No real-time service integration or tracking',
-        '18 menu items create decision paralysis',
-        'No journey-stage awareness or contextual recommendations',
-        'Broken service flows (shop, restaurant, spa booking)'
-      ],
-      myStrategy: [
-        'Time-based dashboard: breakfast/weather (6-10am), activities (10am-5pm), dining/entertainment (5-10pm)',
-        'Service suggestions based on booking patterns and time-of-day preferences: morning gym bookings → spa offers, dining reservations → late checkout options',
-        'Real-time service status updates with PMS integration and staff notification system',
-        'Context-aware upselling: check-in → room upgrade, spa booking → package deals, dining → wine pairings'
-      ],
-      features: [
+      title: "In-Stay Revenue Orchestration",
+      subtitle: "Contextual Service Delivery Throughout Guest Journey",
+      timing: "Throughout guest stay",
+      color: "accent",
+      bgGradient: "from-accent/5 to-success/5",
+      borderColor: "border-accent/20", 
+      icon: <TrendingUp className="w-12 h-12" />,
+      businessImpact: {
+        upselling: "Target 10-20% upselling potential of total guest charges",
+        conversion: "Improve from 6.04% industry average to 20%+ top performer upsell rates",
+        booking: "Leverage current 5-10% guest booking rate for additional services"
+      },
+      guestValue: "Effortless access to relevant hotel and local services",
+      tooltip: "Research shows €2.5-3.2M annual revenue impact potential for 200-room hotels through optimized digital services",
+      functionality: [
         {
-          title: 'Time-Adaptive Dashboard',
-          description: 'Homepage changes by time: Morning shows breakfast hours + weather. Evening shows restaurant availability + events',
-          impact: 'Relevant content always',
-          icon: <Smartphone className="w-5 h-5" />
+          feature: "Contextual Housekeeping Requests",
+          description: "Smart service requests based on guest behavior and timing patterns",
+          icon: <Settings className="w-6 h-6 text-accent" />,
+          implementation: "Deep PMS integration across multiple hotel brands"
         },
         {
-          title: 'Predictive Service Alerts',
-          description: 'Monitor wait times, suggest optimal spa/dining slots, track service requests. Based on booking history and time-of-day patterns',
-          impact: 'Reduced wait times',
-          icon: <Bell className="w-5 h-5" />
+          feature: "Intelligent Restaurant Booking",
+          description: "Optimal dining slot recommendations with real-time availability",
+          icon: <Utensils className="w-6 h-6 text-accent" />,
+          implementation: "Customer-driven development approach with 59 features added in 2023"
         },
         {
-          title: 'Live Service Status Tracking',
-          description: 'PMS integration shows real updates: "Housekeeping notified", "Kitchen received order", "Spa confirms 3pm slot"',
-          impact: 'Eliminates uncertainty',
-          icon: <CheckCircle className="w-5 h-5" />
-        },
-        {
-          title: 'Contextual Revenue Opportunities',
-          description: 'Room upgrade during check-in, spa packages after gym visits, wine recommendations during restaurant bookings',
-          impact: 'Natural upselling',
-          icon: <TrendingUp className="w-5 h-5" />
-        }
-      ]
-    },
-    {
-      id: 'post-checkout',
-      title: 'Post-Checkout Retention',
-      timeframe: 'Check-out → Future bookings',
-      description: 'Transform one-time guests into loyal advocates through memorable connections',
-      color: 'accent',
-      icon: <Heart className="w-6 h-6" />,
-      currentProblems: [
-        'Zero post-checkout engagement or follow-up',
-        'No retention mechanism or loyalty integration',
-        'Lost opportunity for reviews, referrals, and rebookings',
-        'No social sharing or experience amplification'
-      ],
-      myStrategy: [
-        'Automated photo compilation from hotel galleries, guest uploads, and location check-ins during stay',
-        'Timed follow-up sequence: immediate thank you, 3-day photo delivery, 2-week local updates, 3-month return offers',
-        'One-tap social sharing with branded templates and automatic friend tagging capabilities',
-        'Existing loyalty program integration with visible progress tracking and cross-property benefits'
-      ],
-      features: [
-        {
-          title: 'Automated Photo Compilation',
-          description: 'Generate shareable stay highlights with hotel branding, guest photos, and location memories for social media',
-          impact: 'Increases social sharing',
-          icon: <Star className="w-5 h-5" />
-        },
-        {
-          title: 'Timed Re-engagement Campaign',
-          description: 'Day 3: Thank you + photo compilation. Week 2: Local events happening now. Month 3: Return incentives',
-          impact: 'Maintains connection',
-          icon: <Calendar className="w-5 h-5" />
-        },
-        {
-          title: 'Loyalty Program Integration',
-          description: 'Connect with existing Straiv loyalty system. Show points earned, status progress, and available perks across network',
-          impact: 'Leverages existing system',
-          icon: <Shield className="w-5 h-5" />
-        },
-        {
-          title: 'Friend Referral System',
-          description: 'Share stay experience with contacts, automatic booking links, referral tracking, and mutual incentives',
-          impact: 'Drives new bookings',
-          icon: <Users className="w-5 h-5" />
+          feature: "Smart Upsell Recommendations",
+          description: "Context-aware offers based on guest behavior patterns and preferences",
+          icon: <Sparkles className="w-6 h-6 text-accent" />,
+          implementation: "Leverage behavioral analytics from existing digital check-ins"
         }
       ]
     }
   ];
 
-  const getStageData = () => {
-    return journeyStages.find(stage => stage.id === activeTimeline);
+  // Implementation framework data
+  const implementationFramework = {
+    technicalIntegration: [
+      "Leverage existing 50+ technology partner integrations",
+      "Use current 1,000,000+ digital check-ins data for pattern recognition", 
+      "Build on 98.89% customer satisfaction foundation"
+    ],
+    successMetrics: [
+      "Achieve 25-30% onboarding completion (vs current 19.2% average)",
+      "Reach 15-25% digital check-in adoption (vs current 4%)",
+      "Improve to 8-12% Day 30 retention (vs current 4.5% average)"
+    ]
   };
 
   return (
-    <div className="space-y-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-base-content mb-4">
-          My Stickiness Strategy
+    <div className="space-y-16">
+      {/* Header Section */}
+      <div className="text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <span className="text-primary">Journey-Stage Intelligence</span><br />
+          <span className="text-secondary">for Maximum Engagement</span>
         </h1>
-        <h2 className="text-2xl font-semibold text-primary mb-6">
-          Journey-Stage Intelligence Framework
-        </h2>
-        <p className="text-lg text-base-content/80 max-w-4xl mx-auto">
-          My core recommendation: Transform Straiv's app from static information portal to journey-aware service platform 
-          that adapts content by time and context, integrates with hotel operations, and maintains guest relationships beyond checkout.
+        
+        <p className="text-xl text-base-content/80 max-w-4xl mx-auto mb-8">
+          Adaptive features that reduce abandonment and increase hotel operational efficiency
         </p>
-      </div>
 
-      {/* Journey-Stage Framework */}
-      <div className="card bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border border-primary/20">
-        <div className="card-body">
-          <h2 className="text-2xl font-bold mb-6 text-center">Journey-Aware Service Platform Strategy</h2>
-          
-          {/* Stage Navigation */}
-          <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
-            {journeyStages.map((stage) => (
-              <button 
-                key={stage.id}
-                className={`btn btn-sm sm:btn-md ${activeTimeline === stage.id ? `btn-${stage.color}` : 'btn-outline'} gap-2 flex-shrink-0 w-full sm:w-auto`}
-                onClick={() => setActiveTimeline(stage.id)}
-              >
-                {stage.icon}
-                <span className="hidden sm:inline">{stage.title}</span>
-                <span className="sm:hidden">{stage.title.split(' ')[0]}</span>
-              </button>
-            ))}
+        {/* Industry Context Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
+          <div className="stats shadow border border-error/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-error text-lg">{industryContext.day30Retention}</div>
+              <div className="stat-desc text-xs">Current Day 30 Retention</div>
+            </div>
           </div>
-
-          {/* Active Stage Content */}
-          <div className="space-y-8">
-            <div className="text-center">
-              <h3 className="text-2xl font-bold mb-2">{getStageData().title}</h3>
-              <p className="text-lg text-base-content/70 mb-4">{getStageData().timeframe}</p>
-              <p className="text-base-content/80 max-w-2xl mx-auto">{getStageData().description}</p>
+          <div className="stats shadow border border-success/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-success text-lg">{industryContext.targetRetention}</div>
+              <div className="stat-desc text-xs">Target Retention Rate</div>
             </div>
-
-            {/* Problems vs Solutions */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <div>
-                <h4 className="font-bold text-error mb-4">Current Problems:</h4>
-                <div className="space-y-2">
-                  {getStageData().currentProblems.map((problem, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <div className="w-1.5 h-1.5 bg-error rounded-full mt-2"></div>
-                      <span className="text-sm text-base-content/80">{problem}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h4 className="font-bold text-success mb-4">My Strategy:</h4>
-                <div className="space-y-2">
-                  {getStageData().myStrategy.map((strategy, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <CheckCircle className="w-4 h-4 text-success mt-0.5" />
-                      <span className="text-sm text-base-content/80">{strategy}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          </div>
+          <div className="stats shadow border border-primary/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-primary text-lg">{industryContext.mobileCheckInPreference}</div>
+              <div className="stat-desc text-xs">Prefer Mobile Check-in</div>
             </div>
-
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {getStageData().features.map((feature, index) => (
-                <div key={index} className={`card bg-base-100 border border-${getStageData().color}/20`}>
-                  <div className="card-body p-6">
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className={`p-2 rounded-lg bg-${getStageData().color}/10 text-${getStageData().color}`}>
-                        {feature.icon}
-                      </div>
-                      <div>
-                        <h5 className="font-bold">{feature.title}</h5>
-                        <div className={`badge badge-${getStageData().color} badge-sm`}>{feature.impact}</div>
-                      </div>
-                    </div>
-                    <p className="text-sm text-base-content/80">{feature.description}</p>
-                  </div>
-                </div>
-              ))}
+          </div>
+          <div className="stats shadow border border-info/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-info text-lg">{industryContext.contactlessPreference}</div>
+              <div className="stat-desc text-xs">Prefer Contactless</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation to Next Section */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <button 
-          className="card bg-gradient-to-r from-secondary to-accent text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('conversion-strategy')}
-        >
-          <div className="card-body text-center">
-            <TrendingUp className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="card-title justify-center">My Conversion Strategy</h3>
-            <p className="text-sm opacity-80">Optimize onboarding, check-in, and transaction touchpoints</p>
-            <div className="card-actions justify-center">
-              <ArrowRight className="w-5 h-5" />
-            </div>
-          </div>
-        </button>
+      {/* Research-Backed Approach */}
+      <div>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-4">Research-Backed Strategic Approach</h2>
+          <p className="text-lg text-base-content/80 max-w-3xl mx-auto">
+            Three strategic features designed to address mobile app retention challenges through contextual intelligence
+          </p>
+        </div>
 
-        <button 
-          className="card bg-gradient-to-r from-accent to-primary text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('prototype-demo')}
-        >
-          <div className="card-body text-center">
-            <Smartphone className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="card-title justify-center">See It In Action</h3>
-            <p className="text-sm opacity-80">Interactive prototype demonstrating journey-stage intelligence</p>
-            <div className="card-actions justify-center">
-              <ArrowRight className="w-5 h-5" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="card bg-base-100 border border-error/20">
+            <div className="card-body text-center p-6">
+              <Clock className="w-8 h-8 mx-auto mb-2 text-error" />
+              <div className="font-bold text-error">Day 1: {industryContext.day1Retention}</div>
+              <div className="text-sm text-base-content/70">Industry retention baseline</div>
             </div>
           </div>
-        </button>
+          <div className="card bg-base-100 border border-warning/20">
+            <div className="card-body text-center p-6">
+              <BarChart3 className="w-8 h-8 mx-auto mb-2 text-warning" />
+              <div className="font-bold text-warning">Day 7: {industryContext.day7Retention}</div>
+              <div className="text-sm text-base-content/70">Weekly engagement drop</div>
+            </div>
+          </div>
+          <div className="card bg-base-100 border border-info/20">
+            <div className="card-body text-center p-6">
+              <Target className="w-8 h-8 mx-auto mb-2 text-info" />
+              <div className="font-bold text-info">Target: {industryContext.targetRetention}</div>
+              <div className="text-sm text-base-content/70">Day 30 improvement goal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Three Strategic Stickiness Features */}
+      <div>
+        <h2 className="text-3xl font-bold text-center mb-8">Three Strategic Stickiness Features</h2>
+        
+        {/* Feature Navigation */}
+        <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
+          {stickinessFeatures.map((feature, index) => (
+            <button 
+              key={feature.id}
+              className={`btn ${activeFeature === index ? `btn-${feature.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
+              onClick={() => setActiveFeature(index)}
+            >
+              {feature.icon}
+              <span className="hidden sm:inline">{feature.title.split(' ')[0]}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Active Feature Display */}
+        <div className={`card bg-gradient-to-br ${stickinessFeatures[activeFeature].bgGradient} border-2 ${stickinessFeatures[activeFeature].borderColor} mb-8`}>
+          <div className="card-body p-8">
+            <div className="flex items-start gap-6 mb-6">
+              <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${stickinessFeatures[activeFeature].borderColor}`}>
+                <div className={`text-${stickinessFeatures[activeFeature].color}`}>
+                  {stickinessFeatures[activeFeature].icon}
+                </div>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold mb-2">{stickinessFeatures[activeFeature].title}</h3>
+                <p className="text-lg text-base-content/80 mb-3">{stickinessFeatures[activeFeature].subtitle}</p>
+                <div className="flex items-center gap-2 text-base-content/60">
+                  <Clock className="w-4 h-4" />
+                  <span className="text-sm font-medium">{stickinessFeatures[activeFeature].timing}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Business Impact */}
+            <div className="mb-6">
+              <h4 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <DollarSign className="w-5 h-5" />
+                Business Impact
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {Object.entries(stickinessFeatures[activeFeature].businessImpact).map(([key, value]) => (
+                  <div key={key} className="p-4 bg-base-100 rounded-lg border border-base-300">
+                    <div className="font-medium text-sm capitalize mb-1">{key.replace(/([A-Z])/g, ' $1')}</div>
+                    <div className="text-sm text-base-content/80">{value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Guest Value */}
+            <div className="mb-6">
+              <div className="alert alert-success py-3">
+                <Users className="w-4 h-4" />
+                <div className="text-sm">
+                  <div className="font-semibold">Guest Value:</div>
+                  <div>{stickinessFeatures[activeFeature].guestValue}</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Functionality Details */}
+            <div>
+              <h4 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                <Settings className="w-5 h-5" />
+                Core Functionality
+              </h4>
+              <div className="space-y-4">
+                {stickinessFeatures[activeFeature].functionality.map((func, index) => (
+                  <div key={index} className="p-4 bg-base-100 rounded-lg border border-base-300">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0">
+                        {func.icon}
+                      </div>
+                      <div className="flex-1">
+                        <h5 className="font-semibold text-base mb-2">{func.feature}</h5>
+                        <p className="text-sm text-base-content/80 mb-3">{func.description}</p>
+                        <div className="text-xs text-base-content/60 bg-base-200 rounded px-2 py-1">
+                          <strong>Implementation:</strong> {func.implementation}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature Tooltip */}
+        <Tooltip content={stickinessFeatures[activeFeature].tooltip}>
+          <div className="text-center cursor-help">
+            <div className="inline-flex items-center gap-2 text-base-content/60">
+              <Info className="w-4 h-4" />
+              <span className="text-sm">Research Insight Available</span>
+            </div>
+          </div>
+        </Tooltip>
+      </div>
+
+      {/* Implementation Framework */}
+      <div>
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold mb-4">Implementation Framework</h2>
+          <Tooltip content="Builds strategically on Straiv's existing technical infrastructure and proven customer satisfaction">
+            <p className="text-lg text-base-content/80 max-w-3xl mx-auto cursor-help">
+              Strategic approach leveraging Straiv's existing technical advantages and market position
+            </p>
+          </Tooltip>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Technical Integration */}
+          <div className="card bg-gradient-to-br from-info/5 to-primary/5 border border-info/20">
+            <div className="card-body p-8">
+              <h3 className="card-title text-2xl mb-6 flex items-center gap-3">
+                <Brain className="w-8 h-8 text-info" />
+                Technical Integration
+              </h3>
+              
+              <div className="space-y-4">
+                {implementationFramework.technicalIntegration.map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Success Metrics */}
+          <div className="card bg-gradient-to-br from-success/5 to-accent/5 border border-success/20">
+            <div className="card-body p-8">
+              <h3 className="card-title text-2xl mb-6 flex items-center gap-3">
+                <Target className="w-8 h-8 text-success" />
+                Success Metrics
+              </h3>
+              
+              <div className="space-y-4">
+                {implementationFramework.successMetrics.map((metric, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <Star className="w-5 h-5 text-success mt-0.5 flex-shrink-0" />
+                    <span className="text-sm">{metric}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Revenue Impact Projection */}
+      <div className="card bg-gradient-to-r from-accent/10 to-success/10 border border-accent/20">
+        <div className="card-body text-center p-8">
+          <h3 className="text-2xl font-bold mb-4 flex items-center justify-center gap-3">
+            <TrendingUp className="w-8 h-8 text-success" />
+            Revenue Impact Projection
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div>
+              <div className="text-3xl font-bold text-primary">€2.5-3.2M</div>
+              <div className="text-sm font-medium">Annual Revenue Impact</div>
+              <div className="text-xs text-base-content/60">200-room hotel potential</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-success">20%+</div>
+              <div className="text-sm font-medium">Upsell Conversion Rate</div>
+              <div className="text-xs text-base-content/60">vs 6.04% industry average</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-info">15-25%</div>
+              <div className="text-sm font-medium">Digital Check-in Adoption</div>
+              <div className="text-xs text-base-content/60">vs current 4% utilization</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Next Steps Navigation */}
+      <div>
+        <h2 className="text-3xl font-bold text-center mb-8">Strategic Implementation Path</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <button 
+            className="card bg-gradient-to-r from-accent to-info text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/conversion-strategy') : onSectionChange('conversion-strategy')}
+          >
+            <div className="card-body text-center p-6">
+              <TrendingUp className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Conversion Strategy</h3>
+              <p className="text-sm opacity-80">Optimize onboarding and critical revenue touchpoints</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-info to-success text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/innovation-strategy') : onSectionChange('innovation-strategy')}
+          >
+            <div className="card-body text-center p-6">
+              <Brain className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Innovation Strategy</h3>
+              <p className="text-sm opacity-80">AI and voice technology for market differentiation</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-success to-primary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/implementation-roadmap') : onSectionChange('implementation-roadmap')}
+          >
+            <div className="card-body text-center p-6">
+              <Calendar className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Implementation Roadmap</h3>
+              <p className="text-sm opacity-80">Detailed timeline and resource requirements</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   );

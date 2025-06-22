@@ -1,1705 +1,650 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
-  Smartphone,
-  Eye,
+  ArrowRight,
+  CheckCircle,
+  Star,
+  Coffee,
   Mic,
   Brain,
-  Users,
-  Calendar,
-  Star,
-  ArrowRight,
-  Play,
-  Pause,
-  Volume2,
-  MessageCircle,
-  CheckCircle,
-  MapPin,
-  Coffee,
-  Clock,
-  Heart,
-  Share2,
+  ExternalLink,
+  FileText,
+  BookOpen,
   Award,
-  TrendingUp,
+  Phone,
+  Bell,
+  Home,
+  User,
+  Menu,
+  X,
+  Wifi,
+  Car,
+  Utensils,
+  ArrowLeft,
+  ChevronLeft,
   Zap,
-  Settings
+  MessageCircle
 } from 'lucide-react';
 
-const PrototypeDemo = ({ onSectionChange }) => {
-  const [activeDemo, setActiveDemo] = useState('journey-intelligence');
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentStep, setCurrentStep] = useState(0);
-  const intervalRef = useRef(null);
+const PrototypeDemo = ({ onSectionChange, navigate }) => {
+  const [activeScreen, setActiveScreen] = useState('home');
 
-  // Add CSS for hiding scrollbars and smooth scrolling
-  React.useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      .scrollbar-hide {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-        scroll-behavior: smooth;
-      }
-      .scrollbar-hide::-webkit-scrollbar {
-        display: none;
-      }
-      .phone-content {
-        max-height: 100%;
-        overflow-y: auto;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => document.head.removeChild(style);
-  }, []);
-
-  const demoCategories = [
-    {
-      id: 'journey-intelligence',
-      title: 'Journey-Stage Intelligence',
-      subtitle: 'Pre-arrival → In-stay → Post-checkout',
-      icon: <Brain className="w-6 h-6" />,
-      color: 'primary',
-      description: 'Experience how the app adapts to guest journey stages with contextual content and smart suggestions'
-    },
-    {
-      id: 'conversion-optimization',
-      title: 'Conversion Optimization',
-      subtitle: 'Onboarding → Check-in → Transactions',
-      icon: <TrendingUp className="w-6 h-6" />,
-      color: 'secondary',
-      description: 'See optimized flows that transform user touchpoints into high-converting experiences'
-    },
-    {
-      id: 'ai-voice-features',
-      title: 'AI & Voice Features',
-      subtitle: 'Intelligent assistant + Voice commands',
-      icon: <Mic className="w-6 h-6" />,
-      color: 'accent',
-      description: 'Interact with enhanced digital concierge and voice-controlled hotel services'
-    },
-    {
-      id: 'social-viral',
-      title: 'Social & Viral Growth',
-      subtitle: 'Referrals → Stories → Achievements',
-      icon: <Users className="w-6 h-6" />,
-      color: 'success',
-      description: 'Experience viral mechanisms that turn guests into brand ambassadors and drive organic growth'
-    }
-  ];
-
-  const journeySteps = {
-    'journey-intelligence': [
-      {
-        stage: 'Pre-Arrival (7 days before)',
-        screen: 'Welcome & Countdown',
-        mockup: {
-          type: 'countdown',
-          title: 'Your Stuttgart Adventure',
-          subtitle: '7 days to go! ✈️',
-          weather: { temp: '22°C', condition: 'Sunny', icon: '☀️' },
-          countdown: { days: 7, hours: 14, minutes: 32 },
-          suggestions: [
-            { icon: '🎭', title: 'Stuttgart Opera', desc: 'Book tickets for Dec 15th', action: 'Book Now' },
-            { icon: '🍷', title: 'Wine Tasting', desc: 'Local vineyard tour available', action: 'Learn More' },
-            { icon: '📱', title: 'Express Check-in', desc: 'Complete now to skip lines', action: 'Start' }
-          ]
-        },
-        interaction: 'Tap any suggestion to see personalized recommendations',
-        impact: '+60% pre-arrival engagement'
-      },
-      {
-        stage: 'Pre-Arrival (Arrival day)',
-        screen: 'Express Check-in',
-        mockup: {
-          type: 'checkin',
-          progress: 85,
-          roomStatus: 'Ready for early check-in',
-          roomNumber: '413',
-          keyStatus: 'Digital key activated',
-          weather: { temp: '19°C', condition: 'Light rain', icon: '🌧️' },
-          suggestions: [
-            { icon: '☂️', title: 'Umbrella Service', desc: 'Complimentary at front desk', urgent: true },
-            { icon: '🚗', title: 'Airport Transfer', desc: 'Arriving in 25 minutes', status: 'tracking' }
-          ],
-          actions: [
-            { text: 'Complete Check-in', primary: true },
-            { text: 'Room Preferences', secondary: true }
-          ]
-        },
-        interaction: 'Tap "Complete Check-in" to finish in one tap',
-        impact: '+280% digital check-in adoption'
-      },
-      {
-        stage: 'In-Stay (Morning)',
-        screen: 'Smart Dashboard',
-        mockup: {
-          type: 'dashboard',
-          time: '8:30 AM',
-          weather: { temp: '16°C', condition: 'Cloudy', icon: '☁️' },
-          greeting: 'Good morning, Alex!',
-          contextualCards: [
-            { 
-              icon: '☕', 
-              title: 'Perfect Coffee Weather', 
-              desc: 'Room service coffee + pastries?', 
-              action: 'Order Now',
-              highlight: true,
-              price: '€12'
-            },
-            { 
-              icon: '🏛️', 
-              title: 'Mercedes-Benz Museum', 
-              desc: 'Indoor activity for cloudy day', 
-              action: 'Get Tickets',
-              price: '€10 (Guest discount)'
-            },
-            { 
-              icon: '💆', 
-              title: 'Spa Relaxation', 
-              desc: 'Cozy day spa package', 
-              action: 'Book Now',
-              price: '€85'
-            }
-          ],
-          quickActions: ['🗣️ Voice Assistant', '🔑 Room Controls', '📞 Concierge']
-        },
-        interaction: 'Say "Order coffee to room 413" or tap the coffee card',
-        impact: '+190% service engagement'
-      },
-      {
-        stage: 'Post-Checkout',
-        screen: 'Journey Memory',
-        mockup: {
-          type: 'memory',
-          title: 'Your Stuttgart Story',
-          photos: ['🏨', '🍷', '🎭', '🏛️'],
-          achievements: [
-            { badge: '🏆', title: 'Stuttgart Explorer', desc: 'Visited 5 local attractions' },
-            { badge: '🍷', title: 'Wine Connoisseur', desc: 'Tried 3 regional wines' },
-            { badge: '⭐', title: 'VIP Guest', desc: 'Perfect stay rating' }
-          ],
-          stats: { nights: 3, services: 8, savings: '€45' },
-          sharing: {
-            platforms: ['📱 Instagram', '📘 Facebook', '🐦 Twitter'],
-            friends: ['👤 Sarah', '👤 Mike', '👤 Lisa']
-          }
-        },
-        interaction: 'Share your story and invite friends for 20% off',
-        impact: '+450% social sharing'
-      }
-    ],
-    'conversion-optimization': [
-      {
-        stage: 'Onboarding Flow',
-        screen: 'Smart Registration',
-        mockup: {
-          type: 'onboarding',
-          step: 1,
-          totalSteps: 3,
-          title: 'Welcome to Hotel Straiv',
-          subtitle: 'Let\'s personalize your stay',
-          form: {
-            fields: [
-              { label: 'First Name', value: 'Alex', type: 'text' },
-              { label: 'Email', value: 'alex@email.com', type: 'email' },
-              { label: 'Phone', value: '+49 123 456 789', type: 'tel' }
-            ],
-            socialOptions: ['🔗 Continue with Google', '📘 Continue with Facebook'],
-            benefits: [
-              { icon: '⚡', text: 'Express check-in ready' },
-              { icon: '🎯', text: 'Personalized recommendations' },
-              { icon: '🏆', text: 'Loyalty points & rewards' }
-            ]
-          }
-        },
-        interaction: 'Tap "Continue with Google" for 1-tap registration',
-        impact: '+340% registration completion'
-      },
-      {
-        stage: 'Check-in Optimization',
-        screen: 'Frictionless Check-in',
-        mockup: {
-          type: 'checkin-flow',
-          progress: 95,
-          title: 'Almost Ready!',
-          currentStep: 'Room Preferences',
-          preferences: [
-            { icon: '🛏️', label: 'Bed Type', selected: 'King Size', options: ['King Size', 'Twin Beds'] },
-            { icon: '🌡️', label: 'Temperature', selected: '22°C', slider: true },
-            { icon: '☕', label: 'Welcome Amenity', selected: 'Coffee & Pastries', options: ['Coffee & Pastries', 'Wine & Cheese', 'Fresh Fruit'] }
-          ],
-          upsells: [
-            { 
-              icon: '🏨', 
-              title: 'Room Upgrade', 
-              desc: 'City view suite for €25/night', 
-              originalPrice: '€45', 
-              discountPrice: '€25',
-              highlight: true 
-            },
-            { 
-              icon: '🍳', 
-              title: 'Breakfast Package', 
-              desc: 'Daily breakfast for two', 
-              price: '€18/day' 
-            }
-          ]
-        },
-        interaction: 'Accept the room upgrade offer with one tap',
-        impact: '+180% upsell conversion'
-      },
-      {
-        stage: 'In-App Transactions',
-        screen: 'Smart Ordering',
-        mockup: {
-          type: 'ordering',
-          category: 'Room Service',
-          time: '2:30 PM',
-          weather: { temp: '24°C', condition: 'Sunny', icon: '☀️' },
-          recommendations: [
-            {
-              icon: '🥗',
-              title: 'Light Summer Salad',
-              desc: 'Perfect for sunny weather',
-              price: '€14',
-              time: '15 min',
-              rating: 4.8,
-              highlight: true,
-              weatherMatch: true
-            },
-            {
-              icon: '🍹',
-              title: 'Refreshing Smoothie',
-              desc: 'Mango & passion fruit',
-              price: '€8',
-              time: '5 min',
-              rating: 4.9,
-              popular: true
-            }
-          ],
-          cart: {
-            items: 1,
-            total: '€14',
-            delivery: 'Free to room 413',
-            time: '15 minutes'
-          },
-          paymentMethods: ['💳 Room Charge', '📱 Apple Pay', '💰 Loyalty Points (1,200 pts)']
-        },
-        interaction: 'Order with loyalty points for instant gratification',
-        impact: '+220% transaction frequency'
-             }
-     ],
-    'ai-voice-features': [
-      {
-        stage: 'AI Chat Assistant',
-        screen: 'Digital Concierge',
-        mockup: {
-          type: 'ai-chat',
-          conversation: [
-            { sender: 'user', message: 'I need restaurant recommendations for tonight', time: '2:15 PM' },
-            { 
-              sender: 'ai', 
-              message: 'Based on your preferences and the weather (sunny, 24°C), I recommend these options:', 
-              time: '2:15 PM',
-              suggestions: [
-                { name: 'Zirbelstube', type: 'Traditional German', rating: 4.8, distance: '5 min walk', weather: 'Outdoor seating available' },
-                { name: 'Cube Restaurant', type: 'Modern European', rating: 4.9, distance: '10 min walk', weather: 'Rooftop terrace' }
-              ]
-            }
-          ],
-          typing: true,
-          quickReplies: ['Book a table', 'More options', 'Directions', 'Call restaurant']
-        },
-        interaction: 'AI knows your preferences, weather, and location context',
-        impact: '+340% query resolution'
-      },
-      {
-        stage: 'Voice Commands',
-        screen: 'Voice Control',
-        mockup: {
-          type: 'voice',
-          status: 'listening',
-          waveform: [3, 7, 4, 8, 2, 9, 5, 6, 3, 7],
-          lastCommand: 'Set room temperature to 22 degrees',
-          response: 'Temperature set to 22°C. Adjusting climate control now.',
-          suggestions: [
-            '🗣️ "Order room service"',
-            '🗣️ "Book spa appointment"',
-            '🗣️ "Call housekeeping"',
-            '🗣️ "Dim the lights"'
-          ]
-        },
-        interaction: 'Say "Set room temperature to 22 degrees" for instant control',
-        impact: '+420% accessibility'
-      },
-      {
-        stage: 'Predictive Intelligence',
-        screen: 'Smart Predictions',
-        mockup: {
-          type: 'predictions',
-          weather: { current: '24°C Sunny', forecast: 'Rain at 6 PM' },
-          predictions: [
-            { 
-              icon: '☂️', 
-              title: 'Rain Alert', 
-              desc: 'Rain expected at 6 PM. Umbrella available at front desk.', 
-              action: 'Reserve Umbrella',
-              confidence: 95,
-              urgent: true
-            },
-            { 
-              icon: '🍽️', 
-              title: 'Dinner Suggestion', 
-              desc: 'Based on weather, indoor dining recommended.', 
-              action: 'View Restaurants',
-              confidence: 87
-            },
-            { 
-              icon: '🚗', 
-              title: 'Transport Tip', 
-              desc: 'Book taxi 30 min early due to rain.', 
-              action: 'Book Taxi',
-              confidence: 92
-            }
-          ]
-        },
-        interaction: 'App proactively suggests umbrella before rain',
-        impact: '+220% service relevance'
-      }
-    ],
-    'social-viral': [
-      {
-        stage: 'Achievement System',
-        screen: 'Badge Collection',
-        mockup: {
-          type: 'achievements',
-          newBadge: { name: 'Stuttgart Explorer', icon: '🏆', desc: 'Visited 5 local attractions' },
-          progress: { current: 5, target: 5, complete: true },
-          badges: [
-            { name: 'Early Bird', icon: '🌅', desc: 'Checked in before 2 PM', earned: true },
-            { name: 'Foodie', icon: '🍽️', desc: 'Tried 3 local restaurants', earned: true },
-            { name: 'Culture Buff', icon: '🎭', desc: 'Visited museum & opera', earned: true },
-            { name: 'Social Butterfly', icon: '🦋', desc: 'Share 3 experiences', progress: '2/3' }
-          ],
-          rewards: [
-            { title: '20% off next stay', desc: 'For earning 5 badges', available: true },
-            { title: 'Free room upgrade', desc: 'For sharing your story', locked: true }
-          ]
-        },
-        interaction: 'Unlock "Stuttgart Explorer" badge and get 20% off next stay',
-        impact: '+320% repeat engagement'
-      },
-      {
-        stage: 'Story Generation',
-        screen: 'Journey Story',
-        mockup: {
-          type: 'story',
-          title: 'My Stuttgart Adventure',
-          photos: [
-            { src: '🏨', caption: 'Arrived at beautiful Hotel Straiv' },
-            { src: '🍷', caption: 'Wine tasting in local vineyard' },
-            { src: '🎭', caption: 'Amazing opera performance' },
-            { src: '🏛️', caption: 'Mercedes-Benz Museum visit' }
-          ],
-          stats: { days: 3, activities: 8, newPlaces: 12 },
-          highlights: [
-            '🏆 Earned Stuttgart Explorer badge',
-            '🍷 Discovered amazing local wines',
-            '⭐ Perfect 5-star stay experience'
-          ],
-          shareOptions: [
-            { platform: 'Instagram', followers: 1200 },
-            { platform: 'Facebook', friends: 350 },
-            { platform: 'Twitter', followers: 800 }
-          ]
-        },
-        interaction: 'Share your auto-generated story to unlock rewards',
-        impact: '+450% social media sharing'
-      },
-      {
-        stage: 'Friend Referrals',
-        screen: 'Invite Friends',
-        mockup: {
-          type: 'referrals',
-          yourRewards: { earned: '€150', pending: '€75' },
-          friendsRewards: { discount: '25%', bonusPoints: 500 },
-          inviteMessage: 'Just had an amazing stay in Stuttgart! 🏆 Earned the Explorer badge. Book through my link for 25% off + bonus points!',
-          contacts: [
-            { name: 'Sarah M.', status: 'invited', reward: '€25 pending' },
-            { name: 'Mike K.', status: 'booked', reward: '€50 earned' },
-            { name: 'Lisa T.', status: 'stayed', reward: '€75 earned' }
-          ],
-          shareChannels: ['📱 WhatsApp', '📧 Email', '📋 Copy Link', '📱 SMS']
-        },
-        interaction: 'Invite friends with your Stuttgart Explorer achievement',
-        impact: '+280% referral conversion'
-      },
-      {
-        stage: 'Social Proof',
-        screen: 'Live Activity',
-        mockup: {
-          type: 'social-feed',
-          liveStats: { guestsToday: 23, checkinsNow: 3, activitiesBooked: 47 },
-          activities: [
-            { 
-              user: 'Sarah K.', 
-              action: 'earned Wine Connoisseur badge', 
-              time: '2 min ago', 
-              location: 'Stuttgart',
-              reaction: '🍷'
-            },
-            { 
-              user: 'Mike R.', 
-              action: 'shared their Stuttgart story', 
-              time: '5 min ago', 
-              likes: 12,
-              reaction: '📸'
-            },
-            { 
-              user: 'Anonymous', 
-              action: 'rated spa experience 5 stars', 
-              time: '8 min ago', 
-              reaction: '⭐'
-            }
-          ],
-          trending: [
-            { activity: 'Mercedes-Benz Museum', bookings: 8, rating: 4.9 },
-            { activity: 'Local Wine Tasting', bookings: 6, rating: 4.8 },
-            { activity: 'Spa Package', bookings: 12, rating: 4.9 }
-          ]
-        },
-        interaction: 'See what other guests are experiencing right now',
-        impact: '+125% booking confidence'
-      }
-    ]
-  };
-
-  const getActiveSteps = () => {
-    return journeySteps[activeDemo] || [];
-  };
-
-  const getCurrentStep = () => {
-    return getActiveSteps()[currentStep];
-  };
-
-  const nextStep = () => {
-    const steps = getActiveSteps();
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+  // Helper function to handle navigation with scroll-to-top
+  const handleNavigation = (path) => {
+    if (navigate) {
+      navigate(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  // Clean up interval when component unmounts or demo changes
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, []);
-
-  // Handle auto-progression when playing
-  useEffect(() => {
-    if (isPlaying) {
-      intervalRef.current = setInterval(() => {
-        setCurrentStep(prev => {
-          const steps = getActiveSteps();
-          if (prev < steps.length - 1) {
-            return prev + 1;
-          } else {
-            setIsPlaying(false);
-            return prev;
-          }
-        });
-      }, 4000);
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
-    }
-
-    return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-    };
-  }, [isPlaying, activeDemo]);
-
-  const renderMockup = (mockup) => {
-    if (!mockup) return null;
-
-    switch (mockup.type) {
-      case 'countdown':
-        return (
-          <div className="space-y-3">
-            {/* Header with weather */}
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="text-base font-bold text-gray-900">{mockup.title}</h3>
-                <p className="text-xs text-gray-600">{mockup.subtitle}</p>
-              </div>
-              <div className="text-right">
-                <div className="text-lg">{mockup.weather.icon}</div>
-                <div className="text-xs font-medium">{mockup.weather.temp}</div>
-              </div>
+  // Simple prototype screens
+  const screens = {
+    home: {
+      title: 'Smart Guest Experience',
+      subtitle: 'Journey-stage intelligence with contextual interface',
+      content: (
+        <div className="h-full bg-gradient-to-b from-blue-50 to-white flex flex-col">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 text-center">
+            <div className="text-lg font-bold">Welcome to Stuttgart Grand Hotel!</div>
             </div>
 
-            {/* Countdown */}
-            <div className="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-3 rounded-lg text-center">
-              <div className="flex justify-center space-x-3">
-                <div><div className="text-lg font-bold">{mockup.countdown.days}</div><div className="text-xs">DAYS</div></div>
-                <div><div className="text-lg font-bold">{mockup.countdown.hours}</div><div className="text-xs">HRS</div></div>
-                <div><div className="text-lg font-bold">{mockup.countdown.minutes}</div><div className="text-xs">MIN</div></div>
+          {/* Content */}
+          <div className="flex-1 p-6 space-y-4">
+            {/* Quick Check-in */}
+            <div 
+              className="bg-white rounded-xl p-4 shadow-lg border-l-4 border-green-500 cursor-pointer hover:shadow-xl transition-all hover:scale-105"
+              onClick={() => setActiveScreen('checkin')}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <CheckCircle className="w-6 h-6 text-green-500" />
+                <span className="font-bold text-gray-900 text-lg">Room Ready - Check In Now</span>
               </div>
-            </div>
-
-            {/* Suggestions */}
-            <div className="space-y-2">
-              {mockup.suggestions.map((suggestion, index) => (
-                <div key={index} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg border gap-2">
-                  <div className="flex items-center space-x-2 flex-1 min-w-0">
-                    <span className="text-base flex-shrink-0">{suggestion.icon}</span>
-                    <div className="min-w-0 flex-1">
-                      <div className="font-medium text-gray-900 text-sm leading-tight">{suggestion.title}</div>
-                      <div className="text-xs text-gray-600 leading-tight">{suggestion.desc}</div>
-                    </div>
-                  </div>
-                  <button className="px-2 py-1 bg-blue-600 text-white text-xs rounded-full flex-shrink-0">
-                    {suggestion.action}
+              <div className="text-sm text-gray-700 font-medium mb-3">Digital key activated • Skip the front desk</div>
+              <button className="w-full bg-green-600 text-white py-3 rounded-lg font-medium hover:bg-green-700 transition-colors">
+                Complete Check-in (1 tap)
                   </button>
                 </div>
-              ))}
-            </div>
-          </div>
-        );
 
-      case 'checkin':
-        return (
-          <div className="space-y-4">
-            {/* Progress */}
-            <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">Check-in Progress</span>
-                <span className="text-blue-600 font-medium">{mockup.progress}%</span>
+            {/* AI Recommendations */}
+            <div 
+              className="bg-white rounded-xl p-4 shadow-lg cursor-pointer hover:shadow-xl transition-all hover:scale-105"
+              onClick={() => setActiveScreen('ai')}
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <Brain className="w-6 h-6 text-blue-500" />
+                <span className="font-bold text-gray-900 text-lg">Perfect for Today ☀️ 22°C</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{width: `${mockup.progress}%`}}></div>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Coffee className="w-4 h-4 text-gray-700" />
+                    <span className="text-sm text-gray-800 font-medium">Morning coffee delivery</span>
               </div>
+                  <button className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition-colors">€8</button>
             </div>
-
-            {/* Room info */}
-            <div className="bg-green-50 p-4 rounded-lg border border-green-200">
               <div className="flex items-center justify-between">
-                <div>
-                  <div className="font-bold text-gray-900">Room {mockup.roomNumber}</div>
-                  <div className="text-sm text-green-700">{mockup.roomStatus}</div>
-                  <div className="text-xs text-gray-600 mt-1">{mockup.keyStatus}</div>
+                  <div className="flex items-center gap-2">
+                    <Car className="w-4 h-4 text-gray-700" />
+                    <span className="text-sm text-gray-800 font-medium">Mercedes Museum tickets</span>
                 </div>
-                <div className="text-right">
-                  <div className="text-lg">{mockup.weather.icon}</div>
-                  <div className="text-sm">{mockup.weather.temp}</div>
+                  <button className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm hover:bg-blue-200 transition-colors">€12</button>
                 </div>
               </div>
             </div>
 
-            {/* Contextual suggestions */}
-            <div className="space-y-2">
-              {mockup.suggestions.map((suggestion, index) => (
-                <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg ${suggestion.urgent ? 'bg-amber-50 border border-amber-200' : 'bg-gray-50'}`}>
-                  <span className="text-xl">{suggestion.icon}</span>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{suggestion.title}</div>
-                    <div className="text-sm text-gray-600">{suggestion.desc}</div>
+            {/* Voice Assistant */}
+            <div 
+              className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all hover:scale-105"
+              onClick={() => setActiveScreen('voice')}
+            >
+              <div className="flex items-center justify-center gap-3">
+                <Mic className="w-8 h-8 text-purple-600" />
+                <div className="text-center">
+                  <div className="font-bold text-purple-800">Voice Assistant</div>
+                  <div className="text-sm text-purple-600">Tap to speak</div>
                   </div>
-                  {suggestion.status && <div className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Live</div>}
                 </div>
-              ))}
             </div>
 
-            {/* Actions */}
-            <div className="space-y-2 pt-2">
-              {mockup.actions.map((action, index) => (
-                <button key={index} className={`w-full py-3 rounded-lg font-medium ${action.primary ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700'}`}>
-                  {action.text}
-                </button>
-              ))}
+            {/* Innovation Showcase */}
+            <div 
+              className="bg-gradient-to-r from-orange-100 to-yellow-100 rounded-xl p-4 cursor-pointer hover:shadow-lg transition-all hover:scale-105"
+              onClick={() => setActiveScreen('innovation')}
+            >
+              <div className="flex items-center justify-center gap-3">
+                <Zap className="w-6 h-6 text-orange-600" />
+                <div className="text-center">
+                  <div className="font-bold text-orange-800">Innovation Features</div>
+                  <div className="text-sm text-orange-600">Explore new capabilities</div>
             </div>
           </div>
-        );
-
-      case 'dashboard':
-        return (
-          <div className="space-y-3">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="text-base font-bold text-gray-900">{mockup.greeting}</div>
-                <div className="text-xs text-gray-600">{mockup.time}</div>
               </div>
-              <div className="text-right">
-                <div className="text-lg">{mockup.weather.icon}</div>
-                <div className="text-xs">{mockup.weather.temp}</div>
               </div>
             </div>
+      )
+    },
 
-            {/* Contextual cards */}
-            <div className="space-y-2">
-              {mockup.contextualCards.map((card, index) => (
-                <div key={index} className={`p-3 rounded-lg border ${card.highlight ? 'bg-blue-50 border-blue-200 ring-1 ring-blue-100' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-2">
-                      <span className="text-lg">{card.icon}</span>
-                      <div>
-                        <div className="font-medium text-gray-900 text-sm">{card.title}</div>
-                        <div className="text-xs text-gray-600">{card.desc}</div>
-                        {card.price && <div className="text-xs font-medium text-green-600 mt-1">{card.price}</div>}
-                      </div>
-                    </div>
-                    <button className={`px-2 py-1 text-xs rounded-full ${card.highlight ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'}`}>
-                      {card.action}
+    checkin: {
+      title: 'Express Check-in',
+      subtitle: '15-25% adoption target - One-tap completion',
+      content: (
+        <div className="min-h-full bg-gradient-to-b from-green-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-4 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setActiveScreen('home')}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
                     </button>
+              <div className="flex-1 text-center">
+                <div className="text-lg font-bold">Express Check-in</div>
+                <div className="text-sm opacity-90">95% complete • 1 tap remaining</div>
                   </div>
                 </div>
-              ))}
             </div>
 
-            {/* Quick actions */}
-            <div className="grid grid-cols-3 gap-1">
-              {mockup.quickActions.map((action, index) => (
-                <button key={index} className="p-2 bg-gray-100 rounded-lg text-center text-xs">
-                  {action}
-                </button>
-              ))}
+          <div className="flex-1 p-6 space-y-6 pb-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-green-500">
+              <div className="text-lg font-bold text-gray-900 mb-4">✅ Ready to Complete</div>
+              <div className="space-y-3 text-gray-800">
+                <div className="flex justify-between">
+                  <span className="font-medium">Room:</span>
+                  <span className="font-bold text-gray-900">413 - Deluxe King</span>
             </div>
+                <div className="flex justify-between">
+                  <span className="font-medium">Digital key:</span>
+                  <span className="text-green-600 font-bold">✓ Activated</span>
           </div>
-        );
-
-      case 'memory':
-        return (
-          <div className="space-y-3">
-            {/* Header */}
-            <div className="text-center">
-              <h3 className="text-base font-bold text-gray-900">{mockup.title}</h3>
-              <div className="flex justify-center space-x-1 mt-2">
-                {mockup.photos.map((photo, index) => (
-                  <div key={index} className="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center text-base">
-                    {photo}
+                <div className="flex justify-between">
+                  <span className="font-medium">WiFi:</span>
+                  <span className="text-green-600 font-bold">✓ Auto-connected</span>
                   </div>
-                ))}
               </div>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <div className="text-base font-bold text-blue-600">{mockup.stats.nights}</div>
-                <div className="text-xs text-gray-600">Nights</div>
-              </div>
-              <div className="p-2 bg-green-50 rounded-lg">
-                <div className="text-base font-bold text-green-600">{mockup.stats.services}</div>
-                <div className="text-xs text-gray-600">Services</div>
-              </div>
-              <div className="p-2 bg-purple-50 rounded-lg">
-                <div className="text-base font-bold text-purple-600">{mockup.stats.savings}</div>
-                <div className="text-xs text-gray-600">Saved</div>
+            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+              <div className="text-sm text-green-700 font-medium mb-2">🎯 Improvement Impact</div>
+              <div className="text-xs text-green-600 space-y-1">
+                <div>• Target: 15-25% digital adoption (vs current 4%)</div>
+                <div>• 85% shorter wait times</div>
+                <div>• Skip front desk entirely</div>
               </div>
             </div>
 
-            {/* Achievements */}
-            <div className="space-y-2">
-              {mockup.achievements.map((achievement, index) => (
-                <div key={index} className="flex items-center space-x-2 p-2 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <span className="text-lg">{achievement.badge}</span>
-                  <div>
-                    <div className="font-medium text-gray-900 text-sm">{achievement.title}</div>
-                    <div className="text-xs text-gray-600">{achievement.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Sharing */}
-            <div className="space-y-2">
-              <div className="text-xs font-medium text-gray-900">Share your story:</div>
-              <div className="grid grid-cols-3 gap-1">
-                {mockup.sharing.platforms.map((platform, index) => (
-                  <button key={index} className="p-2 bg-gray-100 rounded-lg text-center text-xs">
-                    {platform}
+            <button 
+              className="w-full bg-green-600 text-white py-4 rounded-xl text-lg font-bold shadow-lg hover:bg-green-700 transition-all transform hover:scale-105"
+              onClick={() => setActiveScreen('success')}
+            >
+              🔑 Complete Check-in & Unlock Room
                   </button>
-                ))}
-              </div>
-              <div className="text-xs text-gray-600">Invite friends: {mockup.sharing.friends.join(', ')}</div>
-            </div>
-          </div>
-        );
-
-      case 'onboarding':
-        return (
-          <div className="space-y-4">
-            {/* Progress */}
-            <div className="text-center">
-              <div className="text-sm text-gray-600 mb-2">Step {mockup.step} of {mockup.totalSteps}</div>
-              <div className="w-full bg-gray-200 rounded-full h-1">
-                <div className="bg-blue-600 h-1 rounded-full" style={{width: `${(mockup.step/mockup.totalSteps)*100}%`}}></div>
               </div>
             </div>
+      )
+    },
 
-            {/* Header */}
-            <div className="text-center">
-              <h3 className="text-lg font-bold text-gray-900">{mockup.title}</h3>
-              <p className="text-sm text-gray-600">{mockup.subtitle}</p>
-            </div>
-
-            {/* Benefits */}
-            <div className="space-y-2">
-              {mockup.form.benefits.map((benefit, index) => (
-                <div key={index} className="flex items-center space-x-3 p-2 bg-green-50 rounded-lg">
-                  <span className="text-lg">{benefit.icon}</span>
-                  <span className="text-sm text-gray-800">{benefit.text}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Social Login */}
-            <div className="space-y-2">
-              {mockup.form.socialOptions.map((option, index) => (
-                <button key={index} className="w-full py-3 bg-gray-100 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-200">
-                  {option}
+    ai: {
+      title: 'AI Recommendations',
+      subtitle: 'Journey-stage intelligence with contextual suggestions',
+      content: (
+        <div className="min-h-full bg-gradient-to-b from-blue-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setActiveScreen('home')}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
                 </button>
-              ))}
+              <div className="flex-1 text-center">
+                <div className="text-lg font-bold">Smart Recommendations</div>
+                <div className="text-sm opacity-90">Personalized for your stay</div>
+            </div>
+            </div>
             </div>
 
-            {/* Divider */}
-            <div className="flex items-center space-x-4">
-              <div className="flex-1 h-px bg-gray-300"></div>
-              <span className="text-xs text-gray-500">OR</span>
-              <div className="flex-1 h-px bg-gray-300"></div>
-            </div>
-
-            {/* Form Fields */}
-            <div className="space-y-3">
-              {mockup.form.fields.map((field, index) => (
-                <div key={index}>
-                  <label className="block text-xs font-medium text-gray-700 mb-1">{field.label}</label>
-                  <input 
-                    type={field.type} 
-                    value={field.value} 
-                    className="w-full p-3 border border-gray-300 rounded-lg text-sm bg-gray-50"
-                    readOnly
-                  />
-                </div>
-              ))}
-            </div>
-
-            <button className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium">
-              Continue
-            </button>
+          <div className="flex-1 p-6 space-y-4 pb-8">
+            <div className="bg-white rounded-xl p-4 shadow-lg">
+              <div className="flex items-center gap-3 mb-3">
+                <Brain className="w-6 h-6 text-blue-500" />
+                <span className="font-bold text-gray-900 text-lg">Based on Your Preferences</span>
           </div>
-        );
-
-      case 'checkin-flow':
-        return (
           <div className="space-y-4">
-            {/* Progress */}
+                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <Coffee className="w-5 h-5 text-amber-700" />
             <div>
-              <div className="flex justify-between text-sm mb-2">
-                <span className="text-gray-600">{mockup.title}</span>
-                <span className="text-blue-600 font-medium">{mockup.progress}%</span>
+                      <div className="font-bold text-gray-900">Room Service Coffee</div>
+                      <div className="text-sm text-gray-700 font-medium">Perfect morning start</div>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-blue-600 h-2 rounded-full" style={{width: `${mockup.progress}%`}}></div>
               </div>
+                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Order €8</button>
             </div>
 
-            {/* Current Step */}
-            <div className="text-center">
-              <h3 className="font-bold text-gray-900">{mockup.currentStep}</h3>
-            </div>
-
-            {/* Preferences */}
-            <div className="space-y-3">
-              {mockup.preferences.map((pref, index) => (
-                <div key={index} className="p-3 bg-gray-50 rounded-lg border">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <span className="text-lg">{pref.icon}</span>
-                      <span className="text-sm font-medium text-gray-900">{pref.label}</span>
-                    </div>
-                    <div className="text-sm text-blue-600 font-medium">{pref.selected}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Upsells */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Special Offers</div>
-              {mockup.upsells.map((upsell, index) => (
-                <div key={index} className={`p-3 rounded-lg border ${upsell.highlight ? 'bg-yellow-50 border-yellow-200 ring-2 ring-yellow-100' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3">
-                      <span className="text-xl">{upsell.icon}</span>
-                      <div>
-                        <div className="font-medium text-gray-900">{upsell.title}</div>
-                        <div className="text-sm text-gray-600">{upsell.desc}</div>
-                        <div className="flex items-center space-x-2 mt-1">
-                          {upsell.originalPrice && <span className="text-sm text-gray-500 line-through">{upsell.originalPrice}</span>}
-                          <span className="text-sm font-medium text-green-600">{upsell.discountPrice || upsell.price}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button className={`px-3 py-1 text-xs rounded-full ${upsell.highlight ? 'bg-yellow-600 text-white' : 'bg-gray-600 text-white'}`}>
-                      Add
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <button className="w-full py-3 bg-blue-600 text-white rounded-lg font-medium">
-              Complete Check-in
-            </button>
-          </div>
-        );
-
-      case 'ordering':
-        return (
-          <div className="space-y-4">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className="font-bold text-gray-900">{mockup.category}</h3>
-                <p className="text-sm text-gray-600">{mockup.time}</p>
-              </div>
-              <div className="text-right">
-                <div className="text-2xl">{mockup.weather.icon}</div>
-                <div className="text-sm">{mockup.weather.temp}</div>
-              </div>
-            </div>
-
-            {/* Recommendations */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Recommended for you</div>
-              {mockup.recommendations.map((item, index) => (
-                <div key={index} className={`p-3 rounded-lg border ${item.highlight ? 'bg-blue-50 border-blue-200 ring-2 ring-blue-100' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3">
-                      <span className="text-2xl">{item.icon}</span>
-                      <div>
-                        <div className="flex items-center space-x-2">
-                          <span className="font-medium text-gray-900">{item.title}</span>
-                          {item.weatherMatch && <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Weather Match</span>}
-                          {item.popular && <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Popular</span>}
-                        </div>
-                        <div className="text-sm text-gray-600">{item.desc}</div>
-                        <div className="flex items-center space-x-4 mt-1">
-                          <span className="text-sm font-medium text-green-600">{item.price}</span>
-                          <span className="text-xs text-gray-500">{item.time}</span>
-                          <span className="text-xs text-yellow-600">★ {item.rating}</span>
-                        </div>
-                      </div>
-                    </div>
-                    <button className={`px-3 py-1 text-xs rounded-full ${item.highlight ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'}`}>
-                      Add
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Cart */}
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-900">Cart ({mockup.cart.items} item)</span>
-                <span className="text-lg font-bold text-green-600">{mockup.cart.total}</span>
-              </div>
-              <div className="text-xs text-gray-600">{mockup.cart.delivery}</div>
-              <div className="text-xs text-gray-600">Estimated: {mockup.cart.time}</div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Payment Method</div>
-              {mockup.paymentMethods.map((method, index) => (
-                <button key={index} className="w-full p-2 bg-gray-100 rounded-lg text-left text-sm">
-                  {method}
-                </button>
-              ))}
-            </div>
-
-            <button className="w-full py-3 bg-green-600 text-white rounded-lg font-medium">
-              Place Order
-            </button>
-          </div>
-        );
-
-      case 'ai-chat':
-        return (
-          <div className="space-y-4">
-            {/* Chat Header */}
-            <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg border-b">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">AI</span>
-              </div>
-              <div>
-                <div className="font-medium text-gray-900">Digital Concierge</div>
-                <div className="text-xs text-green-600">● Online</div>
-              </div>
-            </div>
-
-            {/* Conversation */}
-            <div className="space-y-3">
-              {mockup.conversation.map((msg, index) => (
-                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-xs p-3 rounded-lg ${msg.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'}`}>
-                    <div className="text-sm">{msg.message}</div>
-                    <div className={`text-xs mt-1 ${msg.sender === 'user' ? 'text-blue-100' : 'text-gray-500'}`}>
-                      {msg.time}
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* AI Suggestions */}
-              {mockup.conversation[1]?.suggestions && (
-                <div className="space-y-2">
-                  {mockup.conversation[1].suggestions.map((suggestion, index) => (
-                    <div key={index} className="p-3 bg-gray-50 rounded-lg border">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <div className="font-medium text-gray-900">{suggestion.name}</div>
-                          <div className="text-sm text-gray-600">{suggestion.type}</div>
-                          <div className="text-xs text-gray-500 mt-1">{suggestion.distance} • ★ {suggestion.rating}</div>
-                          <div className="text-xs text-green-600">{suggestion.weather}</div>
-                        </div>
-                        <button className="px-2 py-1 bg-blue-600 text-white text-xs rounded">Book</button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {/* Typing indicator */}
-              {mockup.typing && (
-                <div className="flex justify-start">
-                  <div className="bg-gray-100 p-3 rounded-lg">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Quick Replies */}
-            <div className="grid grid-cols-2 gap-2">
-              {mockup.quickReplies.map((reply, index) => (
-                <button key={index} className="p-2 bg-gray-100 rounded-lg text-sm text-center">
-                  {reply}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'voice':
-        return (
-          <div className="space-y-4">
-            {/* Voice Status */}
-            <div className="text-center">
-              <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center ${mockup.status === 'listening' ? 'bg-red-100 animate-pulse' : 'bg-gray-100'}`}>
-                <span className="text-2xl">🎤</span>
-              </div>
-              <div className="mt-2 text-sm font-medium text-gray-900">
-                {mockup.status === 'listening' ? 'Listening...' : 'Tap to speak'}
-              </div>
-            </div>
-
-            {/* Waveform */}
-            {mockup.waveform && (
-              <div className="flex justify-center items-end space-x-1 h-12">
-                {mockup.waveform.map((height, index) => (
-                  <div 
-                    key={index} 
-                    className="w-1 bg-blue-600 rounded animate-pulse" 
-                    style={{height: `${height * 4}px`}}
-                  ></div>
-                ))}
-              </div>
-            )}
-
-            {/* Last Command */}
-            {mockup.lastCommand && (
-              <div className="p-3 bg-blue-50 rounded-lg border">
-                <div className="text-xs text-gray-600 mb-1">You said:</div>
-                <div className="text-sm font-medium text-gray-900">"{mockup.lastCommand}"</div>
-              </div>
-            )}
-
-            {/* Response */}
-            {mockup.response && (
-              <div className="p-3 bg-green-50 rounded-lg border">
-                <div className="text-xs text-gray-600 mb-1">Assistant:</div>
-                <div className="text-sm text-gray-900">{mockup.response}</div>
-              </div>
-            )}
-
-            {/* Voice Suggestions */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Try saying:</div>
-              {mockup.suggestions.map((suggestion, index) => (
-                <button key={index} className="w-full p-2 bg-gray-100 rounded-lg text-left text-sm">
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'predictions':
-        return (
-          <div className="space-y-4">
-            {/* Weather Context */}
-            <div className="p-3 bg-blue-50 rounded-lg border">
-              <div className="flex justify-between items-center">
-                <div>
-                  <div className="text-sm font-medium text-gray-900">Current Weather</div>
-                  <div className="text-xs text-gray-600">{mockup.weather.current}</div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm font-medium text-gray-900">Forecast</div>
-                  <div className="text-xs text-gray-600">{mockup.weather.forecast}</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Predictions */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Smart Predictions</div>
-              {mockup.predictions.map((prediction, index) => (
-                <div key={index} className={`p-3 rounded-lg border ${prediction.urgent ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start space-x-3">
-                      <span className="text-xl">{prediction.icon}</span>
-                      <div>
-                        <div className="font-medium text-gray-900">{prediction.title}</div>
-                        <div className="text-sm text-gray-600">{prediction.desc}</div>
-                        <div className="text-xs text-gray-500 mt-1">{prediction.confidence}% confidence</div>
-                      </div>
-                    </div>
-                    <button className={`px-3 py-1 text-xs rounded-full ${prediction.urgent ? 'bg-red-600 text-white' : 'bg-blue-600 text-white'}`}>
-                      {prediction.action}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'achievements':
-        return (
-          <div className="space-y-4">
-            {/* New Badge Celebration */}
-            {mockup.newBadge && (
-              <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                <div className="text-4xl mb-2">{mockup.newBadge.icon}</div>
-                <div className="font-bold text-gray-900">Congratulations!</div>
-                <div className="text-sm text-gray-600">You earned: {mockup.newBadge.name}</div>
-                <div className="text-xs text-gray-500 mt-1">{mockup.newBadge.desc}</div>
-              </div>
-            )}
-
-            {/* Progress */}
-            <div className="p-3 bg-green-50 rounded-lg border">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-medium text-gray-900">Achievement Progress</span>
-                <span className="text-sm text-green-600">{mockup.progress.current}/{mockup.progress.target}</span>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
-                <div className="bg-green-600 h-2 rounded-full" style={{width: '100%'}}></div>
-              </div>
-            </div>
-
-            {/* Badge Collection */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Your Badges</div>
-              {mockup.badges.map((badge, index) => (
-                <div key={index} className={`flex items-center space-x-3 p-3 rounded-lg border ${badge.earned ? 'bg-yellow-50 border-yellow-200' : 'bg-gray-50 border-gray-200'}`}>
-                  <span className={`text-2xl ${!badge.earned ? 'grayscale opacity-50' : ''}`}>{badge.icon}</span>
-                  <div className="flex-1">
-                    <div className={`font-medium ${badge.earned ? 'text-gray-900' : 'text-gray-500'}`}>{badge.name}</div>
-                    <div className="text-sm text-gray-600">{badge.desc}</div>
-                    {badge.progress && <div className="text-xs text-blue-600 mt-1">Progress: {badge.progress}</div>}
-                  </div>
-                  {badge.earned && <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Earned</span>}
-                </div>
-              ))}
-            </div>
-
-            {/* Rewards */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Available Rewards</div>
-              {mockup.rewards.map((reward, index) => (
-                <div key={index} className={`p-3 rounded-lg border ${reward.available ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'}`}>
-                  <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <Car className="w-5 h-5 text-gray-700" />
                     <div>
-                      <div className={`font-medium ${reward.available ? 'text-gray-900' : 'text-gray-500'}`}>{reward.title}</div>
-                      <div className="text-sm text-gray-600">{reward.desc}</div>
+                      <div className="font-bold text-gray-900">Museum Tickets</div>
+                      <div className="text-sm text-gray-700 font-medium">Perfect for cloudy weather</div>
+            </div>
                     </div>
-                    <button className={`px-3 py-1 text-xs rounded-full ${reward.available ? 'bg-green-600 text-white' : 'bg-gray-300 text-gray-500'}`} disabled={!reward.available}>
-                      {reward.available ? 'Claim' : 'Locked'}
+                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Book €12</button>
+            </div>
+
+                <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <Utensils className="w-5 h-5 text-orange-600" />
+                      <div>
+                      <div className="font-bold text-gray-900">Restaurant Reservation</div>
+                      <div className="text-sm text-gray-700 font-medium">Highly rated nearby</div>
+                        </div>
+                      </div>
+                  <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Reserve</button>
+                    </div>
+                  </div>
+            </div>
+
+            <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+              <div className="text-sm text-blue-700 font-medium mb-2">🧠 AI Intelligence</div>
+              <div className="text-xs text-blue-600 space-y-1">
+                <div>• Contextual recommendations based on journey stage</div>
+                <div>• Weather-aware suggestions</div>
+                <div>• 20%+ upsell conversion target (vs 6.04% industry avg)</div>
+          </div>
+              </div>
+              </div>
+            </div>
+      )
+    },
+
+    voice: {
+      title: 'Voice Assistant',
+      subtitle: '85% query automation through intelligent voice interface',
+      content: (
+        <div className="min-h-full bg-gradient-to-b from-purple-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 flex-shrink-0">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setActiveScreen('home')}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
                     </button>
+              <div className="flex-1 text-center">
+                <div className="text-lg font-bold">Voice Assistant Active</div>
+                <div className="text-sm opacity-90">Listening... Tap to speak</div>
                   </div>
                 </div>
-              ))}
             </div>
+
+          <div className="flex-1 p-6 space-y-6 pb-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg border-l-4 border-purple-500">
+              <div className="text-lg font-bold text-gray-900 mb-3">🎤 Voice Command</div>
+              <div className="text-gray-800 font-medium mb-4">"Order coffee to room 413"</div>
+              <div className="bg-purple-50 p-4 rounded-lg">
+                <div className="font-bold text-purple-800 text-lg">✅ Understood!</div>
+                <div className="text-purple-700 font-medium mt-1">Ordering room service coffee for room 413. ETA: 15 minutes. Total: €8.50</div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-6 text-center">
+              <Mic className="w-16 h-16 mx-auto text-purple-600 mb-4 animate-pulse" />
+              <div className="text-xl font-bold text-purple-800 mb-2">Tap & Hold to Speak</div>
+              <div className="text-purple-600">85% of queries automated</div>
+            </div>
+
+            <div className="bg-purple-50 rounded-xl p-4 border border-purple-200">
+              <div className="text-sm text-purple-700 font-medium mb-2">🗣️ Voice Innovation</div>
+              <div className="text-xs text-purple-600 space-y-1">
+                <div>• 54% of hotels planning voice features</div>
+                <div>• GDPR-compliant European voice technology</div>
+                <div>• Multi-language support</div>
           </div>
-        );
-
-      case 'story':
-        return (
-          <div className="space-y-4">
-            {/* Story Header */}
-            <div className="text-center">
-              <h3 className="text-lg font-bold text-gray-900">{mockup.title}</h3>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
-                {mockup.photos.map((photo, index) => (
-                  <div key={index} className="aspect-square bg-gray-200 rounded-lg flex items-center justify-center text-2xl">
-                    {photo.src}
-                  </div>
-                ))}
+              </div>
               </div>
             </div>
+      )
+    },
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 text-center">
-              <div className="p-3 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">{mockup.stats.days}</div>
-                <div className="text-xs text-gray-600">Days</div>
-              </div>
-              <div className="p-3 bg-green-50 rounded-lg">
-                <div className="text-2xl font-bold text-green-600">{mockup.stats.activities}</div>
-                <div className="text-xs text-gray-600">Activities</div>
-              </div>
-              <div className="p-3 bg-purple-50 rounded-lg">
-                <div className="text-2xl font-bold text-purple-600">{mockup.stats.newPlaces}</div>
-                <div className="text-xs text-gray-600">New Places</div>
-              </div>
-            </div>
-
-            {/* Highlights */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Story Highlights</div>
-              {mockup.highlights.map((highlight, index) => (
-                <div key={index} className="p-2 bg-yellow-50 rounded-lg text-sm text-gray-800">
-                  {highlight}
-                </div>
-              ))}
-            </div>
-
-            {/* Share Options */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Share your story:</div>
-              {mockup.shareOptions.map((option, index) => (
-                <button key={index} className="w-full p-3 bg-gray-100 rounded-lg text-left">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">{option.platform}</span>
-                    <span className="text-xs text-gray-500">{option.followers || option.friends} {option.followers ? 'followers' : 'friends'}</span>
-                  </div>
+    innovation: {
+      title: 'Innovation Showcase',
+      subtitle: 'Advanced features for market differentiation',
+      content: (
+        <div className="h-full bg-gradient-to-b from-orange-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white p-4">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setActiveScreen('home')}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
                 </button>
-              ))}
+              <div className="flex-1 text-center">
+                <div className="text-lg font-bold">Innovation Features</div>
+                <div className="text-sm opacity-90">Market-leading capabilities</div>
             </div>
-          </div>
-        );
-
-      case 'referrals':
-        return (
-          <div className="space-y-4">
-            {/* Rewards Summary */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 bg-green-50 rounded-lg text-center">
-                <div className="text-2xl font-bold text-green-600">{mockup.yourRewards.earned}</div>
-                <div className="text-xs text-gray-600">Earned</div>
-              </div>
-              <div className="p-3 bg-blue-50 rounded-lg text-center">
-                <div className="text-2xl font-bold text-blue-600">{mockup.yourRewards.pending}</div>
-                <div className="text-xs text-gray-600">Pending</div>
               </div>
             </div>
 
-            {/* Friend Benefits */}
-            <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-              <div className="text-sm font-medium text-gray-900 mb-2">Your friends get:</div>
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-700">{mockup.friendsRewards.discount} off first stay</span>
-                <span className="text-sm text-gray-700">{mockup.friendsRewards.bonusPoints} bonus points</span>
+          <div className="flex-1 p-6 space-y-4">
+            <div 
+              className="bg-white rounded-xl p-4 shadow-lg cursor-pointer hover:shadow-xl transition-all"
+              onClick={() => setActiveScreen('predictive')}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <Brain className="w-6 h-6 text-blue-500" />
+                <span className="font-bold text-gray-900 text-lg">Predictive Service Engine</span>
               </div>
+              <div className="text-sm text-gray-700 font-medium mb-2">AI-powered anticipation of guest needs</div>
+              <div className="text-xs text-blue-600 font-medium">Tap to explore →</div>
+              </div>
+
+            <div 
+              className="bg-white rounded-xl p-4 shadow-lg cursor-pointer hover:shadow-xl transition-all"
+              onClick={() => setActiveScreen('voice')}
+            >
+              <div className="flex items-center gap-3 mb-2">
+                <Mic className="w-6 h-6 text-purple-500" />
+                <span className="font-bold text-gray-900 text-lg">Voice-First Interface</span>
+              </div>
+              <div className="text-sm text-gray-700 font-medium mb-2">Natural language processing for guest requests</div>
+              <div className="text-xs text-purple-600 font-medium">Tap to explore →</div>
             </div>
 
-            {/* Invite Message */}
-            <div className="p-3 bg-gray-50 rounded-lg border">
-              <div className="text-xs text-gray-600 mb-2">Your invite message:</div>
-              <div className="text-sm text-gray-900">{mockup.inviteMessage}</div>
-            </div>
-
-            {/* Contact Status */}
-            <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Invitation Status</div>
-              {mockup.contacts.map((contact, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-                  <div>
-                    <div className="font-medium text-gray-900">{contact.name}</div>
-                    <div className="text-xs text-gray-500 capitalize">{contact.status}</div>
-                  </div>
-                  <div className="text-sm text-green-600">{contact.reward}</div>
+            <div className="bg-white rounded-xl p-4 shadow-lg">
+              <div className="flex items-center gap-3 mb-2">
+                <Zap className="w-6 h-6 text-yellow-500" />
+                <span className="font-bold text-gray-900 text-lg">Smart Automation</span>
                 </div>
-              ))}
-            </div>
-
-            {/* Share Channels */}
-            <div className="grid grid-cols-2 gap-2">
-              {mockup.shareChannels.map((channel, index) => (
-                <button key={index} className="p-2 bg-blue-600 text-white rounded-lg text-sm text-center">
-                  {channel}
-                </button>
-              ))}
-            </div>
-          </div>
-        );
-
-      case 'social-feed':
-        return (
-          <div className="space-y-4">
-            {/* Live Stats */}
-            <div className="grid grid-cols-3 gap-2 text-center">
-              <div className="p-2 bg-blue-50 rounded-lg">
-                <div className="text-lg font-bold text-blue-600">{mockup.liveStats.guestsToday}</div>
-                <div className="text-xs text-gray-600">Guests Today</div>
-              </div>
-              <div className="p-2 bg-green-50 rounded-lg">
-                <div className="text-lg font-bold text-green-600">{mockup.liveStats.checkinsNow}</div>
-                <div className="text-xs text-gray-600">Checking In</div>
-              </div>
-              <div className="p-2 bg-purple-50 rounded-lg">
-                <div className="text-lg font-bold text-purple-600">{mockup.liveStats.activitiesBooked}</div>
-                <div className="text-xs text-gray-600">Activities</div>
+              <div className="text-sm text-gray-700 font-medium mb-3">85%+ automation of guest inquiries</div>
+              <div className="bg-yellow-50 p-3 rounded-lg">
+                <div className="text-xs text-yellow-700 space-y-1">
+                  <div>• Automatic housekeeping optimization</div>
+                  <div>• Predictive maintenance alerts</div>
+                  <div>• Dynamic pricing recommendations</div>
+                </div>
               </div>
             </div>
 
-            {/* Live Activity Feed */}
-            <div className="space-y-3">
-              <div className="text-sm font-medium text-gray-900">Live Activity</div>
-              {mockup.activities.map((activity, index) => (
-                <div key={index} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border">
-                  <span className="text-xl">{activity.reaction}</span>
-                  <div className="flex-1">
-                    <div className="text-sm text-gray-900">
-                      <span className="font-medium">{activity.user}</span> {activity.action}
+            <div className="bg-orange-50 rounded-xl p-4 border border-orange-200">
+              <div className="text-sm text-orange-700 font-medium mb-2">🚀 Innovation Impact</div>
+              <div className="text-xs text-orange-600 space-y-1">
+                <div>• 80% hotel AI adoption with 10-15% revenue increases</div>
+                <div>• European market differentiation advantage</div>
+                <div>• 4-6 month implementation timeline</div>
+                      </div>
                     </div>
-                    <div className="text-xs text-gray-500">{activity.time}</div>
-                    {activity.likes && <div className="text-xs text-blue-600 mt-1">❤️ {activity.likes} likes</div>}
                   </div>
                 </div>
-              ))}
+      )
+    },
+
+    predictive: {
+      title: 'Predictive Service Engine',
+      subtitle: 'AI-powered anticipation using integrated hotel data',
+      content: (
+        <div className="h-full bg-gradient-to-b from-indigo-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white p-4">
+            <div className="flex items-center gap-3">
+              <button 
+                onClick={() => setActiveScreen('innovation')}
+                className="p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <ChevronLeft className="w-5 h-5" />
+                    </button>
+              <div className="flex-1 text-center">
+                <div className="text-lg font-bold">Predictive Engine</div>
+                <div className="text-sm opacity-90">Anticipating guest needs</div>
+                  </div>
+                </div>
+            </div>
+          
+          <div className="flex-1 p-6 space-y-4">
+            <div className="bg-white rounded-xl p-4 shadow-lg border-l-4 border-indigo-500">
+              <div className="text-lg font-bold mb-3">🔮 Predictive Insights</div>
+              <div className="space-y-3">
+                <div className="bg-indigo-50 p-3 rounded-lg">
+                  <div className="font-medium text-indigo-800">Guest likely to order breakfast</div>
+                  <div className="text-sm text-indigo-600">Based on previous patterns • 87% confidence</div>
+                  </div>
+                <div className="bg-green-50 p-3 rounded-lg">
+                  <div className="font-medium text-green-800">Room service optimal time: 8:30 AM</div>
+                  <div className="text-sm text-green-600">Aligned with guest schedule</div>
+              </div>
+                <div className="bg-yellow-50 p-3 rounded-lg">
+                  <div className="font-medium text-yellow-800">Housekeeping window: 11:00-13:00</div>
+                  <div className="text-sm text-yellow-600">Guest typically out during this time</div>
+            </div>
+              </div>
             </div>
 
-            {/* Trending Activities */}
+            <div className="bg-white rounded-xl p-4 shadow-lg">
+              <div className="text-lg font-bold mb-3">🎯 Proactive Actions</div>
             <div className="space-y-2">
-              <div className="text-sm font-medium text-gray-900">Trending Now</div>
-              {mockup.trending.map((trend, index) => (
-                <div key={index} className="flex items-center justify-between p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <div>
-                    <div className="font-medium text-gray-900">{trend.activity}</div>
-                    <div className="text-xs text-gray-600">{trend.bookings} bookings today</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm text-yellow-600">★ {trend.rating}</div>
-                    <button className="text-xs bg-yellow-600 text-white px-2 py-1 rounded mt-1">Book</button>
-                  </div>
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                  <span className="text-sm">Pre-order breakfast suggestion</span>
+                  <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Send</button>
                 </div>
-              ))}
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                  <span className="text-sm">Spa appointment availability</span>
+                  <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Notify</button>
+            </div>
+                <div className="flex items-center justify-between p-2 bg-gray-50 rounded">
+                  <span className="text-sm">Weather alert + umbrella offer</span>
+                  <button className="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Alert</button>
+                  </div>
             </div>
           </div>
-        );
 
-      default:
-        return <div className="text-center text-gray-500">Mockup type not found</div>;
+            <div className="bg-indigo-50 rounded-xl p-4 border border-indigo-200">
+              <div className="text-sm text-indigo-700 font-medium mb-2">🧠 Technical Advantage</div>
+              <div className="text-xs text-indigo-600 space-y-1">
+                <div>• Leverages 50+ technology partner integrations</div>
+                <div>• 1M+ digital check-ins behavioral data</div>
+                <div>• 10-30% cost reduction in customer service</div>
+              </div>
+              </div>
+            </div>
+              </div>
+      )
+    },
+
+    success: {
+      title: 'Check-in Complete',
+      subtitle: 'Digital transformation success',
+      content: (
+        <div className="h-full bg-gradient-to-b from-green-50 to-white flex flex-col">
+          <div className="bg-gradient-to-r from-green-600 to-teal-600 text-white p-4 text-center">
+            <div className="text-lg font-bold">Check-in Complete! 🎉</div>
+            <div className="text-sm opacity-90">Welcome to Stuttgart Grand</div>
+            </div>
+
+          <div className="flex-1 p-6 space-y-6 text-center">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <CheckCircle className="w-20 h-20 mx-auto text-green-500 mb-4 animate-bounce" />
+              <div className="text-2xl font-bold text-green-800 mb-2">Success!</div>
+              <div className="text-gray-600 mb-4">Your room is ready and digital key is active</div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="font-bold text-green-800">Room 413 - Deluxe King</div>
+                <div className="text-green-700">4th Floor • Use your phone to unlock</div>
+                  </div>
+            </div>
+
+            <div className="bg-green-50 rounded-xl p-4 border border-green-200">
+              <div className="text-sm text-green-700 font-medium mb-2">📊 Impact Achieved</div>
+              <div className="text-xs text-green-600 space-y-1">
+                <div>• 85% faster than traditional check-in</div>
+                <div>• Zero front desk interaction required</div>
+                <div>• Contributing to 15-25% digital adoption target</div>
+            </div>
+          </div>
+
+            <div className="space-y-3">
+              <button 
+                className="w-full bg-green-600 text-white py-3 rounded-xl font-bold hover:bg-green-700 transition-colors"
+                onClick={() => setActiveScreen('home')}
+              >
+                Continue to Guest Services
+              </button>
+              <button 
+                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                onClick={() => setActiveScreen('ai')}
+              >
+                Explore AI Recommendations
+              </button>
+                    </div>
+                  </div>
+                </div>
+      )
     }
   };
 
-  const startDemo = () => {
-    setIsPlaying(true);
-    setCurrentStep(0);
-  };
-
-  const stopDemo = () => {
-    setIsPlaying(false);
-  };
+  const currentScreen = screens[activeScreen];
 
   return (
-    <div className="space-y-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-base-content mb-4">
-          Experience My Strategy in Action
-        </h1>
-        <h2 className="text-2xl font-semibold text-accent mb-6">
-          Interactive Mockups Demonstrating Key Features
-        </h2>
-        <p className="text-lg text-base-content/80 max-w-4xl mx-auto">
-          Step through interactive demonstrations of journey-stage intelligence, conversion optimization, 
-          AI features, and viral growth mechanics. See exactly how each strategy transforms the guest experience.
-        </p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 py-12">
+      <div className="max-w-7xl mx-auto px-4">
+        
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-blue-300 to-purple-300 bg-clip-text text-transparent">Interactive Prototype</span><br />
+            <span className="bg-gradient-to-r from-green-300 to-blue-300 bg-clip-text text-transparent">Experience the Innovation</span>
+          </h1>
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
+            A clickable prototype showcasing what I want to improve in the innovation and stickiness strategies
+          </p>
+        </div>
 
-      {/* Demo Category Selection */}
-      <div className="card bg-gradient-to-br from-accent/5 via-primary/5 to-secondary/5 border border-accent/20">
-        <div className="card-body p-4 sm:p-6">
-          <h2 className="text-xl sm:text-2xl font-bold mb-4 text-center">Interactive Strategy Demo</h2>
+        {/* Main Prototype Display */}
+        <div className="flex justify-center mb-12">
+          <div className="relative">
+            {/* Mobile Frame - Made Larger */}
+            <div className="w-96 h-[700px] bg-black rounded-3xl p-4 shadow-2xl">
+              <div className="w-full h-full bg-white rounded-2xl overflow-hidden">
+                <div className="h-full overflow-y-auto scrollbar-hide">
+                  {currentScreen.content}
+                </div>
+              </div>
+            </div>
+            
+            {/* Screen Info */}
+            <div className="absolute -bottom-16 left-0 right-0 text-center">
+              <h3 className="text-xl font-bold text-white mb-2">
+                {currentScreen.title}
+              </h3>
+              <p className="text-sm text-gray-300">
+                {currentScreen.subtitle}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Navigation Controls */}
+        <div className="flex justify-center mb-12">
+          <div className="bg-white/20 backdrop-blur-md rounded-2xl p-6 shadow-lg border border-white/30">
+            <h3 className="text-lg font-bold text-white mb-4 text-center">Quick Navigation</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <button 
+                onClick={() => setActiveScreen('home')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeScreen === 'home' 
+                    ? 'bg-blue-600 text-white shadow-lg' 
+                    : 'bg-white/30 text-white hover:bg-white/40'
+                }`}
+              >
+                🏠 Home
+              </button>
+              <button 
+                onClick={() => setActiveScreen('checkin')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeScreen === 'checkin' 
+                    ? 'bg-green-600 text-white shadow-lg' 
+                    : 'bg-white/30 text-white hover:bg-white/40'
+                }`}
+              >
+                ✅ Check-in
+              </button>
+              <button 
+                onClick={() => setActiveScreen('ai')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeScreen === 'ai' 
+                    ? 'bg-blue-600 text-white shadow-lg' 
+                    : 'bg-white/30 text-white hover:bg-white/40'
+                }`}
+              >
+                🧠 AI
+              </button>
+              <button 
+                onClick={() => setActiveScreen('voice')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeScreen === 'voice' 
+                    ? 'bg-purple-600 text-white shadow-lg' 
+                    : 'bg-white/30 text-white hover:bg-white/40'
+                }`}
+              >
+                🎤 Voice
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Key Improvements */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <div className="text-center p-6 bg-white/20 backdrop-blur-md rounded-xl shadow-lg border border-white/30">
+            <CheckCircle className="w-12 h-12 mx-auto text-green-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">Express Check-in</h3>
+            <p className="text-gray-200">From 4% to 15-25% digital adoption through one-tap completion</p>
+          </div>
           
-          {/* Compact Category Selection */}
-          <div className="mb-6">
-            <div className="text-sm font-medium mb-3 text-center">Choose Experience:</div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-              {demoCategories.map((category) => (
-                <button 
-                  key={category.id}
-                  className={`btn btn-sm ${activeDemo === category.id ? `btn-${category.color}` : 'btn-outline'} h-auto py-2 text-left`}
-                  onClick={() => {
-                    setActiveDemo(category.id);
-                    setCurrentStep(0);
-                    setIsPlaying(false);
-                  }}
-                >
-                  <div className="flex items-center gap-2 w-full">
-                    <div className="flex-shrink-0 text-sm">
-                      {category.icon}
-                    </div>
-                    <div className="flex-1 text-left min-w-0">
-                      <div className="text-xs font-bold leading-tight">{category.title}</div>
-                      <div className="text-xs opacity-70 leading-tight truncate">{category.subtitle}</div>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
+          <div className="text-center p-6 bg-white/20 backdrop-blur-md rounded-xl shadow-lg border border-white/30">
+            <Brain className="w-12 h-12 mx-auto text-blue-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">AI Recommendations</h3>
+            <p className="text-gray-200">Journey-stage intelligence with contextual suggestions</p>
           </div>
-
-          {/* Active Demo Description - Compact */}
-          <div className="text-center mb-4">
-            <p className="text-sm text-base-content/70">
-              {demoCategories.find(cat => cat.id === activeDemo)?.description}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Demo Interface - Single Viewport */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
-        {/* Left Side - Step Navigation & Info */}
-        <div className="lg:col-span-3 space-y-4">
-          {/* Step Selection */}
-          <div className="card bg-base-100 border border-base-300">
-            <div className="card-body p-4">
-              <h4 className="font-bold mb-3 text-sm">Journey Steps</h4>
-              
-              {getActiveSteps().length > 0 && (
-                <div className="space-y-2">
-                  {getActiveSteps().map((step, index) => (
-                    <button
-                      key={index}
-                      className={`btn btn-xs w-full justify-start ${currentStep === index ? 'btn-primary' : 'btn-ghost'} h-auto py-2`}
-                      onClick={() => setCurrentStep(index)}
-                    >
-                      <div className="text-left w-full">
-                        <div className="flex items-center gap-2">
-                          <span className="text-xs font-bold">{index + 1}</span>
-                          <span className="text-xs font-medium">{step.screen}</span>
-                        </div>
-                        <div className="text-xs opacity-70 mt-1">{step.stage}</div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Navigation Controls */}
-          <div className="card bg-base-100 border border-base-300">
-            <div className="card-body p-4">
-              <h4 className="font-bold mb-3 text-sm">Controls</h4>
-              
-              <div className="space-y-2">
-                <div className="flex gap-2">
-                  <button 
-                    className="btn btn-xs btn-outline flex-1"
-                    onClick={prevStep}
-                    disabled={currentStep === 0}
-                  >
-                    ← Prev
-                  </button>
-                  <button 
-                    className="btn btn-xs btn-outline flex-1"
-                    onClick={nextStep}
-                    disabled={currentStep === getActiveSteps().length - 1}
-                  >
-                    Next →
-                  </button>
-                </div>
-
-                {getActiveSteps().length > 0 && (
-                  <div className="flex gap-2">
-                    {!isPlaying ? (
-                      <button 
-                        className="btn btn-xs btn-primary flex-1"
-                        onClick={startDemo}
-                      >
-                        <Play className="w-3 h-3 mr-1" />
-                        Auto-Play
-                      </button>
-                    ) : (
-                      <button 
-                        className="btn btn-xs btn-warning flex-1"
-                        onClick={stopDemo}
-                      >
-                        <Pause className="w-3 h-3 mr-1" />
-                        Stop
-                      </button>
-                    )}
-                    <button 
-                      className="btn btn-xs btn-ghost flex-1"
-                      onClick={() => setCurrentStep(0)}
-                    >
-                      Reset
-                    </button>
-                  </div>
-                )}
-                
-                <div className="text-center">
-                  <div className="text-xs text-base-content/70 mb-1">
-                    Step {currentStep + 1} of {getActiveSteps().length}
-                    {isPlaying && <span className="ml-2 text-primary animate-pulse">● Auto</span>}
-                  </div>
-                  <progress 
-                    className={`progress progress-xs w-full ${isPlaying ? 'progress-primary' : 'progress-secondary'}`}
-                    value={currentStep + 1} 
-                    max={getActiveSteps().length}
-                  ></progress>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Step Information */}
-          {getCurrentStep() && (
-            <div className="card bg-primary/5 border border-primary/20">
-              <div className="card-body p-4">
-                <h4 className="font-bold mb-3 text-sm">Current Focus</h4>
-                <div className="space-y-2">
-                  <div>
-                    <div className="text-xs font-semibold text-primary">STAGE</div>
-                    <div className="text-xs">{getCurrentStep().stage}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-primary">SCREEN</div>
-                    <div className="text-xs">{getCurrentStep().screen}</div>
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-primary">BUSINESS IMPACT</div>
-                    <div className="text-xs font-semibold text-success">{getCurrentStep().impact}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Center - Mobile Mockup */}
-        <div className="lg:col-span-6">
-          <div className="card bg-base-100 border border-base-300">
-            <div className="card-body p-3 sm:p-4">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="text-base sm:text-lg font-bold">Mobile Experience</h3>
-                <div className="text-xs text-base-content/60">
-                  {getCurrentStep() ? getCurrentStep().screen : 'Select a demo to begin'}
-                </div>
-              </div>
-
-              {/* Phone Mockup - Optimized for Single Viewport */}
-              <div className="flex justify-center">
-                <div className="w-full max-w-xs">
-                  <div className="relative bg-gray-800 rounded-3xl p-1 sm:p-2 shadow-2xl">
-                    {/* Fixed height for consistent viewport */}
-                    <div className="bg-white rounded-2xl overflow-hidden text-gray-900 h-[500px] sm:h-[550px] flex flex-col">
-                      {/* Phone Header */}
-                      <div className="bg-primary text-white text-center flex-shrink-0 py-3 flex flex-col justify-center">
-                        <div className="text-sm font-semibold">Straiv Guest App</div>
-                        <div className="text-xs opacity-80">Hotel Stuttgart ★★★★</div>
-                      </div>
-
-                      {/* Content Area */}
-                      <div className="flex-1 flex flex-col min-h-0">
-                        {/* Current Step Content */}
-                        {getCurrentStep() && (
-                          <div key={`${activeDemo}-${currentStep}`} className="flex-1 flex flex-col">
-                            {/* Header */}
-                            <div className="text-center animate-fade-in flex-shrink-0 py-2 px-3 bg-gray-50 border-b border-gray-100">
-                              <div className="badge badge-primary mb-1 text-white text-xs">{getCurrentStep().stage}</div>
-                              <h4 className="text-sm font-bold text-gray-900">{getCurrentStep().screen}</h4>
-                            </div>
-
-                            {/* Scrollable Content */}
-                            <div className="animate-fade-in flex-1 overflow-y-auto px-3 py-2 bg-white scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
-                              <div className="space-y-3">
-                                {renderMockup(getCurrentStep().mockup)}
-                              </div>
-                            </div>
-
-                            {/* Footer */}
-                            <div className="flex-shrink-0 px-3 py-2 bg-gray-50 border-t border-gray-100">
-                              <div className="space-y-2">
-                                {/* Interaction Prompt */}
-                                <div className="p-2 bg-blue-50 rounded-lg border border-blue-200">
-                                  <div className="flex items-start gap-2 mb-1">
-                                    <Eye className="w-3 h-3 text-blue-600 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs font-semibold text-blue-900">Try This:</span>
-                                  </div>
-                                  <p className="text-xs text-blue-800 leading-tight">{getCurrentStep().interaction}</p>
-                                </div>
-
-                                {/* Impact Metric */}
-                                <div className="text-center">
-                                  <div className="badge badge-success text-white font-semibold text-xs px-2 py-1">{getCurrentStep().impact}</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                        
-                        {/* Default state */}
-                        {!getCurrentStep() && (
-                          <div className="flex-1 flex flex-col">
-                            <div className="flex-1 flex items-center justify-center p-4">
-                              <div className="text-center">
-                                <Smartphone className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-                                <h4 className="text-base font-bold text-gray-900 mb-2">Select a Demo</h4>
-                                <p className="text-sm text-gray-600">Choose a strategy category above to see the PWA experience flow</p>
-                              </div>
-                            </div>
-                            
-                            <div className="flex-shrink-0 px-3 py-2 bg-gray-50 border-t border-gray-100">
-                              <div className="space-y-2">
-                                <div className="p-2 bg-gray-100 rounded-lg border border-gray-200 opacity-75">
-                                  <div className="flex items-start gap-2 mb-1">
-                                    <Eye className="w-3 h-3 text-gray-400 mt-0.5 flex-shrink-0" />
-                                    <span className="text-xs font-semibold text-gray-500">Interaction:</span>
-                                  </div>
-                                  <p className="text-xs text-gray-500">Select a category to see interactive demo</p>
-                                </div>
-
-                                <div className="text-center">
-                                  <div className="badge badge-ghost text-gray-500 font-semibold text-xs px-2 py-1">Ready to explore</div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+          
+          <div className="text-center p-6 bg-white/20 backdrop-blur-md rounded-xl shadow-lg border border-white/30">
+            <Mic className="w-12 h-12 mx-auto text-purple-400 mb-4" />
+            <h3 className="text-xl font-bold mb-2 text-white">Voice Assistant</h3>
+            <p className="text-gray-200">85% query automation through intelligent voice interface</p>
           </div>
         </div>
 
-        {/* Right Side - Key Insights & Quick Actions */}
-        <div className="lg:col-span-3 space-y-4">
-          {/* Key Insights */}
-          <div className="card bg-success/5 border border-success/20">
-            <div className="card-body p-4">
-              <h4 className="font-bold mb-3 text-sm">Key Insights</h4>
-              <div className="space-y-2 text-xs">
-                <div className="flex items-start gap-2">
-                  <Star className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                  <span>Context-aware personalization increases relevance by 180%</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Zap className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                  <span>Voice interface creates luxury feeling and 420% better accessibility</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <Heart className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                  <span>Social features turn 15% of guests into brand ambassadors</span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <TrendingUp className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                  <span>Journey-stage intelligence drives 340% higher conversion rates</span>
-                </div>
-              </div>
+        {/* Strategic Framework Navigation */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <button 
+            className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            onClick={() => navigate ? handleNavigation('/overview') : onSectionChange('overview')}
+          >
+            <div className="text-center">
+              <BookOpen className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-bold">Strategic Overview</h3>
+              <p className="text-sm opacity-90">Complete framework analysis</p>
             </div>
-          </div>
+          </button>
 
-          {/* Quick Actions */}
-          <div className="card bg-base-100 border border-base-300">
-            <div className="card-body p-4">
-              <h4 className="font-bold mb-3 text-sm">Quick Actions</h4>
-              <div className="space-y-2">
-                <button 
-                  className="btn btn-xs btn-outline w-full justify-start"
-                  onClick={() => onSectionChange('overview')}
-                >
-                  <ArrowRight className="w-3 h-3 mr-2" />
-                  <span className="text-xs">Review Full Strategy</span>
-                </button>
-                <button 
-                  className="btn btn-xs btn-outline w-full justify-start"
-                  onClick={() => onSectionChange('implementation-roadmap')}
-                >
-                  <Calendar className="w-3 h-3 mr-2" />
-                  <span className="text-xs">Implementation Plan</span>
-                </button>
-                <button 
-                  className="btn btn-xs btn-outline w-full justify-start"
-                  onClick={() => onSectionChange('sources')}
-                >
-                  <Settings className="w-3 h-3 mr-2" />
-                  <span className="text-xs">View Sources</span>
-                </button>
-              </div>
+          <button 
+            className="group bg-gradient-to-r from-green-600 to-teal-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            onClick={() => navigate ? handleNavigation('/innovation-strategy') : onSectionChange('innovation-strategy')}
+          >
+            <div className="text-center">
+              <Brain className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-bold">Innovation Strategy</h3>
+              <p className="text-sm opacity-90">AI & voice capabilities</p>
             </div>
-          </div>
+          </button>
 
-          {/* Performance Metrics */}
-          <div className="card bg-primary/5 border border-primary/20">
-            <div className="card-body p-4">
-              <h4 className="font-bold mb-3 text-sm">Expected Results</h4>
-              <div className="space-y-2">
-                <div className="text-center p-2 bg-primary/10 rounded-lg">
-                  <div className="text-base font-bold text-primary">€2.3M+</div>
-                  <div className="text-xs text-base-content/70">Annual Revenue</div>
-                </div>
-                <div className="text-center p-2 bg-secondary/10 rounded-lg">
-                  <div className="text-base font-bold text-secondary">12 Weeks</div>
-                  <div className="text-xs text-base-content/70">Implementation</div>
-                </div>
-                <div className="text-center p-2 bg-success/10 rounded-lg">
-                  <div className="text-base font-bold text-success">340%+</div>
-                  <div className="text-xs text-base-content/70">Conversion Lift</div>
-                </div>
-              </div>
+          <button 
+            className="group bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-xl p-6 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+            onClick={() => navigate ? handleNavigation('/stickiness-strategy') : onSectionChange('stickiness-strategy')}
+          >
+            <div className="text-center">
+              <Star className="w-12 h-12 mx-auto mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg font-bold">Stickiness Strategy</h3>
+              <p className="text-sm opacity-90">Journey-stage intelligence</p>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </div>

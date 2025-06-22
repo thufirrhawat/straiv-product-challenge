@@ -4,7 +4,7 @@ import {
   Users,
   Building,
   Globe,
-  HandHeart,
+  Handshake,
   Zap,
   Star,
   ArrowRight,
@@ -18,7 +18,6 @@ import {
   Calendar,
   Phone,
   Mail,
-  Linkedin,
   BarChart3,
   Percent,
   Clock,
@@ -26,465 +25,431 @@ import {
   Shield,
   Database,
   Layers,
-  Settings
+  Settings,
+  Info,
+  Crown,
+  Home,
+  Building2,
+  ChevronRight,
+  Megaphone,
+  LinkIcon,
+  Gift,
+  Euro,
+  UserCheck,
+  PiggyBank,
+  Eye,
+  Headphones
 } from 'lucide-react';
 
-const GrowthStrategy = ({ onSectionChange }) => {
-  const [activeGrowthPillar, setActiveGrowthPillar] = useState('hotel-acquisition');
+const GrowthStrategy = ({ onSectionChange, navigate }) => {
+  const [activeSection, setActiveSection] = useState(0);
+  const [activeTier, setActiveTier] = useState(0);
+  const [activeChannel, setActiveChannel] = useState(0);
 
-  // Market opportunity data from the report
-  const marketOpportunity = {
+  // Helper function to handle navigation with scroll-to-top
+  const handleNavigation = (path) => {
+    if (navigate) {
+      navigate(path);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Tooltip component for research data
+  const Tooltip = ({ children, content }) => (
+    <div className="tooltip tooltip-info" data-tip={content}>
+      {children}
+    </div>
+  );
+
+  // Market context data
+  const marketContext = {
     europeanMarket: "€187.9B",
-    growthRate: "26.18% CAGR",
-    digitalAcceleration: "3x more digital interactions",
-    guestPreference: "50% prefer mobile check-in",
-    contactlessPreference: "53.6% demand contactless procedures",
-    independentHotels: "60% of European market"
+    independentHotels: "60%",
+    growthRate: "26.18%",
+    laborCosts: "$9-10",
+    digitalDemand: "54%",
+    thirdPartyRevenue: "58%",
+    directBookingAOV: "62%"
   };
 
-  // Two-pillar growth approach
-  const growthPillars = [
+  // Main sections
+  const sections = [
+    { id: 'expansion', title: 'European Market Expansion', icon: <Globe className="w-6 h-6" /> },
+    { id: 'adoption', title: 'Guest Adoption Acceleration', icon: <Users className="w-6 h-6" /> },
+    { id: 'partnerships', title: 'Partnership Strategy', icon: <Handshake className="w-6 h-6" /> }
+  ];
+
+  // European Market Expansion - 3 Tiers
+  const marketTiers = [
     {
-      id: 'hotel-acquisition',
-      title: 'Hotel Acquisition Strategy',
-      icon: <Building className="w-6 h-6" />,
-      color: 'primary',
-      description: 'Target independent hotels (60% of European market) in DACH region with 40%+ branded penetration growth',
-      marketFocus: 'Independent hotels (60% of European market) in DACH region',
+      tier: "Tier 1",
+      title: "Independent & Boutique Hotels",
+      timeframe: "0-3 months",
+      target: "50-200 room independent properties seeking technology parity with major chains",
+      valueProposition: "Enterprise-level capabilities at accessible pricing",
+      approach: "European boutique hotel associations, hospitality trade shows",
+      successMetrics: "25 new partnerships, 60% implementation success rate",
+      color: "success",
+      bgGradient: "from-success/5 to-primary/5",
+      borderColor: "border-success/20",
+      icon: <Home className="w-8 h-8 text-success" />,
+      details: {
+        marketSize: "60% independent hotels in European market (underserved segment)",
+        painPoints: ["Technology gap vs major chains", "Limited digital capabilities", "High operational costs"],
+        solution: ["Straiv's enterprise-level features", "Accessible pricing model", "Quick implementation"],
+        implementation: ["Trade show demonstrations", "Association partnerships", "Pilot program offers"]
+      }
+    },
+    {
+      tier: "Tier 2", 
+      title: "Regional Hotel Chains",
+      timeframe: "3-6 months",
+      target: "Best Western Europe, Choice Hotels, regional chains",
+      valueProposition: "Guest experience differentiation through proven 15-37.8% revenue increases",
+      approach: "Performance-guaranteed pilot programs demonstrating ROI",
+      successMetrics: "3-5 regional partnerships with scalability validation",
+      color: "primary",
+      bgGradient: "from-primary/5 to-secondary/5",
+      borderColor: "border-primary/20",
+      icon: <Building2 className="w-8 h-8 text-primary" />,
+      details: {
+        marketSize: "Regional chains seeking competitive differentiation",
+        painPoints: ["Guest experience expectations", "Competition with major brands", "Operational efficiency"],
+        solution: ["Proven revenue increases", "Performance guarantees", "Scalable implementation"],
+        implementation: ["Pilot program design", "ROI demonstrations", "Success metric tracking"]
+      }
+    },
+    {
+      tier: "Tier 3",
+      title: "Major European Chains", 
+      timeframe: "6-12 months",
+      target: "AccorHotels, NH Hotel Group, enterprise-scale operations",
+      valueProposition: "15% operational cost reduction and 50% automation of front desk needs",
+      approach: "White-label integration options leveraging 50+ technology partners",
+      successMetrics: "1-2 major implementations establishing market leadership",
+      color: "secondary",
+      bgGradient: "from-secondary/5 to-accent/5",
+      borderColor: "border-secondary/20",
+      icon: <Crown className="w-8 h-8 text-secondary" />,
+      details: {
+        marketSize: "Major chains with complex operational requirements",
+        painPoints: ["Operational cost pressures", "Front desk automation needs", "Scale requirements"],
+        solution: ["White-label options", "50+ technology integrations", "Enterprise scalability"],
+        implementation: ["Partnership negotiations", "Integration planning", "Phased rollout"]
+      }
+    }
+  ];
+
+  // Guest Adoption Acceleration - 3 Channels
+  const adoptionChannels = [
+    {
+      channel: "Channel 1",
+      title: "Hotel Partnership Marketing",
+      color: "info",
+      bgGradient: "from-info/5 to-success/5",
+      borderColor: "border-info/20",
+      icon: <Megaphone className="w-8 h-8 text-info" />,
       strategies: [
         {
-          title: 'DACH Market Penetration',
-          description: 'Germany, Austria, Switzerland with 40%+ branded hotel growth opportunity',
-          tactics: [
-            'Germany: 40%+ branded hotel growth, 20,000 new rooms annually',
-            'Austria: 7.7% capacity growth, approaching 20% chain penetration', 
-            'Switzerland: 30%+ branded rooms, consolidation acceleration'
-          ],
-          impact: '15% market penetration via Mews partnership (5,500+ customers)',
-          timeline: '0-12 months'
+          strategy: "Co-branded Campaigns",
+          description: "Highlighting 85% shorter wait times and contactless benefits",
+          implementation: "Joint marketing materials showcasing efficiency gains",
+          impact: "Increased guest awareness and adoption"
         },
         {
-          title: 'Pilot Program Strategy',
-          description: '5-10 properties, 3-6 months, heavily discounted pricing with success metrics',
-          tactics: [
-            'Target 10-22% RevPAR improvement demonstrations',
-            'Reference customer development with case studies',
-            'Local partnership establishment (3-5 strategic integrations)'
-          ],
-          impact: '90%+ customer retention, sub-90-day implementation',
-          timeline: '3-6 months per pilot'
+          strategy: "Staff Training Programs",
+          description: "Leveraging 98.89% customer satisfaction success stories",
+          implementation: "Training modules with proven success metrics",
+          impact: "Enhanced staff confidence and guest support"
         },
         {
-          title: 'European Sales Optimization',
-          description: 'Adapt to 6-18 month European sales cycles vs. US 3-6 months',
-          tactics: [
-            'Multi-language platform scaling with GDPR compliance',
-            'Country-specific data residency and tax integration',
-            'Channel partner development (10-15% referral, 20-25% reseller revenue)'
-          ],
-          impact: '80%+ feature utilization, 5:1 LTV/CAC ratio',
-          timeline: '12-24 months'
+          strategy: "Incentive Programs",
+          description: "Addressing 54% consumer demand for digital check-in",
+          implementation: "Guest rewards for digital service adoption",
+          impact: "Accelerated digital service uptake"
         }
       ]
     },
     {
-      id: 'guest-engagement',
-      title: 'Guest Engagement Growth',
-      icon: <Users className="w-6 h-6" />,
-      color: 'secondary', 
-      description: 'Transform from 25K MAU to 1.5M+ through viral guest experience mechanics and strategic integrations',
-      marketFocus: 'Engagement multiplication through viral mechanics and network effects',
+      channel: "Channel 2",
+      title: "Travel Ecosystem Integration",
+      color: "primary",
+      bgGradient: "from-primary/5 to-info/5", 
+      borderColor: "border-primary/20",
+      icon: <LinkIcon className="w-8 h-8 text-primary" />,
       strategies: [
         {
-          title: 'Viral Experience Mechanics',
-          description: 'Social sharing integration and guest-to-guest hotel recommendations',
-          tactics: [
-            'Guest experience highlights with automatic story generation',
-            'Cross-hotel benefits and accumulated rewards system',
-            'Referral incentives for guest-to-guest recommendations'
-          ],
-          impact: '35% increase in social media mentions, 45% repeat engagement',
-          timeline: '3-6 months'
+          strategy: "Booking Platform Partnerships",
+          description: "Addressing 58% European hotel revenues from third-party bookings",
+          implementation: "Integration with major booking platforms",
+          impact: "Expanded guest reach and seamless experience"
         },
         {
-          title: 'Partnership Integration Growth',
-          description: 'Revenue-sharing partnerships enhancing guest experience',
-          tactics: [
-            'OpenTable partnership: restaurant reservations + commission',
-            'GetYourGuide API: local experiences + 15-20% revenue share',
-            'Uber/Bolt integration: transportation + partnership revenue'
-          ],
-          impact: '€25 additional revenue per guest, 65% pre-arrival adoption',
-          timeline: '6-12 months'
+          strategy: "Corporate Travel Connections",
+          description: "Business traveler system integration for enhanced reach",
+          implementation: "Corporate travel management system integration",
+          impact: "B2B segment penetration and loyalty"
         },
         {
-          title: 'Cross-Property Network Effects',
-          description: 'Leverage guest movement across hotel network for retention',
-          tactics: [
-            'Status and preferences sync across properties',
-            'Network-wide loyalty progression and recognition',
-            'Location-based friend discovery and recommendations'
-          ],
-          impact: '165% multi-property guest retention increase',
-          timeline: '12-18 months'
+          strategy: "Direct Booking Advantage",
+          description: "Leverage 62% premium direct booking AOV advantage",
+          implementation: "Enhanced direct booking incentives and features",
+          impact: "Increased direct bookings and higher revenue per guest"
+        }
+      ]
+    },
+    {
+      channel: "Channel 3",
+      title: "Value-Added Service Expansion",
+      color: "accent",
+      bgGradient: "from-accent/5 to-warning/5",
+      borderColor: "border-accent/20",
+      icon: <Gift className="w-8 h-8 text-accent" />,
+      strategies: [
+        {
+          strategy: "Local Experience Partnerships",
+          description: "Capturing 10-20% upselling potential through local experiences",
+          implementation: "Restaurant and activity booking integration",
+          impact: "Additional revenue streams and enhanced guest value"
+        },
+        {
+          strategy: "Transportation Integration", 
+          description: "Comprehensive guest experience with seamless transportation",
+          implementation: "Uber/taxi integration and booking capabilities",
+          impact: "Complete guest journey optimization"
+        },
+        {
+          strategy: "Loyalty Program Integration",
+          description: "Maximizing repeat business value and guest retention",
+          implementation: "Hotel loyalty program API integration",
+          impact: "Increased guest retention and lifetime value"
         }
       ]
     }
   ];
 
-  // Strategic partnerships framework
-  const partnershipFramework = [
-    {
-      category: 'Technology Integration Partnerships',
-      revenue: '15-25% revenue sharing + customer stickiness',
+  // Partnership Strategy
+  const partnershipStrategy = {
+    technologyPartners: {
+      title: "Technology Integration Partners",
+      description: "PMS vendors for deeper system integration (building on current 50+ partners)",
+      icon: <Settings className="w-6 h-6 text-primary" />,
       partnerships: [
-        {
-          name: 'Mews Partnership',
-          description: 'Immediate DACH access (15% market penetration, 5,500+ customers)',
-          value: 'Joint go-to-market investment, shared customer success'
-        },
-        {
-          name: 'Oracle OHIP Integration', 
-          description: 'Enterprise scalability (2,000+ pre-built integrations)',
-          value: 'Technology development cost sharing'
-        },
-        {
-          name: 'Payment Gateway Integration',
-          description: 'Adyen (40+ European countries), Checkout.com (triple-digit UK growth)',
-          value: 'Transaction revenue + European payment method support'
-        }
+        "PMS vendors for deeper system integration",
+        "Payment processors ensuring European compliance and local payment methods",
+        "Voice and AI technology providers for advanced capabilities"
       ]
     },
-    {
-      category: 'Distribution Channel Partnerships',
-      revenue: '10-30% commission on bookings + customer acquisition',
+    distributionPartners: {
+      title: "Distribution Partners", 
+      description: "Hotel management companies for portfolio-wide implementation",
+      icon: <Network className="w-6 h-6 text-secondary" />,
       partnerships: [
-        {
-          name: 'Booking.com Integration',
-          description: '15-18% commission, 58% European hotel revenue share',
-          value: 'Marketing co-investment, customer acquisition sharing'
-        },
-        {
-          name: 'Expedia Rapid API',
-          description: '10-30% commission, white-label solutions',
-          value: 'Distribution reach with enhanced guest experience'
-        },
-        {
-          name: 'Corporate Travel Management',
-          description: 'BCD Travel, American Express GBT partnerships',
-          value: '7-12% commission rates on B2B segment'
-        }
+        "Hotel management companies for portfolio-wide implementation",
+        "European hospitality consultants for market credibility and implementation support",
+        "Technology resellers for expanded market reach"
       ]
     },
-    {
-      category: 'Local Experience Ecosystem',
-      revenue: 'Revenue-sharing partnerships + guest upselling opportunities',
-      partnerships: [
-        {
-          name: 'Restaurant & Activity Integration',
-          description: 'OpenTable, GetYourGuide partnerships with exclusive guest offers',
-          value: '15-20% revenue share + seamless booking integration'
-        },
-        {
-          name: 'Transportation Integration',
-          description: 'Uber/Bolt partnerships for seamless transfers',
-          value: 'Partnership revenue + enhanced guest convenience'
-        },
-        {
-          name: 'Local Business Networks',
-          description: 'Regional tourism boards, hotel consortiums',
-          value: 'Co-marketing opportunities + bulk deployment'
-        }
+    revenueModels: {
+      title: "Revenue Models",
+      description: "Multiple revenue streams optimizing partnership value",
+      icon: <Euro className="w-6 h-6 text-success" />,
+      models: [
+        { model: "Commission partnerships", rate: "10-30% for booking platforms" },
+        { model: "Technology partnerships", rate: "15-25% revenue sharing opportunities" },
+        { model: "Subscription licensing", rate: "€50-200 monthly per property based on market research" }
+      ]
+    },
+    successIndicators: {
+      title: "Success Indicators",
+      metrics: [
+        "Partnership ecosystem offering 10-30% revenue sharing opportunities",
+        "3-5 strategic partnerships across PMS, payments, and booking platforms", 
+        "€1 million ARR target with 50+ customers by month 12"
       ]
     }
-  ];
-
-  // Market expansion roadmap
-  const expansionRoadmap = [
-    {
-      phase: 'Phase 1: DACH Dominance (0-12 months)',
-      markets: 'Germany, Austria, Switzerland',
-      targets: {
-        hotels: '300 hotels',
-        users: '150K MAU',
-        revenue: '€2.5M ARR'
-      },
-      strategies: [
-        'German market cultural adaptation and localization',
-        'Mews partnership for immediate market access',
-        'Reference customer development with success metrics',
-        'Local partnership establishment (3-5 strategic integrations)'
-      ],
-      investment: '€2-3M for market entry and product development',
-      keyMetrics: '8% DACH market share, 90%+ customer retention'
-    },
-    {
-      phase: 'Phase 2: European Expansion (12-24 months)',
-      markets: 'UK (€6.2B investment), France (€2B+), Netherlands',
-      targets: {
-        hotels: '800 hotels',
-        users: '500K MAU', 
-        revenue: '€8M ARR'
-      },
-      strategies: [
-        'Multi-language platform scaling with GDPR compliance',
-        'European hotel chain partnerships and integrations',
-        'Channel partner development (10-15% referral programs)',
-        'Country-specific data residency and payment integration'
-      ],
-      investment: 'Partnership capital leverage for market expansion',
-      keyMetrics: '5% European market penetration, 75% gross margin'
-    },
-    {
-      phase: 'Phase 3: Global Scale (24-36 months)',
-      markets: 'Nordic, CEE, North America entry',
-      targets: {
-        hotels: '2000 hotels',
-        users: '1.5M MAU',
-        revenue: '€25M ARR'
-      },
-      strategies: [
-        'Franchise and management company partnerships',
-        'Strategic acquisitions of complementary European technologies',
-        'Global travel platform integrations and marketplace presence',
-        'Platform evolution toward comprehensive guest experience management'
-      ],
-      investment: 'Strategic acquisition opportunities in fragmented market',
-      keyMetrics: '2% global market leadership position, 80% gross margin'
-    }
-  ];
-
-  // Pricing strategy from the report
-  const pricingStrategy = [
-    {
-      package: 'Starter Package',
-      target: '10-50 room properties',
-      pricing: '€50-100 per room/month',
-      features: ['Basic guest messaging', 'Mobile check-in', 'Local recommendations'],
-      marketSegment: 'Independent boutique hotels'
-    },
-    {
-      package: 'Professional Package', 
-      target: '50-200 rooms with volume discounts',
-      pricing: '€30-60 per room/month',
-      features: ['AI concierge', 'Voice integration', 'Upselling automation', 'Analytics dashboard'],
-      marketSegment: 'Mid-market hotels and small chains'
-    },
-    {
-      package: 'Enterprise Package',
-      target: '200+ room operations',
-      pricing: '€20-40 per room/month',
-      features: ['Full platform access', 'Custom integrations', 'Dedicated support', 'Multi-property management'],
-      marketSegment: 'Large hotels and management companies'
-    }
-  ];
-
-  // Success metrics and KPIs
-  const successMetrics = {
-    hotelAdoption: {
-      current: '50 hotels',
-      year1: '300 hotels (DACH)',
-      year2: '800 hotels (Europe)', 
-      year3: '2000 hotels (Global)'
-    },
-    userEngagement: {
-      current: '25K MAU',
-      year1: '150K MAU',
-      year2: '500K MAU',
-      year3: '1.5M MAU'
-    },
-    revenue: {
-      current: '€500K ARR',
-      year1: '€2.5M ARR',
-      year2: '€8M ARR',
-      year3: '€25M ARR'
-    },
-    marketPenetration: {
-      current: '1% DACH',
-      year1: '8% DACH',
-      year2: '5% Europe',
-      year3: '2% Global'
-    }
-  };
-
-  const getActiveGrowthPillar = () => {
-    return growthPillars.find(pillar => pillar.id === activeGrowthPillar);
   };
 
   return (
-    <div className="space-y-8 lg:space-y-12">
-      {/* Header with Market Opportunity */}
-      <div className="hero bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 rounded-3xl border border-primary/10">
-        <div className="hero-content text-center py-8 lg:py-12 px-4 lg:px-8">
-          <div className="max-w-5xl">
-            <h1 className="text-3xl lg:text-4xl font-bold mb-4 lg:mb-6">
-              <span className="text-base-content">Growth Strategy:</span><br />
-              <span className="text-primary">Scaling Hotel Adoption & Guest Engagement</span>
-            </h1>
-            <h2 className="text-lg lg:text-xl font-semibold text-success mb-4 lg:mb-6">
-              Data-Driven Market Opportunity: €187.9B European Hotel Market
-            </h2>
-            <p className="text-sm lg:text-base text-base-content/80 mb-6 lg:mb-8 max-w-4xl mx-auto leading-relaxed">
-              Post-COVID acceleration has generated 3x more digital interactions, with 50% of guests preferring mobile check-in 
-              and 53.6% demanding contactless procedures. The DACH region's 40%+ branded hotel penetration and underserved 
-              independent hotel segment (60% of European market) create ideal conditions for Straiv's expansion.
-            </p>
-            
-            {/* Market Opportunity Stats */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 max-w-4xl mx-auto">
-              <div className="stat bg-primary/10 border border-primary/20 rounded-lg p-3 lg:p-4">
-                <div className="stat-title text-primary text-xs lg:text-sm">European Market</div>
-                <div className="stat-value text-primary text-lg lg:text-2xl">{marketOpportunity.europeanMarket}</div>
-                <div className="stat-desc text-xs">Hotel market size</div>
-              </div>
-              <div className="stat bg-secondary/10 border border-secondary/20 rounded-lg p-3 lg:p-4">
-                <div className="stat-title text-secondary text-xs lg:text-sm">Growth Rate</div>
-                <div className="stat-value text-secondary text-lg lg:text-2xl">{marketOpportunity.growthRate}</div>
-                <div className="stat-desc text-xs">Smart hospitality</div>
-              </div>
-              <div className="stat bg-accent/10 border border-accent/20 rounded-lg p-3 lg:p-4 col-span-2 lg:col-span-1">
-                <div className="stat-title text-accent text-xs lg:text-sm">Digital Acceleration</div>
-                <div className="stat-value text-accent text-lg lg:text-2xl">3x</div>
-                <div className="stat-desc text-xs">More digital interactions</div>
-              </div>
+    <div className="space-y-16">
+      {/* Header Section */}
+      <div className="text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <span className="text-primary">Capturing the €187.9 Billion</span><br />
+          <span className="text-secondary">European Hotel Market Opportunity</span>
+        </h1>
+        
+        <p className="text-xl text-base-content/80 max-w-4xl mx-auto mb-8">
+          Strategic growth approach targeting 60% independent hotel market with proven automation solutions
+        </p>
+
+        {/* Market Context Stats */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto mb-8">
+          <div className="stats shadow border border-primary/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-primary text-lg">{marketContext.europeanMarket}</div>
+              <div className="stat-desc text-xs">European Hotel Market</div>
             </div>
+          </div>
+          <div className="stats shadow border border-success/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-success text-lg">{marketContext.independentHotels}</div>
+              <div className="stat-desc text-xs">Independent Hotels</div>
+            </div>
+          </div>
+          <div className="stats shadow border border-secondary/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-secondary text-lg">{marketContext.growthRate}</div>
+              <div className="stat-desc text-xs">CAGR Growth Rate</div>
+            </div>
+          </div>
+          <div className="stats shadow border border-warning/20">
+            <div className="stat place-items-center py-4">
+              <div className="stat-value text-warning text-lg">{marketContext.laborCosts}</div>
+              <div className="stat-desc text-xs">Per Check-in Cost</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Context */}
+        <div className="alert alert-info max-w-4xl mx-auto">
+          <Info className="w-4 h-4" />
+          <div className="text-sm">
+            <div className="font-semibold">Market Context:</div>
+            <div>Smart hospitality market growing at 26.18% CAGR through 2029 with labor cost pressures driving automation demand</div>
           </div>
         </div>
       </div>
 
-      {/* Two-Pillar Growth Approach */}
-      <div className="card bg-gradient-to-br from-success/5 via-primary/5 to-secondary/5 border border-success/20">
-        <div className="card-body p-4 lg:p-8">
-          <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-center">Two-Pillar Growth Approach</h2>
-          
-          {/* Growth Pillar Selection */}
-          <div className="flex flex-col sm:flex-row justify-center gap-2 mb-6 lg:mb-8">
-            {growthPillars.map((pillar) => (
-              <button 
-                key={pillar.id}
-                className={`btn btn-sm lg:btn-md ${activeGrowthPillar === pillar.id ? `btn-${pillar.color}` : 'btn-outline'} gap-2 flex-shrink-0 w-full sm:w-auto`}
-                onClick={() => setActiveGrowthPillar(pillar.id)}
-              >
-                {pillar.icon}
-                <span className="hidden lg:inline">{pillar.title}</span>
-                <span className="lg:hidden text-xs">{pillar.title.split(' ')[0]}</span>
-              </button>
-            ))}
-          </div>
+      {/* Main Section Navigation */}
+      <div>
+        <h2 className="text-3xl font-bold text-center mb-8">Three-Pillar Growth Strategy</h2>
+        
+        {/* Section Navigation */}
+        <div className="flex flex-col sm:flex-row justify-center gap-2 mb-12">
+          {sections.map((section, index) => (
+            <button 
+              key={section.id}
+              className={`btn ${activeSection === index ? 'btn-primary' : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
+              onClick={() => setActiveSection(index)}
+            >
+              {section.icon}
+              <span className="hidden sm:inline">{section.title}</span>
+            </button>
+          ))}
+        </div>
 
-          {/* Active Growth Pillar Content */}
-          <div className="space-y-6 lg:space-y-8">
-            <div className="text-center">
-              <h3 className="text-lg lg:text-xl font-bold mb-2">{getActiveGrowthPillar().title}</h3>
-              <p className="text-sm lg:text-base text-base-content/70 mb-2">{getActiveGrowthPillar().description}</p>
-              <div className="badge badge-neutral badge-sm">{getActiveGrowthPillar().marketFocus}</div>
+        {/* European Market Expansion */}
+        {activeSection === 0 && (
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-4">European Market Expansion</h3>
+              <Tooltip content="Tiered approach allows proven success demonstration with smaller properties before major chain negotiations">
+                <p className="text-lg text-base-content/80 cursor-help">
+                  Three-tier market penetration strategy targeting 60% independent hotel segment
+                </p>
+              </Tooltip>
             </div>
 
-            {/* Growth Strategies */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
-              {getActiveGrowthPillar().strategies.map((strategy, index) => (
-                <div key={index} className={`card bg-base-100 border border-${getActiveGrowthPillar().color}/20`}>
-                  <div className="card-body p-4 lg:p-6">
-                    <div className="flex flex-col gap-2 mb-3">
-                      <h5 className="font-bold text-sm lg:text-base">{strategy.title}</h5>
-                      <div className="flex flex-wrap gap-1">
-                        <div className={`badge badge-${getActiveGrowthPillar().color} badge-xs`}>
-                          {strategy.timeline}
-                        </div>
-                        <div className="badge badge-success badge-xs text-xs">
-                          {strategy.impact.split(',')[0]}
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-xs lg:text-sm text-base-content/80 mb-4">{strategy.description}</p>
-                    
-                    <div className="space-y-2">
-                      <h6 className="font-semibold text-xs">Key Tactics:</h6>
-                      {strategy.tactics.map((tactic, tIndex) => (
-                        <div key={tIndex} className="flex items-start gap-2">
-                          <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
-                          <span className="text-xs text-base-content/70 break-words">{tactic}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+            {/* Tier Navigation */}
+            <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
+              {marketTiers.map((tier, index) => (
+                <button 
+                  key={tier.tier}
+                  className={`btn ${activeTier === index ? `btn-${tier.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
+                  onClick={() => setActiveTier(index)}
+                >
+                  {tier.icon}
+                  <span className="hidden sm:inline">{tier.tier}</span>
+                </button>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Strategic Partnerships Framework */}
-      <div className="card bg-accent/5 border border-accent/20">
-        <div className="card-body p-4 lg:p-8">
-          <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-center flex items-center justify-center gap-3">
-            <HandHeart className="w-5 h-5 lg:w-6 lg:h-6" />
-            Strategic Partnerships Framework
-          </h2>
-          
-          <div className="space-y-6">
-            {partnershipFramework.map((category, index) => (
-              <div key={index} className="card bg-base-100 border border-accent/20">
-                <div className="card-body p-4 lg:p-6">
-                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4 gap-2">
-                    <h3 className="font-bold text-base lg:text-lg">{category.category}</h3>
-                    <div className="badge badge-accent badge-sm">{category.revenue}</div>
+            {/* Active Tier Display */}
+            <div className={`card bg-gradient-to-br ${marketTiers[activeTier].bgGradient} border-2 ${marketTiers[activeTier].borderColor}`}>
+              <div className="card-body p-8">
+                <div className="flex items-start gap-6 mb-6">
+                  <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${marketTiers[activeTier].borderColor}`}>
+                    {marketTiers[activeTier].icon}
                   </div>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                    {category.partnerships.map((partnership, pIndex) => (
-                      <div key={pIndex} className="p-3 lg:p-4 bg-accent/10 rounded-lg border border-accent/20">
-                        <h4 className="font-semibold text-sm mb-2">{partnership.name}</h4>
-                        <p className="text-xs text-base-content/80 mb-2 break-words">{partnership.description}</p>
-                        <div className="text-xs text-accent font-medium break-words">{partnership.value}</div>
-                      </div>
-                    ))}
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold mb-2">
+                      {marketTiers[activeTier].tier}: {marketTiers[activeTier].title}
+                    </h4>
+                    <div className="flex items-center gap-2 text-base-content/60 mb-3">
+                      <Clock className="w-4 h-4" />
+                      <span className="text-sm font-medium">Timeline: {marketTiers[activeTier].timeframe}</span>
+                    </div>
+                    <p className="text-base-content/80">{marketTiers[activeTier].target}</p>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* Market Expansion Roadmap */}
-      <div className="card bg-primary/5 border border-primary/20">
-        <div className="card-body p-4 lg:p-8">
-          <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-center flex items-center justify-center gap-3">
-            <Globe className="w-5 h-5 lg:w-6 lg:h-6" />
-            Market Expansion Roadmap
-          </h2>
-          
-          <div className="space-y-4 lg:space-y-6">
-            {expansionRoadmap.map((phase, index) => (
-              <div key={index} className="card bg-base-100 border border-primary/20">
-                <div className="card-body p-4 lg:p-6">
-                  <div className="flex flex-col gap-3 mb-4">
-                    <h3 className="text-base lg:text-lg font-bold text-primary">{phase.phase}</h3>
-                    <div className="flex flex-wrap gap-1">
-                      <div className="badge badge-primary badge-xs">{phase.targets.hotels}</div>
-                      <div className="badge badge-secondary badge-xs">{phase.targets.users}</div>
-                      <div className="badge badge-success badge-xs">{phase.targets.revenue}</div>
+                {/* Tier Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="space-y-4">
+                    <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                      <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <Target className="w-4 h-4" />
+                        Value Proposition
+                      </h5>
+                      <p className="text-sm text-base-content/80">{marketTiers[activeTier].valueProposition}</p>
+                    </div>
+                    <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                      <h5 className="font-semibold text-sm mb-2 flex items-center gap-2">
+                        <Rocket className="w-4 h-4" />
+                        Approach
+                      </h5>
+                      <p className="text-sm text-base-content/80">{marketTiers[activeTier].approach}</p>
                     </div>
                   </div>
-                  
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3">Target Markets & Investment:</h4>
-                      <div className="space-y-2 mb-4">
-                        <div className="text-sm font-medium text-primary">{phase.markets}</div>
-                        <div className="text-xs text-base-content/70">{phase.investment}</div>
-                        <div className="text-xs text-success font-medium">{phase.keyMetrics}</div>
+                  <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                    <h5 className="font-semibold text-sm mb-3 flex items-center gap-2">
+                      <BarChart3 className="w-4 h-4" />
+                      Success Metrics
+                    </h5>
+                    <p className="text-sm text-base-content/80 mb-3">{marketTiers[activeTier].successMetrics}</p>
+                    <div className="text-xs text-base-content/60 bg-base-200 rounded px-2 py-1">
+                      <strong>Market Context:</strong> {marketTiers[activeTier].details.marketSize}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Implementation Strategy */}
+                <div>
+                  <h5 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                    <Settings className="w-5 h-5" />
+                    Implementation Strategy
+                  </h5>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                      <h6 className="font-semibold text-sm mb-3 text-error">Pain Points</h6>
+                      <div className="space-y-2">
+                        {marketTiers[activeTier].details.painPoints.map((point, index) => (
+                          <div key={index} className="flex items-start gap-2">
+                            <div className="w-2 h-2 bg-error rounded-full mt-1.5 flex-shrink-0"></div>
+                            <span className="text-xs text-base-content/80">{point}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-sm mb-3">Key Strategies:</h4>
+                    <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                      <h6 className="font-semibold text-sm mb-3 text-success">Solution</h6>
                       <div className="space-y-2">
-                        {phase.strategies.map((strategy, sIndex) => (
-                          <div key={sIndex} className="flex items-start gap-2">
-                            <Zap className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
-                            <span className="text-xs break-words">{strategy}</span>
+                        {marketTiers[activeTier].details.solution.map((solution, index) => (
+                          <div key={index} className="flex items-start gap-2">
+                            <CheckCircle className="w-3 h-3 text-success mt-0.5 flex-shrink-0" />
+                            <span className="text-xs text-base-content/80">{solution}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="p-4 bg-base-100 rounded-lg border border-base-300">
+                      <h6 className="font-semibold text-sm mb-3 text-info">Implementation</h6>
+                      <div className="space-y-2">
+                        {marketTiers[activeTier].details.implementation.map((impl, index) => (
+                          <div key={index} className="flex items-start gap-2">
+                            <ChevronRight className="w-3 h-3 text-info mt-0.5 flex-shrink-0" />
+                            <span className="text-xs text-base-content/80">{impl}</span>
                           </div>
                         ))}
                       </div>
@@ -492,131 +457,261 @@ const GrowthStrategy = ({ onSectionChange }) => {
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-        </div>
-      </div>
+        )}
 
-      {/* Pricing Strategy */}
-      <div className="card bg-warning/5 border border-warning/20">
-        <div className="card-body p-4 lg:p-8">
-          <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-center flex items-center justify-center gap-3">
-            <DollarSign className="w-5 h-5 lg:w-6 lg:h-6" />
-            European Market Pricing Strategy
-          </h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
-            {pricingStrategy.map((package_, index) => (
-              <div key={index} className="card bg-base-100 border border-warning/20">
-                <div className="card-body p-4 lg:p-6">
-                  <h3 className="font-bold text-warning text-sm lg:text-base mb-2">{package_.package}</h3>
-                  <div className="text-xl lg:text-2xl font-bold text-primary mb-2">{package_.pricing}</div>
-                  <div className="text-xs text-base-content/70 mb-4">{package_.target}</div>
-                  
-                  <div className="space-y-2 mb-4">
-                    {package_.features.map((feature, fIndex) => (
-                      <div key={fIndex} className="flex items-center gap-2">
-                        <CheckCircle className="w-3 h-3 text-success flex-shrink-0" />
-                        <span className="text-xs">{feature}</span>
+        {/* Guest Adoption Acceleration */}
+        {activeSection === 1 && (
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-4">Guest Adoption Acceleration</h3>
+              <Tooltip content="Multi-channel approach increases guest touchpoints while providing additional value beyond basic hotel services">
+                <p className="text-lg text-base-content/80 cursor-help">
+                  Three-channel strategy maximizing guest engagement and adoption rates
+                </p>
+              </Tooltip>
+            </div>
+
+            {/* Channel Navigation */}
+            <div className="flex flex-col sm:flex-row justify-center gap-2 mb-8">
+              {adoptionChannels.map((channel, index) => (
+                <button 
+                  key={channel.channel}
+                  className={`btn ${activeChannel === index ? `btn-${channel.color}` : 'btn-outline'} gap-2 flex-1 sm:flex-none`}
+                  onClick={() => setActiveChannel(index)}
+                >
+                  {channel.icon}
+                  <span className="hidden sm:inline">{channel.channel}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Active Channel Display */}
+            <div className={`card bg-gradient-to-br ${adoptionChannels[activeChannel].bgGradient} border-2 ${adoptionChannels[activeChannel].borderColor}`}>
+              <div className="card-body p-8">
+                <div className="flex items-start gap-6 mb-6">
+                  <div className={`w-20 h-20 rounded-xl bg-base-100 flex items-center justify-center border-2 ${adoptionChannels[activeChannel].borderColor}`}>
+                    {adoptionChannels[activeChannel].icon}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="text-2xl font-bold mb-2">
+                      {adoptionChannels[activeChannel].channel}: {adoptionChannels[activeChannel].title}
+                    </h4>
+                    <p className="text-base-content/80">Strategic guest engagement through targeted marketing and partnerships</p>
+                  </div>
+                </div>
+
+                {/* Channel Strategies */}
+                <div>
+                  <h5 className="font-semibold text-lg mb-4 flex items-center gap-2">
+                    <Zap className="w-5 h-5" />
+                    Strategic Approaches
+                  </h5>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {adoptionChannels[activeChannel].strategies.map((strategy, index) => (
+                      <div key={index} className="p-4 bg-base-100 rounded-lg border border-base-300">
+                        <h6 className="font-semibold text-sm mb-3">{strategy.strategy}</h6>
+                        <p className="text-xs text-base-content/80 mb-3">{strategy.description}</p>
+                        <div className="space-y-2">
+                          <div className="text-xs text-base-content/60 bg-base-200 rounded px-2 py-1">
+                            <strong>Implementation:</strong> {strategy.implementation}
+                          </div>
+                          <div className="text-xs text-success bg-success/10 rounded px-2 py-1">
+                            <strong>Impact:</strong> {strategy.impact}
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  
-                  <div className="badge badge-neutral badge-sm w-full text-xs">{package_.marketSegment}</div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
-      {/* Success Metrics Dashboard */}
-      <div className="card bg-gradient-to-r from-success/10 to-primary/10 border border-success/20">
-        <div className="card-body p-4 lg:p-8">
-          <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6 text-center">3-Year Growth Trajectory</h2>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-6">
-            {Object.entries(successMetrics).map(([metric, data]) => (
-              <div key={metric} className="card bg-base-100 border border-success/20">
-                <div className="card-body p-3 lg:p-4 text-center">
-                  <h4 className="font-bold text-success mb-3 text-sm">{metric.replace(/([A-Z])/g, ' $1').trim()}</h4>
-                  <div className="space-y-2">
-                    <div>
-                      <div className="text-xs text-base-content/60">Current</div>
-                      <div className="text-sm font-semibold">{data.current}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-base-content/60">Year 1</div>
-                      <div className="text-base lg:text-lg font-bold text-primary">{data.year1}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-base-content/60">Year 2</div>
-                      <div className="text-base lg:text-lg font-bold text-secondary">{data.year2}</div>
-                    </div>
-                    <div>
-                      <div className="text-xs text-base-content/60">Year 3</div>
-                      <div className="text-lg lg:text-xl font-bold text-success">{data.year3}</div>
+                {/* Revenue Models Highlight */}
+                <div className="mt-6">
+                  <div className="alert alert-warning py-3">
+                    <Euro className="w-4 h-4" />
+                    <div className="text-sm">
+                      <div className="font-semibold">Revenue Models:</div>
+                      <div>Commission partnerships: 10-30% for booking platforms | Technology partnerships: 15-25% revenue sharing | Subscription licensing: €50-200 monthly per property</div>
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
+            </div>
           </div>
-          
-          <div className="mt-6 lg:mt-8 text-center p-4 lg:p-6 bg-success/10 rounded-lg border border-success/20">
-            <h4 className="font-bold text-base lg:text-lg mb-2">Market Impact Projection</h4>
-            <div className="text-2xl lg:text-3xl font-bold text-success mb-2">€25M ARR</div>
-            <p className="text-xs lg:text-sm text-base-content/70 mb-4">
-              Conservative annual value from 2000+ hotels and 1.5M+ users through data-driven growth strategies, 
-              viral engagement mechanics, and strategic partnership ecosystem in the €187.9B European market.
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
-              <div className="p-2 lg:p-3 bg-primary/10 rounded-lg">
-                <div className="text-sm lg:text-base font-bold text-primary">12-18 Months</div>
-                <div className="text-xs text-base-content/60">Payback Period</div>
+        )}
+
+        {/* Partnership Strategy */}
+        {activeSection === 2 && (
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-bold mb-4">Partnership Strategy</h3>
+              <Tooltip content="Partnership strategy leverages existing relationships while building new distribution channels for accelerated growth">
+                <p className="text-lg text-base-content/80 cursor-help">
+                  Strategic partnerships across technology, distribution, and experience ecosystem
+                </p>
+              </Tooltip>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Technology Integration Partners */}
+              <div className="card bg-gradient-to-br from-primary/5 to-info/5 border border-primary/20">
+                <div className="card-body p-8">
+                  <h4 className="card-title text-2xl mb-6 flex items-center gap-3">
+                    {partnershipStrategy.technologyPartners.icon}
+                    {partnershipStrategy.technologyPartners.title}
+                  </h4>
+                  <p className="text-sm text-base-content/80 mb-6">{partnershipStrategy.technologyPartners.description}</p>
+                  
+                  <div className="space-y-4">
+                    {partnershipStrategy.technologyPartners.partnerships.map((partnership, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{partnership}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="p-2 lg:p-3 bg-secondary/10 rounded-lg">
-                <div className="text-sm lg:text-base font-bold text-secondary">€2-3M</div>
-                <div className="text-xs text-base-content/60">Year 1 Investment</div>
+
+              {/* Distribution Partners */}
+              <div className="card bg-gradient-to-br from-secondary/5 to-accent/5 border border-secondary/20">
+                <div className="card-body p-8">
+                  <h4 className="card-title text-2xl mb-6 flex items-center gap-3">
+                    {partnershipStrategy.distributionPartners.icon}
+                    {partnershipStrategy.distributionPartners.title}
+                  </h4>
+                  <p className="text-sm text-base-content/80 mb-6">{partnershipStrategy.distributionPartners.description}</p>
+                  
+                  <div className="space-y-4">
+                    {partnershipStrategy.distributionPartners.partnerships.map((partnership, index) => (
+                      <div key={index} className="flex items-start gap-3">
+                        <CheckCircle className="w-5 h-5 text-secondary mt-0.5 flex-shrink-0" />
+                        <span className="text-sm">{partnership}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="p-2 lg:p-3 bg-accent/10 rounded-lg">
-                <div className="text-sm lg:text-base font-bold text-accent">80% Margin</div>
-                <div className="text-xs text-base-content/60">Year 3 Target</div>
+            </div>
+
+            {/* Revenue Models */}
+            <div className="card bg-gradient-to-r from-success/10 to-warning/10 border border-success/20">
+              <div className="card-body p-8">
+                <h4 className="card-title text-2xl mb-6 flex items-center gap-3">
+                  {partnershipStrategy.revenueModels.icon}
+                  {partnershipStrategy.revenueModels.title}
+                </h4>
+                <p className="text-sm text-base-content/80 mb-6">{partnershipStrategy.revenueModels.description}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {partnershipStrategy.revenueModels.models.map((model, index) => (
+                    <div key={index} className="p-4 bg-base-100 rounded-lg border border-base-300 text-center">
+                      <div className="font-medium text-sm mb-1">{model.model}</div>
+                      <div className="text-success font-bold">{model.rate}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
+            </div>
+
+            {/* Success Indicators */}
+            <div className="card bg-gradient-to-r from-accent/10 to-info/10 border border-accent/20">
+              <div className="card-body text-center p-8">
+                <h4 className="text-2xl font-bold mb-6 flex items-center justify-center gap-3">
+                  <Target className="w-8 h-8 text-accent" />
+                  Success Indicators
+                </h4>
+                <div className="space-y-4">
+                  {partnershipStrategy.successIndicators.metrics.map((metric, index) => (
+                    <div key={index} className="flex items-start gap-3">
+                      <Award className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-left">{metric}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Growth Impact Summary */}
+      <div className="card bg-gradient-to-r from-primary/10 to-success/10 border border-primary/20">
+        <div className="card-body text-center p-8">
+          <h3 className="text-2xl font-bold mb-6">Growth Strategy Impact</h3>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div>
+              <div className="text-3xl font-bold text-primary">€1M</div>
+              <div className="text-sm font-medium">ARR Target</div>
+              <div className="text-xs text-base-content/60">By month 12</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-success">50+</div>
+              <div className="text-sm font-medium">Customer Target</div>
+              <div className="text-xs text-base-content/60">European market penetration</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-secondary">60%</div>
+              <div className="text-sm font-medium">Implementation Success</div>
+              <div className="text-xs text-base-content/60">Tier 1 target rate</div>
+            </div>
+            <div>
+              <div className="text-3xl font-bold text-accent">15-25%</div>
+              <div className="text-sm font-medium">Revenue Sharing</div>
+              <div className="text-xs text-base-content/60">Partnership opportunities</div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Navigation to Next Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-        <button 
-          className="card bg-gradient-to-r from-primary to-success text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('conversion-strategy')}
-        >
-          <div className="card-body text-center p-4 lg:p-6">
-            <TrendingUp className="w-8 h-8 lg:w-12 lg:h-12 mx-auto mb-4" />
-            <h3 className="card-title justify-center text-sm lg:text-base">Conversion Strategy</h3>
-            <p className="text-xs opacity-80">Optimize hotel adoption and guest engagement conversion</p>
-            <div className="card-actions justify-center">
-              <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" />
+      {/* Next Steps Navigation */}
+      <div>
+        <h2 className="text-3xl font-bold text-center mb-8">Strategic Implementation Path</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          
+          <button 
+            className="card bg-gradient-to-r from-success to-primary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/implementation-roadmap') : onSectionChange('implementation-roadmap')}
+          >
+            <div className="card-body text-center p-6">
+              <Calendar className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Implementation Roadmap</h3>
+              <p className="text-sm opacity-80">Detailed timeline and execution plan</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
 
-        <button 
-          className="card bg-gradient-to-r from-success to-accent text-base-content hover:scale-105 transition-transform cursor-pointer"
-          onClick={() => onSectionChange('implementation-roadmap')}
-        >
-          <div className="card-body text-center p-4 lg:p-6">
-            <Calendar className="w-8 h-8 lg:w-12 lg:h-12 mx-auto mb-4" />
-            <h3 className="card-title justify-center text-sm lg:text-base">Implementation Roadmap</h3>
-            <p className="text-xs opacity-80">Detailed timeline and resource planning</p>
-            <div className="card-actions justify-center">
-              <ArrowRight className="w-4 h-4 lg:w-5 lg:h-5" />
+          <button 
+            className="card bg-gradient-to-r from-info to-secondary text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/prototype-demo') : onSectionChange('prototype-demo')}
+          >
+            <div className="card-body text-center p-6">
+              <Eye className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Prototype Demo</h3>
+              <p className="text-sm opacity-80">Interactive demonstrations of key features</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
+
+          <button 
+            className="card bg-gradient-to-r from-primary to-accent text-base-content hover:scale-105 transition-transform cursor-pointer"
+            onClick={() => navigate ? handleNavigation('/sources') : onSectionChange('sources')}
+          >
+            <div className="card-body text-center p-6">
+              <Database className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="card-title justify-center text-base">Research Sources</h3>
+              <p className="text-sm opacity-80">Industry benchmarks and supporting studies</p>
+              <div className="card-actions justify-center mt-4">
+                <ArrowRight className="w-5 h-5" />
+              </div>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   );
