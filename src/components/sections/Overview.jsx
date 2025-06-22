@@ -34,25 +34,23 @@ const Overview = ({ onSectionChange, navigate }) => {
     </div>
   );
 
-  // Rich tooltip component for complex content
-  const RichTooltip = ({ children, title, description, source, sourceUrl }) => {
-    const tooltipContent = `${title}\n\n${description}\n\nSource: ${source}${sourceUrl.startsWith('http') ? '\n🔗 Click to view source' : ''}`;
-    
+  // Rich tooltip component for concise content
+  const RichTooltip = ({ children, description }) => {
     return (
-      <div className="tooltip tooltip-info tooltip-top" data-tip={tooltipContent}>
+      <div className="tooltip tooltip-info tooltip-top" data-tip={description}>
         {children}
       </div>
     );
   };
 
-  // Stats data for hero section with detailed tooltips
+  // Stats data for hero section with concise tooltips
   const heroStats = [
     {
       value: "2.9x",
       label: "Improvement Potential",
       description: "Mobile vs Desktop Conversion Gap",
       color: "text-primary",
-      tooltip: "Industry research shows mobile hotel apps convert at only 2.6% vs 7.6% for desktop, representing massive optimization opportunity for hotels investing in mobile experience improvements. Calculation: 7.6% ÷ 2.6% = 2.9x improvement potential.",
+      tooltip: "Mobile hotel apps convert at 2.6% vs 7.6% for desktop, showing significant optimization opportunity.",
       source: "Statista - Travel websites conversion rate by device 2024",
       sourceUrl: "https://www.statista.com/statistics/1350599/conversion-rate-travel-tourism-websites-by-device-worldwide/"
     },
@@ -61,7 +59,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       label: "Revenue Increase",
       description: "Documented Case Studies",
       color: "text-success",
-      tooltip: "Penta Hotels achieved 37.8% conversion rate improvement through A/B testing, representing the high end of documented 15-37.8% revenue increases from mobile optimization. Additional cases: LuxStay Hotels (15% revenue increase), Heritage Grand Resorts (30% engagement increase).",
+      tooltip: "Proven revenue increases from mobile optimization range from 15-37.8% based on hotel industry case studies.",
       source: "Hotel App Conversion Benchmarks - Proven Optimization Results",
       sourceUrl: "#case-studies"
     },
@@ -70,7 +68,7 @@ const Overview = ({ onSectionChange, navigate }) => {
       label: "European Market",
       description: "Total Addressable Market",
       color: "text-secondary",
-      tooltip: "Total European hotel market size representing the addressable opportunity for digital guest experience solutions, with 26.18% CAGR growth through 2029. This validates the massive scale of opportunity for hospitality technology improvements.",
+      tooltip: "European hotel market size with 26.18% CAGR growth through 2029 in digital guest solutions.",
       source: "Statista - Global market size of hospitality industry 2023",
       sourceUrl: "https://www.statista.com/statistics/1247012/global-market-size-of-the-hospitality-industry/"
     }
@@ -113,35 +111,32 @@ const Overview = ({ onSectionChange, navigate }) => {
   ];
 
   return (
-    <div className="space-y-16">
+    <div className="space-y-8 sm:space-y-12 lg:space-y-16">
       {/* Hero Section - Unlocking Revenue Potential */}
-      <div className="hero bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 rounded-3xl border border-primary/10">
-        <div className="hero-content text-center py-16 px-8">
-          <div className="max-w-7xl">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+      <div className="hero bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 rounded-2xl sm:rounded-3xl border border-primary/10">
+        <div className="hero-content text-center py-8 px-4 sm:py-12 md:py-16 sm:px-6 lg:px-8">
+          <div className="max-w-7xl w-full">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 leading-tight">
               <span className="text-primary">Unlocking Straiv's</span><br />
-              <span className="text-secondary">Guest App Revenue Potential</span>
+              <span className="text-secondary">Guest App Revenue<br className="sm:hidden" /> Potential</span>
             </h1>
 
-            <p className="text-xl md:text-2xl text-base-content/80 mb-8 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-base-content/80 mb-6 sm:mb-8 max-w-xs sm:max-w-2xl lg:max-w-4xl mx-auto leading-relaxed">
               Strategic improvements to transform current performance into industry-leading results
             </p>
 
             {/* Hero Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-5xl mx-auto">
               {heroStats.map((stat, index) => (
                 <RichTooltip 
                   key={index} 
-                  title={`📊 ${stat.label} Analysis`}
                   description={stat.tooltip}
-                  source={stat.source}
-                  sourceUrl={stat.sourceUrl}
                 >
-                  <div className="stats shadow border border-base-300 hover:shadow-lg transition-shadow cursor-help">
-                    <div className="stat place-items-center">
-                      <div className={`stat-value ${stat.color} text-3xl md:text-4xl`}>{stat.value}</div>
-                      <div className="stat-title font-semibold">{stat.label}</div>
-                      <div className="stat-desc text-sm">{stat.description}</div>
+                  <div className="stats stats-vertical sm:stats-horizontal shadow border border-base-300 hover:shadow-lg transition-shadow cursor-help w-full">
+                    <div className="stat place-items-center p-4 sm:p-6">
+                      <div className={`stat-value ${stat.color} text-2xl sm:text-3xl lg:text-4xl mb-1`}>{stat.value}</div>
+                      <div className="stat-title font-semibold text-xs sm:text-sm text-center">{stat.label}</div>
+                      <div className="stat-desc text-xs sm:text-sm text-center px-2">{stat.description}</div>
                       <div className="stat-actions mt-2">
                         <Info className="w-4 h-4 text-base-content/50" />
                       </div>
@@ -194,7 +189,7 @@ const Overview = ({ onSectionChange, navigate }) => {
                 </div>
                 
                 <div className="flex items-center justify-between p-4 bg-base-100 rounded-lg">
-                  <span className="text-base-content/80">Documented Revenue Increases</span>
+                  <span className="text-base-content/80">Revenue Increases</span>
                   <span className="font-bold text-info">15-37.8%</span>
                 </div>
               </div>
@@ -268,7 +263,7 @@ const Overview = ({ onSectionChange, navigate }) => {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Four-Phase Revenue Optimization Approach
           </h2>
-          <Tooltip content="Phased approach targets verified industry benchmarks with proven ROI potential">
+          <Tooltip content="Phased approach targets verified industry benchmarks with ROI potential">
             <p className="text-lg text-base-content/80 max-w-3xl mx-auto cursor-help">
               Systematic implementation strategy designed to achieve measurable revenue impact 
               through proven optimization techniques
