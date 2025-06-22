@@ -228,22 +228,13 @@ const Layout = ({ onLogout }) => {
             {/* Desktop section header */}
             <div className="hidden lg:block mb-6">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <button
-                    className="btn btn-ghost btn-sm"
-                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                    title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-                  >
-                    {isSidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-                  </button>
-                  <div>
-                    <h1 className="text-3xl font-bold text-primary mb-2">
-                      {SECTION_LABELS[currentSection]}
-                    </h1>
-                    <p className="text-base-content/60">
-                      {SECTION_DESCRIPTIONS[currentSection]}
-                    </p>
-                  </div>
+                <div>
+                  <h1 className="text-3xl font-bold text-primary mb-2">
+                    {SECTION_LABELS[currentSection]}
+                  </h1>
+                  <p className="text-base-content/60">
+                    {SECTION_DESCRIPTIONS[currentSection]}
+                  </p>
                 </div>
                 <button 
                   className="btn btn-outline btn-sm"
