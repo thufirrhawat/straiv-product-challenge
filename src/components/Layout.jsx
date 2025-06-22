@@ -211,18 +211,19 @@ const Layout = ({ onLogout }) => {
           </div>
         </div>
 
+        {/* Fixed sticky sidebar toggle for collapsed state */}
+        {isSidebarCollapsed && (
+          <button
+            className="fixed top-6 left-6 z-50 btn btn-primary btn-sm shadow-lg hidden lg:flex"
+            onClick={() => setIsSidebarCollapsed(false)}
+            title="Expand Sidebar"
+          >
+            <ChevronRight size={18} />
+          </button>
+        )}
+
         {/* Main content */}
-        <main className="flex-1 p-4 lg:p-6 max-w-full overflow-x-hidden relative">
-          {/* Floating sidebar toggle for collapsed state */}
-          {isSidebarCollapsed && (
-            <button
-              className="absolute top-2 left-2 z-50 btn btn-primary btn-sm shadow-lg hidden lg:flex"
-              onClick={() => setIsSidebarCollapsed(false)}
-              title="Expand Sidebar"
-            >
-              <ChevronRight size={18} />
-            </button>
-          )}
+        <main className="flex-1 p-4 lg:p-6 max-w-full overflow-x-hidden">
 
           <div className="max-w-7xl mx-auto">
             {/* Desktop section header */}
