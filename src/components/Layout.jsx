@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LogOut, Menu, X, Home } from 'lucide-react';
+import { LogOut, Menu, X, Home, ChevronLeft, ChevronRight, Play, Pause, Square, RotateCcw, Clock } from 'lucide-react';
 import { setAuthStatus, getDemoState, saveDemoState } from '../utils/storage';
 import { SECTIONS, SECTION_LABELS, SECTION_DESCRIPTIONS, APP_CONFIG } from '../utils/constants';
 import nuriPp from '../assets/images/nuri-pp.png';
@@ -20,7 +20,16 @@ const Layout = ({ onLogout }) => {
   const { section } = useParams();
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [demoState, setDemoState] = useState(getDemoState());
+  
+  // Presentation Timer State
+  const [timerState, setTimerState] = useState({
+    time: 0, // time in seconds
+    isRunning: false,
+    isPaused: false
+  });
+  const [timerInterval, setTimerInterval] = useState(null);
 
   // Map URL slugs to section constants
   const urlToSection = {
@@ -84,6 +93,66 @@ const Layout = ({ onLogout }) => {
     onLogout();
   };
 
+  // Presentation Timer Functions
+  const startTimer = () => {
+    console.log('Starting presentation timer');
+    if (!timerState.isRunning) {
+      const interval = setInterval(() => {
+        setTimerState(prev => ({
+          ...prev,
+          time: prev.time + 1
+        }));
+      }, 1000);
+      setTimerInterval(interval);
+      setTimerState(prev => ({
+        ...prev,
+        isRunning: true,
+        isPaused: false
+      }));
+    }
+  };
+
+  const pauseTimer = () => {
+    console.log('Pausing presentation timer');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
+    setTimerState(prev => ({
+      ...prev,
+      isRunning: false,
+      isPaused: true
+    }));
+  };
+
+  const stopTimer = () => {
+    console.log('Stopping presentation timer');
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      setTimerInterval(null);
+    }
+    setTimerState({
+      time: 0,
+      isRunning: false,
+      isPaused: false
+    });
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+      }
+    };
+  }, [timerInterval]);
+
   const renderCurrentSection = () => {
     const sectionProps = { demoState, setDemoState, onSectionChange: handleSectionChange, navigate };
     
@@ -114,7 +183,7 @@ const Layout = ({ onLogout }) => {
   const sectionEntries = Object.entries(SECTIONS);
 
   return (
-    <div className="drawer lg:drawer-open">
+    <div className={`drawer ${!isSidebarCollapsed ? 'lg:drawer-open' : ''}`}>
       <input id="drawer-toggle" type="checkbox" className="drawer-toggle" 
              checked={isMobileMenuOpen} 
              onChange={(e) => setIsMobileMenuOpen(e.target.checked)} />
@@ -142,19 +211,39 @@ const Layout = ({ onLogout }) => {
           </div>
         </div>
 
+        {/* Floating sidebar toggle for collapsed state */}
+        {isSidebarCollapsed && (
+          <button
+            className="fixed top-4 left-4 z-50 btn btn-primary btn-sm shadow-lg hidden lg:flex"
+            onClick={() => setIsSidebarCollapsed(false)}
+            title="Expand Sidebar"
+          >
+            <ChevronRight size={18} />
+          </button>
+        )}
+
         {/* Main content */}
         <main className="flex-1 p-4 lg:p-6 max-w-full overflow-x-hidden">
           <div className="max-w-7xl mx-auto">
             {/* Desktop section header */}
             <div className="hidden lg:block mb-6">
               <div className="flex items-center justify-between">
-                <div>
-                  <h1 className="text-3xl font-bold text-primary mb-2">
-                    {SECTION_LABELS[currentSection]}
-                  </h1>
-                  <p className="text-base-content/60">
-                    {SECTION_DESCRIPTIONS[currentSection]}
-                  </p>
+                <div className="flex items-center gap-4">
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                    title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+                  >
+                    {isSidebarCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+                  </button>
+                  <div>
+                    <h1 className="text-3xl font-bold text-primary mb-2">
+                      {SECTION_LABELS[currentSection]}
+                    </h1>
+                    <p className="text-base-content/60">
+                      {SECTION_DESCRIPTIONS[currentSection]}
+                    </p>
+                  </div>
                 </div>
                 <button 
                   className="btn btn-outline btn-sm"
@@ -181,20 +270,30 @@ const Layout = ({ onLogout }) => {
         <aside className="w-80 min-h-full bg-base-200 flex flex-col">
           {/* Sidebar header */}
           <div className="p-4 border-b border-base-300">
-            <div className="flex items-center gap-3">
-              <div className="avatar">
-                <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <img 
-                    src={nuriPp} 
-                    alt="Nuri Profile Picture" 
-                    className="rounded-full object-cover w-full h-full"
-                  />
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="avatar">
+                  <div className="w-10 h-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                    <img 
+                      src={nuriPp} 
+                      alt="Nuri Profile Picture" 
+                      className="rounded-full object-cover w-full h-full"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h2 className="font-bold text-primary">{APP_CONFIG.name}</h2>
+                  <p className="text-xs text-base-content/60">{APP_CONFIG.author}</p>
                 </div>
               </div>
-              <div>
-                <h2 className="font-bold text-primary">{APP_CONFIG.name}</h2>
-                <p className="text-xs text-base-content/60">{APP_CONFIG.author}</p>
-              </div>
+              {/* Desktop collapse button */}
+              <button
+                className="btn btn-ghost btn-sm hidden lg:flex"
+                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+              >
+                <ChevronLeft size={18} />
+              </button>
             </div>
           </div>
 
@@ -229,6 +328,64 @@ const Layout = ({ onLogout }) => {
             </ul>
           </nav>
 
+          {/* Presentation Timer */}
+          <div className="p-4 border-t border-base-300 bg-base-300">
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                <span className="text-sm font-semibold text-primary">Presentation Timer</span>
+              </div>
+              
+              {/* Timer Display */}
+              <div className="text-center">
+                <div className="text-2xl font-mono font-bold text-base-content">
+                  {formatTime(timerState.time)}
+                </div>
+                <div className="text-xs text-base-content/60">
+                  {timerState.isRunning ? 'Running' : timerState.isPaused ? 'Paused' : 'Ready'}
+                </div>
+              </div>
+
+              {/* Timer Controls */}
+              <div className="flex justify-center gap-2">
+                {!timerState.isRunning ? (
+                  <button
+                    className="btn btn-primary btn-sm"
+                    onClick={startTimer}
+                    title="Start Timer"
+                  >
+                    <Play className="w-4 h-4" />
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={pauseTimer}
+                    title="Pause Timer"
+                  >
+                    <Pause className="w-4 h-4" />
+                  </button>
+                )}
+                
+                <button
+                  className="btn btn-error btn-sm"
+                  onClick={stopTimer}
+                  title="Stop Timer"
+                  disabled={timerState.time === 0 && !timerState.isRunning}
+                >
+                  <Square className="w-4 h-4" />
+                </button>
+                
+                <button
+                  className="btn btn-ghost btn-sm"
+                  onClick={stopTimer}
+                  title="Reset Timer"
+                  disabled={timerState.time === 0 && !timerState.isRunning}
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
 
         </aside>
       </div>

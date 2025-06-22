@@ -130,19 +130,25 @@ const Overview = ({ onSectionChange, navigate }) => {
             </p>
 
             {/* Hero Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 mb-6 sm:mb-8 max-w-6xl mx-auto">
               {heroStats.map((stat, index) => (
                 <RichTooltip 
                   key={index} 
                   description={stat.tooltip}
                 >
-                  <div className="stats stats-vertical sm:stats-horizontal shadow border border-base-300 hover:shadow-lg transition-shadow cursor-help w-full">
-                    <div className="stat place-items-center p-4 sm:p-6">
-                      <div className={`stat-value ${stat.color} text-2xl sm:text-3xl lg:text-4xl mb-1`}>{stat.value}</div>
-                      <div className="stat-title font-semibold text-xs sm:text-sm text-center">{stat.label}</div>
-                      <div className="stat-desc text-xs sm:text-sm text-center px-2">{stat.description}</div>
-                      <div className="stat-actions mt-2">
-                        <Info className="w-4 h-4 text-base-content/50" />
+                  <div className="card bg-base-100 shadow-lg border border-base-300 hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-help">
+                    <div className="card-body text-center p-4 sm:p-6 lg:p-8">
+                      <div className={`text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold ${stat.color} mb-2 sm:mb-3`}>
+                        {stat.value}
+                      </div>
+                      <div className="text-sm sm:text-base lg:text-lg font-semibold text-base-content mb-1 sm:mb-2">
+                        {stat.label}
+                      </div>
+                      <div className="text-xs sm:text-sm lg:text-base text-base-content/70 mb-3 sm:mb-4 leading-tight">
+                        {stat.description}
+                      </div>
+                      <div className="flex justify-center">
+                        <Info className="w-4 h-4 sm:w-5 sm:h-5 text-base-content/40" />
                       </div>
                     </div>
                   </div>
